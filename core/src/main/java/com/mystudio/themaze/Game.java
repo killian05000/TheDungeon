@@ -10,6 +10,19 @@ public class Game extends BasicGame {
 	public static final String GAME_IDENTIFIER = "com.mystudio.themaze";
 
 	private Texture texture;
+	int [][] maze = 
+	{
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+		{ 1, 1, 0, 0, 0, 0, 1, 1, 0, 0 },
+		{ 1, 1, 0, 1, 0, 1, 1, 0, 0, 1 },
+		{ 1, 0, 0, 1, 0, 0, 1, 0, 1, 1 },
+		{ 1, 0, 1, 0, 0, 1, 1, 0, 0, 1 },
+		{ 1, 0, 1, 1, 0, 1, 1, 1, 0, 1 },
+		{ 1, 0, 1, 1, 0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 0, 0, 0, 1, 1, 1, 1, 1 },
+		{ 1, 0, 1, 1, 0, 0, 0, 0, 0, 1 },
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+	  };
 	
 	@Override
     public void initialise() {
@@ -27,7 +40,29 @@ public class Game extends BasicGame {
     }
     
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics g) 
+	{
 		g.drawTexture(texture, 0f, 0f);
+		PaintMaze(g);
+    }
+	
+	
+	    public void PaintMaze(Graphics g) {
+    	
+    	int TAILLE =50;
+	    for (int i=0; i<maze.length; i++) {
+	      for (int j=0; j<maze.length; j++) {
+	        switch(maze[i][j]) {
+	        case 0: 
+	          g.setColor(Color.WHITE);
+	          g.fillRect(j*TAILLE,i*TAILLE,TAILLE,TAILLE);
+	          break;
+	        case 1: 
+	          g.setColor(Color.BLACK);
+	          g.fillRect(j*TAILLE,i*TAILLE,TAILLE,TAILLE);
+	          break;
+	        }
+	      }
+	    }
     }
 }
