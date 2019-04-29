@@ -14,15 +14,21 @@ public class Player
 	private int defaultPostionX = 1;
 	private int defaultPositionY = 9;
 	
+	private int speed;//Multiple of mapScale
+	
+	private int mapScale;
+	
 	private int direction;
 	
 	private Texture badpac;
 	
-	public Player() 
+	public Player(int mapScale) 
 	{
-		posX = defaultPostionX;
-		posY = defaultPositionY;
+		posX = defaultPostionX*mapScale;
+		posY = defaultPositionY*mapScale;
 		badpac = new Texture("badpacLeft.png");
+		speed = 5;
+		this.mapScale = mapScale;
 	}
 	/**
 	 * Update the direction
@@ -56,32 +62,48 @@ public class Player
     	switch(direction)
     	{
 			case 0:
-				newPosX= posX-1;
-				if(newPosX>=0 && maze.getMatrix()[newPosX][posY] == 0)
-					posX=newPosX;
+				newPosX= posX-speed;
+				
+				if(newPosX/mapScale>=0 
+					&& maze.getMatrix()[newPosX/mapScale][posY/mapScale] == 0
+					&& maze.getMatrix()[newPosX/mapScale][(posY+mapScale-speed)/mapScale] == 0
+					)
+					posX =newPosX;
 				break;
 			case 1:
-				newPosY = posY+1;
-				if(newPosY<maze.getMatrix()[0].length && maze.getMatrix()[posX][newPosY] == 0)
-					posY=newPosY;
+				newPosY = posY+speed;
+	    		
+	    		if((newPosY+mapScale-speed)/mapScale<maze.getMatrix()[0].length 
+					&& maze.getMatrix()[posX/mapScale][(newPosY+mapScale-speed)/mapScale] == 0
+					&& maze.getMatrix()[(posX+mapScale-speed)/mapScale][(newPosY+mapScale-speed)/mapScale] == 0
+					)
+					posY = newPosY;
 				break;
 			case 2:
-				newPosX = posX+1;
-				if(newPosX<maze.getMatrix().length && maze.getMatrix()[newPosX][posY] == 0) 
-					posX=newPosX;			
+				newPosX = posX+speed;
+	    		
+	    		if(newPosX/mapScale<maze.getMatrix().length 
+					&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][posY/mapScale] == 0
+					&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][(posY+mapScale-speed)/mapScale] == 0
+					) 
+					posX = newPosX;			
 				break;
 			case 3:
-				newPosY = posY-1;
-				if(newPosY>=0 && maze.getMatrix()[posX][newPosY] == 0) 
-					posY=newPosY;
-				break;	
+				newPosY = posY-speed;
+				
+	    		if(newPosY>=0 
+					&& maze.getMatrix()[posX/mapScale][newPosY/mapScale] == 0
+					&& maze.getMatrix()[(posX+mapScale-speed)/mapScale][newPosY/mapScale] == 0
+					) 
+					posY = newPosY;
+	    		break;		
 		}
 	}
 	
 	
-	public void render(Graphics g, int mapScale) 
+	public void render(Graphics g) 
 	{	
-		g.drawTexture(badpac, posY*mapScale, posX*mapScale, mapScale, mapScale);
+		g.drawTexture(badpac, posY, posX, mapScale, mapScale);
 	}
 	
 	public void setPosY(int posY) 
