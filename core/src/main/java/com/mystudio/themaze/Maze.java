@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 
 public class Maze 
 {
+	private int mapScale;
 	private int [][] matrix = 
 		{
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -20,6 +21,12 @@ public class Maze
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
 		  };
 	
+	public Maze(int scale)
+	{
+		mapScale = matrix.length*scale;
+		System.out.println(mapScale);
+	}
+	
 	public int[][] getMatrix() 
 	{
 		return matrix;
@@ -33,7 +40,6 @@ public class Maze
 	
 	public void PaintMaze(Graphics g) 
 	{
-		int length =50;
 		for (int i=0; i<matrix.length; i++) 
 		{
 			for (int j=0; j<matrix[0].length; j++) 
@@ -42,16 +48,19 @@ public class Maze
 				{
 					case 0:
 						g.setColor(Color.WHITE);
-						g.fillRect(j*length,i*length,length,length);
+						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
 						break;
 					case 1:
 						g.setColor(Color.BLACK);
-						g.fillRect(j*length,i*length,length,length);
+						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
 						break;
 				 }
 			 }
 		 } 
-	 }
+	 }	
 	
-	
+	public int getMapScale()
+	{
+		return mapScale;
+	}
 }
