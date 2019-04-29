@@ -16,9 +16,9 @@ public class Game extends BasicGame {
     public void initialise() 
 	{
 		Items = new ArrayList<Item>();
-    	maze = new Maze(5); // map scale
+    	maze = new Maze(3); // map scale
     	player = new Player();
-    	Items.add(new Item(50,150,"key1.png"));
+    	Items.add(new Item(1,5,"key.png"));
     }
     
     @Override
@@ -38,7 +38,7 @@ public class Game extends BasicGame {
     {
 		maze.PaintMaze(g);
 		player.render(g, maze.getMapScale());
-		Items.get(0).render(g, 50);
+		Items.get(0).render(g, maze.getMapScale());
     }
 	
 }
