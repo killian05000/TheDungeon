@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Player 
 {
-	private int direction;
-	
 	private int posX;
 	private int posY;
 	
@@ -18,7 +16,8 @@ public class Player
 	
 	private Texture badpac;
 	
-	public Player() {
+	public Player() 
+	{
 		posX = defaultPostionX;
 		posY = defaultPositionY;
 		badpac = new Texture("badpacLeft.png");
@@ -26,34 +25,45 @@ public class Player
 	/**
 	 * Update the direction
 	 */
-	public  void  updateDirection () {
+	public  void  update (Maze maze) { // update the player direction according to the user input
+		
+		int newPosX;
+    	int newPosY;
+    	
 		if(Gdx.input.isKeyPressed(Keys.UP)) 
 		{
 			badpac = new Texture("badpacUp.png");
-			direction = 0;
+			newPosX= getPosX()-1;
+			if(newPosX>=0 && maze.getMatrix()[newPosX][getPosY()] == 0)
+				setPosX(newPosX);
 		}
     	if(Gdx.input.isKeyPressed(Keys.RIGHT))
     	{
     		badpac = new Texture("badpacRight.png");
-    		direction = 1;
+    		newPosY = getPosY()+1;
+			if(newPosY<maze.getMatrix()[0].length && maze.getMatrix()[getPosX()][newPosY] == 0)
+				setPosY(newPosY);
     	}
     	if(Gdx.input.isKeyPressed(Keys.DOWN))
     	{
     		badpac = new Texture("badpacDown.png");
-    		direction = 2;
+    		newPosX = getPosX()+1;
+			if(newPosX<maze.getMatrix().length && maze.getMatrix()[newPosX][getPosY()] == 0) 
+				setPosX(newPosX);	
     	}
     	if(Gdx.input.isKeyPressed(Keys.LEFT))
     	{
-    		badpac = new Texture("badpacLeft.png");
-    		direction = 3;   
+    		badpac = new Texture("badpacLeft.png");  
+    		newPosY = getPosY()-1;
+			if(newPosY>=0 && maze.getMatrix()[getPosX()][newPosY] == 0) 
+				setPosY(newPosY);
     	}
 	}
 	
 	
-	public void render(Graphics g) 
-	{
-		
-		g.drawTexture(badpac, posY*50, posX*50, 50, 50);
+	public void render(Graphics g, int mapScale) 
+	{	
+		g.drawTexture(badpac, posY*mapScale, posX*mapScale, mapScale, mapScale);
 	}
 	
 	public int getPosX() 
@@ -74,11 +84,6 @@ public class Player
 	public void setPosY(int posY) 
 	{
 		this.posY = posY;
-	}
-	
-	public int getDirection() 
-	{
-		return direction;
 	}
 	
 }
