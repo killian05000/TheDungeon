@@ -25,12 +25,18 @@ public class Maze
 		return matrix;
 	}
 	
+	public void setMatrix(int posX , int posY, int valeur) 
+	{
+		matrix[posX][posY] = valeur;
+		
+	}
+	
 	public void PaintMaze(Graphics g) 
 	{
 		int length =50;
 		for (int i=0; i<matrix.length; i++) 
 		{
-			for (int j=0; j<matrix.length; j++) 
+			for (int j=0; j<matrix[0].length; j++) 
 			{
 				switch(matrix[i][j])
 				{
@@ -45,5 +51,7 @@ public class Maze
 				 }
 			 }
 		 } 
-	 }	
+	 }
+	
+	
 }
