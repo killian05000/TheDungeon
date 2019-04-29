@@ -1,10 +1,19 @@
 
 package com.mystudio.themaze;
 
+import java.util.ArrayList;
+
+import org.mini2Dx.core.collisions.PointQuadTree;
+import org.mini2Dx.core.collisions.QuadTree;
+import org.mini2Dx.core.collisions.RegionQuadTree;
+import org.mini2Dx.core.engine.geom.CollisionBox;
+import org.mini2Dx.core.engine.geom.CollisionPoint;
 import org.mini2Dx.core.graphics.Graphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData.Region;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 
 public class Player 
 {
@@ -17,13 +26,17 @@ public class Player
 	private int direction;
 	
 	private Texture badpac;
+	QuadTree<CollisionPoint> collisions;
 	
 	public Player() 
 	{
 		posX = defaultPostionX;
 		posY = defaultPositionY;
 		badpac = new Texture("badpacLeft.png");
+		collisions = new PointQuadTree<CollisionPoint>(4, 2, 0, 0, 640, 320);
+		collisions.add(new CollisionPoint(posX+25, posY+25));
 	}
+	
 	/**
 	 * Update the direction
 	 */
@@ -76,6 +89,9 @@ public class Player
 					posY=newPosY;
 				break;	
 		}
+    	
+    	ArrayList<CollisionPoint> collisionsInArea = new ArrayList<CollisionPoint>();
+    	collisions.getElementsWithinArea(new CollisionBox(2, 2, 6, 6));
 	}
 	
 	
