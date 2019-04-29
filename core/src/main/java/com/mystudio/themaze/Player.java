@@ -1,3 +1,4 @@
+
 package com.mystudio.themaze;
 
 import org.mini2Dx.core.graphics.Graphics;
@@ -81,3 +82,4 @@ public class Player
 	}
 	
 }
+

@@ -51,12 +51,12 @@ public class Game extends BasicGame {
     
     @Override
     public void interpolate(float alpha) {
-    
+    	
     }
     
     @Override
     public void render(Graphics g) 
-	{	
+    {
 		maze.PaintMaze(g);
 		player.render(g);
     }
