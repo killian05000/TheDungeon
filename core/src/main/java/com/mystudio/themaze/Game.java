@@ -1,5 +1,7 @@
 package com.mystudio.themaze;
 
+import java.util.ArrayList;
+
 import org.mini2Dx.core.game.BasicGame;
 import org.mini2Dx.core.graphics.Graphics;
 
@@ -8,18 +10,22 @@ public class Game extends BasicGame {
 
 	private Maze maze;
 	private Player player;
+	private ArrayList<Item> Items;
 	
 	@Override
     public void initialise() 
 	{
+		Items = new ArrayList<Item>();
     	maze = new Maze(5); // map scale
     	player = new Player();
+    	Items.add(new Item(50,150,"key1.png"));
     }
     
     @Override
     public void update(float delta) 
     {
     	player.update(maze);
+    	Items.get(0).update();
     }
     
     @Override
@@ -32,6 +38,7 @@ public class Game extends BasicGame {
     {
 		maze.PaintMaze(g);
 		player.render(g, maze.getMapScale());
+		Items.get(0).render(g, 50);
     }
 	
 }
