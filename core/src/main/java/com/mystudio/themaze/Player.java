@@ -1,6 +1,8 @@
 
 package com.mystudio.themaze;
 
+import java.util.ArrayList;
+
 import org.mini2Dx.core.graphics.Graphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -11,8 +13,9 @@ public class Player
 	private int posX;
 	private int posY;
 	
-	private int defaultPostionX = 1;
-	private int defaultPositionY = 9;
+	//private int defaultPostionX = 8;
+	//private int defaultPositionY = 5;
+	
 	
 	private int speed;//Multiple of mapScale
 	
@@ -20,15 +23,19 @@ public class Player
 	
 	private int direction;
 	
+	public ArrayList<Item> items;
+	
 	private Texture badpac;
 	
-	public Player(int mapScale) 
+	public Player(int defaultPostionX, int defaultPositionY, int mapScale) 
 	{
 		posX = defaultPostionX*mapScale;
 		posY = defaultPositionY*mapScale;
 		badpac = new Texture("badpacLeft.png");
 		speed = 5;
+		direction =-1;
 		this.mapScale = mapScale;
+		items = new ArrayList<Item>();
 	}
 	/**
 	 * Update the direction
@@ -82,7 +89,7 @@ public class Player
 			case 2:
 				newPosX = posX+speed;
 	    		
-	    		if(newPosX/mapScale<maze.getMatrix().length 
+	    		if((newPosX+mapScale-speed)/mapScale<maze.getMatrix().length 
 					&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][posY/mapScale] == 0
 					&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][(posY+mapScale-speed)/mapScale] == 0
 					) 
@@ -105,10 +112,23 @@ public class Player
 	{	
 		g.drawTexture(badpac, posY, posX, mapScale, mapScale);
 	}
+
+	public int getSpeed() {
+		return speed;
+	}
 	
-	public void setPosY(int posY) 
+	public int getPosX() 
 	{
-		this.posY = posY;
+		return posX;
+	}
+	
+	public int getPosY() 
+	{
+		return posY;
+	}
+	
+	public void addItem(Item item) {
+		items.add(item);
 	}
 	
 }
