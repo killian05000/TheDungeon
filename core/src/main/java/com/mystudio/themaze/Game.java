@@ -22,7 +22,7 @@ public class Game extends BasicGame {
 	{
 		mapTranslator map = null;
 		try {
-			map = new mapTranslator("map1.jpg");
+			map = new mapTranslator("MapTest.png");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,8 +33,8 @@ public class Game extends BasicGame {
     	System.out.println(maze.getPlayerSpawnX()+"/"+maze.getPlayerSpawnY());
     	player = new Player(maze.getPlayerSpawnX(),maze.getPlayerSpawnY(),maze.getMapScale());
     	enemy = new Enemy(maze.getMapScale());
-    	maze.addItem(new Item(10, 5, maze.getMapScale(), "key.png"));
-    	maze.addItem(new Item(22, 28, maze.getMapScale(), "key.png"));
+    	maze.addItem(new Item(10, 2, maze.getMapScale(), "key.png"));
+    	maze.addItem(new Item(20, 28, maze.getMapScale(), "key.png"));
     	collision = new Collision(maze.getItems(), player, maze.getMapScale());
 
     }
@@ -57,6 +57,7 @@ public class Game extends BasicGame {
     public void render(Graphics g) 
     {
 		maze.PaintMaze(g);
+		maze.paintTrueMap(g, "MapTest.png");
 		player.render(g);
 		maze.paintItemes(g);
 		enemy.render(g);
