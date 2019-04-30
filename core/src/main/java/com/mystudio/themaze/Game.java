@@ -5,27 +5,37 @@ import java.util.ArrayList;
 import org.mini2Dx.core.game.BasicGame;
 import org.mini2Dx.core.graphics.Graphics;
 
+import com.badlogic.gdx.graphics.Color;
+
 public class Game extends BasicGame {
 	public static final String GAME_IDENTIFIER = "com.mystudio.themaze";
 
 	private Maze maze;
 	private Player player;
-	private ArrayList<Item> Items;
+
+	private Collision collision;
+	Enemy enemy;
 	
 	@Override
     public void initialise() 
 	{
-		Items = new ArrayList<Item>();
-    	maze = new Maze(3); // map scale
-    	player = new Player(maze.getMapScale());
-    	Items.add(new Item(1,9,"key.png"));
+		
+    	maze = new Maze(1); // map scale
+    	player = new Player(maze.getDefaultPosYPlayer(),maze.getDefaultPosXPlayer(),maze.getMapScale());
+    	enemy = new Enemy(maze.getMapScale());
+    	maze.addItem(new Item(10, 5, maze.getMapScale(), "key.png"));
+    	maze.addItem(new Item(11, 6, maze.getMapScale(), "key.png"));
+    	collision = new Collision(maze.getItems(), player, maze.getMapScale());
+    	
     }
     
     @Override
     public void update(float delta) 
     {
     	player.update(maze);
-    	Items.get(0).update();
+    	enemy.update(maze);
+    	collision.verify();
+    	
     }
     
     @Override
@@ -38,7 +48,10 @@ public class Game extends BasicGame {
     {
 		maze.PaintMaze(g);
 		player.render(g);
-		Items.get(0).render(g, maze.getMapScale());
+		maze.paintItemes(g);
+		enemy.render(g);
+		
+		
     }
 	
 }
