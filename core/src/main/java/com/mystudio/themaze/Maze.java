@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mini2Dx.core.graphics.Graphics;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Maze 
 {
@@ -95,6 +96,12 @@ public class Maze
 			 }
 		 } 
 	 }
+	
+	public void paintTrueMap(Graphics g, String path)
+	{
+		Texture map = new Texture("MapTest.png");
+		g.drawTexture(map, 0, 0, map.getHeight(), map.getWidth());
+	}
 	
 	public void paintItemes(Graphics g) 
 	{
