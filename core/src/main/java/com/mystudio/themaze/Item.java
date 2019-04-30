@@ -9,12 +9,14 @@ public class Item
 	private Texture sprite;
 	int posX;
 	int posY;
+	int mapScale;
 	
-	public Item(int x, int y, String path)
+	public Item(int x, int y, int mapScale, String path)
 	{
 		posX = x;
 		posY = y;
 		sprite = new Texture(path);
+		this.mapScale = mapScale;
 	}
 	
 	public void update()
@@ -22,8 +24,19 @@ public class Item
 		
 	}
 	
-	public void render(Graphics g, int mapScale) 
+	public void render(Graphics g) 
 	{	
-		g.drawTexture(sprite, posY, posX, mapScale, mapScale);
+		g.drawTexture(sprite, posY*mapScale, posX*mapScale, mapScale, mapScale);
+	}
+	
+	
+	public int getPixelX() 
+	{
+		return posX*mapScale;
+	}
+	
+	public int getPixelY() 
+	{
+		return posY*mapScale;
 	}
 }
