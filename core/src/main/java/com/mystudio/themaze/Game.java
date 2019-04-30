@@ -26,7 +26,7 @@ public class Game extends BasicGame {
     	maze.addItem(new Item(10, 5, maze.getMapScale(), "key.png"));
     	maze.addItem(new Item(11, 6, maze.getMapScale(), "key.png"));
     	collision = new Collision(maze.getItems(), player, maze.getMapScale());
-    	
+
     }
     
     @Override

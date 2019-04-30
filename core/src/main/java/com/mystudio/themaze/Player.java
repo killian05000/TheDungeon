@@ -2,11 +2,12 @@
 package com.mystudio.themaze;
 
 import java.util.ArrayList;
-
 import org.mini2Dx.core.graphics.Graphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData.Region;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 
 public class Player 
 {
@@ -26,7 +27,7 @@ public class Player
 	public ArrayList<Item> items;
 	
 	private Texture badpac;
-	
+
 	public Player(int defaultPostionX, int defaultPositionY, int mapScale) 
 	{
 		posX = defaultPostionX*mapScale;
@@ -96,6 +97,7 @@ public class Player
 					posX = newPosX;			
 				break;
 			case 3:
+
 				newPosY = posY-speed;
 				
 	    		if(newPosY>=0 
