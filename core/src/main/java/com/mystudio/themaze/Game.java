@@ -1,5 +1,6 @@
 package com.mystudio.themaze;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.mini2Dx.core.game.BasicGame;
@@ -19,12 +20,21 @@ public class Game extends BasicGame {
 	@Override
     public void initialise() 
 	{
-		
-    	maze = new Maze(1); // map scale
-    	player = new Player(maze.getDefaultPosYPlayer(),maze.getDefaultPosXPlayer(),maze.getMapScale());
+		mapTranslator map = null;
+		try {
+			map = new mapTranslator("map1.jpg");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.translate();
+		map.displayMatrix();
+    	maze = new Maze(1, map.getMatrix()); // map scale
+    	System.out.println(maze.getPlayerSpawnX()+"/"+maze.getPlayerSpawnY());
+    	player = new Player(maze.getPlayerSpawnX(),maze.getPlayerSpawnY(),maze.getMapScale());
     	enemy = new Enemy(maze.getMapScale());
     	maze.addItem(new Item(10, 5, maze.getMapScale(), "key.png"));
-    	maze.addItem(new Item(11, 6, maze.getMapScale(), "key.png"));
+    	maze.addItem(new Item(22, 28, maze.getMapScale(), "key.png"));
     	collision = new Collision(maze.getItems(), player, maze.getMapScale());
 
     }

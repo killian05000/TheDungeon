@@ -8,61 +8,18 @@ import com.badlogic.gdx.graphics.Color;
 
 public class Maze 
 {
-	/*
-	 * 5 teleporteur
-	 * 7 piege 
-	 * 2 position de depart pour le monstre
-	 * 6 porte
-	 * 8 sortie
-	 * 3 position de depart du joueur
-	 * 
-	 * 30*30
-	 * 
-	 * 
-	 */
 	private int mapScale;
-	private int defaultPosXPlayer;
-	private int defaultPosYPlayer;
-	
-	private int [][] matrix = 
-		{
-			{1,1,1,1,1,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1},
-			{1,1,1,1,1,1,0,1,1,0,1,0,1,0,1,0,1,1,1,1,1,0,1,5,0,0,0,0,0,1},
-			{0,0,0,0,0,1,0,1,1,0,1,0,1,7,1,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1},
-			{0,1,1,1,0,0,0,0,0,0,0,0,1,0,1,0,1,1,1,1,1,1,0,1,0,1,1,1,1,1},
-			{0,1,0,1,0,1,1,0,1,1,0,1,1,0,1,0,1,1,1,1,1,1,0,1,0,0,0,0,6,8},
-			{0,0,5,0,0,1,1,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1},
-			{0,1,0,1,0,1,1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,1},
-			{0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,1},
-			{0,0,0,1,1,0,1,1,1,0,1,1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,0,1},
-			{1,1,1,1,1,0,1,2,1,0,1,1,1,1,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,0,1,0,1,1,0,1,0},
-			{0,1,1,0,1,1,1,0,1,0,1,0,1,1,1,1,0,1,1,1,0,0,0,1,0,1,1,0,1,0},
-			{0,1,1,0,1,0,0,0,1,1,1,0,1,1,1,1,0,1,1,1,0,1,0,1,0,1,1,0,1,0},
-			{0,0,0,0,1,7,1,0,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0},
-			{0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,1,0,1,1,0,1,0},
-			{0,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,0,1,0,1,1,1,0,1,0,1,1,0,1,0},
-			{0,1,1,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,1,1,1,0,0,0,0,0,0,0,0},
-			{0,0,0,0,1,1,1,1,0,1,1,1,1,0,1,0,0,1,0,1,1,1,0,1,1,0,1,1,1,0},
-			{0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,7,1,1,1,0},
-			{0,0,0,0,1,1,1,1,1,0,1,1,1,0,1,5,1,0,1,1,1,1,0,1,1,0,0,0,0,0},
-			{1,0,1,0,0,0,0,0,0,0,1,1,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1},
-			{1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,1,1,0,1,1,1},
-			{1,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,1,0,0},
-			{1,1,1,5,1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,0,0,0,0,0,0,5,1,1,0},
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,1,1,0,1,0,1,1,0},
-			{0,0,1,1,1,1,1,1,1,0,1,1,1,0,1,3,1,0,0,1,0,1,1,1,0,1,0,1,1,0},
-			{0,1,1,1,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0,1,1,1,0,1,0,1,1,0},
-			{0,1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,0,1,1,0},
-			{0,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1,1,1,1,1,0,0,0,0,0,1,0,1,1,0},
-			{0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0},
-	};
+
+	private int [][] matrix;
+	private int playerSpawnX;
+	private int playerSpawnY;
 	
 	private ArrayList<Item> items;
 	
-	
-	public Maze(int scale)
+	public Maze(int scale, int[][] M)
 	{
+		matrix = new int[M.length][M[0].length];
+		matrix = M;
 		items = new ArrayList<Item>();
 		mapScale = matrix.length*scale;
 		initialiseDefaultPositionPlayer();
@@ -76,8 +33,8 @@ public class Maze
 			{
 				if(matrix[i][j]==2) 
 				{
-					defaultPosXPlayer = i;
-					defaultPosYPlayer = j;
+					playerSpawnX = i;
+					playerSpawnY = j;
 				}
 			}	
 		}
@@ -110,26 +67,34 @@ public class Maze
 						g.setColor(Color.BLACK);
 						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
 						break;
-					case 5:
-						g.setColor(Color.PINK);
-						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
-						break;
-					case 6: 
-						g.setColor(Color.BROWN);
-						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
-						break;
-					case 7: 
+					case 2:
 						g.setColor(Color.BLUE);
 						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
 						break;
-					case 8: 
+					case 3:
+						g.setColor(Color.PINK);
+						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
+						break;
+					case 4:
+						g.setColor(Color.RED);
+						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
+						break;
+					case 5:
+						g.setColor(Color.BROWN);
+						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
+						break;
+					case 6:
 						g.setColor(Color.GREEN);
+						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
+						break;
+					case 9:
+						g.setColor(Color.PURPLE);
 						g.fillRect(j*mapScale,i*mapScale,mapScale,mapScale);
 						break;
 				 }
 			 }
 		 } 
-	 }	
+	 }
 	
 	public void paintItemes(Graphics g) 
 	{
@@ -152,12 +117,14 @@ public class Maze
 		return mapScale;
 	}
 	
-	public int getDefaultPosXPlayer() {
-		return defaultPosXPlayer;
+
+	public int getPlayerSpawnX()
+	{
+		return playerSpawnX;
 	}
-	
-	public int getDefaultPosYPlayer() {
-		return defaultPosYPlayer;
+	public int getPlayerSpawnY()
+	{
+		return playerSpawnY;
 	}
 	
 	
@@ -165,5 +132,4 @@ public class Maze
 	{
 		return items;
 	}
-	
 }

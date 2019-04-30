@@ -69,7 +69,7 @@ public class Player
     	
     	switch(direction)
     	{
-			case 0:
+			case 0: // UP
 				newPosX= posX-speed;
 				
 				if(newPosX/mapScale>=0 
@@ -78,7 +78,7 @@ public class Player
 					)
 					posX =newPosX;
 				break;
-			case 1:
+			case 1: // RIGHT
 				newPosY = posY+speed;
 	    		
 	    		if((newPosY+mapScale-speed)/mapScale<maze.getMatrix()[0].length 
@@ -87,7 +87,7 @@ public class Player
 					)
 					posY = newPosY;
 				break;
-			case 2:
+			case 2: // DOWN
 				newPosX = posX+speed;
 	    		
 	    		if((newPosX+mapScale-speed)/mapScale<maze.getMatrix().length 
@@ -96,7 +96,7 @@ public class Player
 					) 
 					posX = newPosX;			
 				break;
-			case 3:
+			case 3: // LEFT
 
 				newPosY = posY-speed;
 				

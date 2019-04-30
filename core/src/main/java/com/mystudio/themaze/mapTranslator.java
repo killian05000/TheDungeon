@@ -22,12 +22,12 @@ public class mapTranslator
 	
 	public void translate()
 	{
-		int ym = 0;
-		int xm = 0;
+		int xM = 0;
+		int yM = 0;		
 
-		for(int y=tileSize/2; y<map.getHeight(); y+=tileSize)
+		for(int x=tileSize/2; x<map.getHeight(); x+=tileSize)
 		{
-			for(int x=tileSize/2; x<map.getWidth(); x+=tileSize)
+			for(int y=tileSize/2; y<map.getWidth(); y+=tileSize)
 			{
 				int pixel=map.getRGB(x,y);
 				int[] v = new int[3];
@@ -35,17 +35,17 @@ public class mapTranslator
 				v[1] = (pixel >> 8) & 0xff;
 				v[2] = pixel & 0xff;
 				
-				//System.out.println("["+x+","+y+"] : "+"("+v[0]+","+v[1]+","+v[2]+")");				
-				buildMatrix(v,xm,ym);
-				xm++;
+				System.out.println("["+x+","+y+"] : "+"("+v[0]+","+v[1]+","+v[2]+")");				
+				buildMatrix(v,xM,yM);
+				xM++;
 			}
-			xm=0;
-			ym++;
+			xM=0;
+			yM++;
 		}
-		displayMatrix();		
+		//displayMatrix();		
 	}
 	
-	public void buildMatrix(int[] p, int x, int y)
+	public void buildMatrix(int[] p, int x, int y) // (x = line,y = column)
 	{
 		if(p[0]==198 && p[1]==198 && p[2]==198) //ALLEYS
 			M[x][y] = 0;
@@ -67,16 +67,16 @@ public class mapTranslator
 	
 	public void displayMatrix()
 	{
-		for(int y=0; y<M.length; y+=1)
+		for(int x=0; x<M.length; x+=1)
 		{
-			for(int x=0; x<M[0].length; x+=1)
+			for(int y=0; y<M[0].length; y+=1)
 			{
 				System.out.print(M[x][y]+",");
 			}
 			System.out.println();
 		}
-		System.out.println("Height : "+M.length);
-		System.out.println("Width : "+M[0].length);
+		System.out.println("Width : "+M.length);
+		System.out.println("Height : "+M[0].length);
 	}
 	
 	public int[][] getMatrix()
