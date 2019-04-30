@@ -37,28 +37,8 @@ public class Enemy {
 		
 		int newPosX;
     	int newPosY;
-    	
-		/*if(Gdx.input.isKeyPressed(Keys.UP)) 
-		{
-			badpac = new Texture("badpacUp.png");
-			direction=0;
-		}
-    	if(Gdx.input.isKeyPressed(Keys.RIGHT))
-    	{
-    		badpac = new Texture("badpacRight.png");
-    		direction=1;
-    	}
-    	if(Gdx.input.isKeyPressed(Keys.DOWN))
-    	{
-    		badpac = new Texture("badpacDown.png");
-    		direction=2;
-    	}
-    	if(Gdx.input.isKeyPressed(Keys.LEFT))
-    	{
-    		badpac = new Texture("badpacLeft.png");
-    		direction=3;
-    	}
-    	*/
+		//System.out.println((int) (Math.random() * (4-0)));
+
     	switch(direction)
     	{
 			case 0:
@@ -70,7 +50,7 @@ public class Enemy {
 					)
 					posX =newPosX;
 				else
-					direction = 1;
+					direction = (int) (Math.random() * (4-0));
 				break;
 			case 1:
 				newPosY = posY+speed;
@@ -81,18 +61,18 @@ public class Enemy {
 					)
 					posY = newPosY;
 	    		else
-	    			direction = 2;
+	    			direction = (int) (Math.random() * (4-0));
 				break;
 			case 2:
 				newPosX = posX+speed;
 	    		
-	    		if(newPosX/mapScale<maze.getMatrix().length 
-					&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][posY/mapScale] == 0
-					&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][(posY+mapScale-speed)/mapScale] == 0
-					) 
-					posX = newPosX;
+				if((newPosX+mapScale-speed)/mapScale<maze.getMatrix().length 
+						&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][posY/mapScale] == 0
+						&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][(posY+mapScale-speed)/mapScale] == 0
+						) 
+						posX = newPosX;
 	    		else
-	    			direction = 3;
+	    			direction = (int) (Math.random() * (4-0));
 				break;
 			case 3:
 				newPosY = posY-speed;
@@ -103,7 +83,7 @@ public class Enemy {
 					) 
 					posY = newPosY;
 	    		else
-	    			direction = 0;
+	    			direction = (int) (Math.random() * (4-0));
 	    		break;		
 		}
 	}
@@ -112,8 +92,5 @@ public class Enemy {
 	{	
 		g.drawTexture(pacMove, posY, posX, mapScale, mapScale);
 	}
-	
-	
-	
 	
 }
