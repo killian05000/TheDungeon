@@ -16,8 +16,11 @@ public class mapTranslator
 	{
 		System.out.println(System.getProperties().get("user.dir"));
 		map = ImageIO.read(new File("../assets/"+path));
-		tileSize = 32;
+		tileSize = 30;
 		M = new int[map.getWidth()/tileSize][map.getHeight()/tileSize];
+		System.out.println(map.getWidth()/tileSize);
+		System.out.println(map.getHeight());
+		System.out.println(map.getWidth());
 	}
 	
 	public void translate()
@@ -35,7 +38,7 @@ public class mapTranslator
 				v[1] = (pixel >> 8) & 0xff;
 				v[2] = pixel & 0xff;
 				
-				System.out.println("["+x+","+y+"] : "+"("+v[0]+","+v[1]+","+v[2]+")");				
+				//System.out.println("["+x+","+y+"] : "+"("+v[0]+","+v[1]+","+v[2]+")");				
 				buildMatrix(v,xM,yM);
 				xM++;
 			}
