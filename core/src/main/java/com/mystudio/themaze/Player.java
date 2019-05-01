@@ -51,17 +51,17 @@ public class Player
 			badpac = new Texture("player/badpacUp.png");
 			direction=0;
 		}
-    	if(Gdx.input.isKeyPressed(Keys.RIGHT))
+		else if(Gdx.input.isKeyPressed(Keys.RIGHT))
     	{
     		badpac = new Texture("player/badpacRight.png");
     		direction=1;
     	}
-    	if(Gdx.input.isKeyPressed(Keys.DOWN))
+		else if(Gdx.input.isKeyPressed(Keys.DOWN))
     	{
     		badpac = new Texture("player/badpacDown.png");
     		direction=2;
     	}
-    	if(Gdx.input.isKeyPressed(Keys.LEFT))
+		else if(Gdx.input.isKeyPressed(Keys.LEFT))
     	{
     		badpac = new Texture("player/badpacLeft.png");
     		direction=3;
