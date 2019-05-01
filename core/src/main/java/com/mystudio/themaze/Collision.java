@@ -55,7 +55,7 @@ public class Collision {
 			{
 				player.addItem(items.get(i));
 				System.out.println(player.items.size());
-				items.remove(i);
+				//items.remove(i);
 				break;
 			}
 			
@@ -67,7 +67,7 @@ public class Collision {
 				{
 					player.addItem(items.get(i));
 					System.out.println(player.items.size());
-					items.remove(i);
+					//items.remove(i);
 					break;
 				}
 			
