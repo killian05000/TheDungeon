@@ -7,73 +7,49 @@ public class Collision {
 	ArrayList<Item> items;
 	int mapScale;
 	
-	public Collision(ArrayList<Item> items, Player player, int mapScale) 
+	/**
+	 * 
+	 * @param _items : maze items
+	 * @param _player : player instance
+	 * @param scale : tile size
+	 */
+	public Collision(ArrayList<Item> _items, Player _player, int scale) 
 	{
-		this.player = player;
-		this.items = items;
-		this.mapScale = mapScale;
+		player = _player;
+		items = _items;
+		mapScale = scale;
 	}
 	
-	public ArrayList<Item> verify() 
+	/**
+	 * Check if the player has collided with an object
+	 */
+	public void verify() 
 	{
 		for(int i=0; i<items.size(); i++) 
 		{
-			/*if(player.getPosX() == (items.get(i).getPixelX()) && player.getPosY() == (items.get(i).getPixelY())
-				|| player.getPosX() == (items.get(i).getPixelX()) && player.getPosY() == (items.get(i).getPixelY())
+			if(player.getPosX() + mapScale - player.getSpeed() >= items.get(i).getPosX() 
+				&& player.getPosY() >= items.get(i).getPosY()
+				&& player.getPosX() <= items.get(i).getPosX() + mapScale - player.getSpeed()
+				&& player.getPosY() <= items.get(i).getPosY() + mapScale - player.getSpeed()
 				) 
 			{
 				player.addItem(items.get(i));
-				items.remove(i);
-			}
-			
-			if(player.getPosX() == (items.get(i).getPixelX()) && (player.getPosY()+mapScale) == (items.get(i).getPixelY()+mapScale)) 
-			{
-				
-				player.addItem(items.get(i));
-				System.out.println(player.items.size());
-				items.remove(i);
-			}*/
-			/*
-			if(player.getPosX() == (items.get(i).getPixelX()) && player.getPosY() == (items.get(i).getPixelY())) 
-			{
-				player.addItem(items.get(i));
-				items.remove(i);
-			}
-			
-			if(player.getPosX() == (items.get(i).getPixelX()) && player.getPosY() == (items.get(i).getPixelY())) 
-			{
-				player.addItem(items.get(i));
-				items.remove(i);
-			}*/
-			
-			
-			if(player.getPosX()+mapScale-player.getSpeed()>=items.get(i).getPixelX() 
-				&& player.getPosY() >=items.get(i).getPixelY()
-				&& player.getPosX() <=items.get(i).getPixelX()+mapScale-player.getSpeed()
-				&& player.getPosY() <=items.get(i).getPixelY()+mapScale-player.getSpeed()
-				) 
-			{
-				player.addItem(items.get(i));
-				System.out.println(player.items.size());
+				System.out.println(player.getItems().size());
 				//items.remove(i);
 				break;
 			}
 			
-			if(player.getPosY()+mapScale-player.getSpeed()>=items.get(i).getPixelY() 
-					&& player.getPosX()+mapScale-player.getSpeed()>=items.get(i).getPixelX()
-					&& player.getPosY()+mapScale-player.getSpeed() <=items.get(i).getPixelY()+mapScale-player.getSpeed()
-					&& player.getPosX() <=items.get(i).getPixelX()+mapScale-player.getSpeed()
+			if(player.getPosY() + mapScale - player.getSpeed() >= items.get(i).getPosY() 
+					&& player.getPosX() + mapScale - player.getSpeed() >= items.get(i).getPosX()
+					&& player.getPosY() + mapScale - player.getSpeed() <= items.get(i).getPosY() + mapScale - player.getSpeed()
+					&& player.getPosX() <= items.get(i).getPosX() + mapScale - player.getSpeed()
 					) 
 				{
 					player.addItem(items.get(i));
-					System.out.println(player.items.size());
+					System.out.println(player.getItems().size());
 					//items.remove(i);
 					break;
-				}
-			
-			
+				}		
 		}
-		return items;
 	}
-
 }
