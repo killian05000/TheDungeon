@@ -1,0 +1,35 @@
+Jeudi 25/04:
+-Recherche et tentative d'installation de librairies graphiques pour
+jeux 2D
+
+Vendredi 26/04:
+-De nouveaux des recherches, avant de finalement s'arrêter sur mini2Dx
+-Mise en place de GitLab
+-Premier affichage de matrice carré blanc/noir
+
+Lundi 29/04:
+-Déplacement joueur
+-Création des objets
+-Recherche de addons graphique
+-Brainstorming sur comment abstraire au mieux la partie graphique et
+algorithmique, quelles bibliothèques, plan UML
+--> Choix de tout faire nous même avec une Image squelette qui sera interprété par le programme pour obtenir la matrice du labyrinthe. Puis la map joueur sur laquelle est basée l'image squellette est affiché.
+-Début création de la map graphique
+-Début du travail sur le convertisseur Image squelette->Matrice
+-Théorie sur un squelette complexe avec différents éléments : mur, sentier, téléporteur, enemy spawn, player spawn, exit door, exit
+ 
+
+Mardi 30/04:
+-Création des enemis
+-Déplacements aléatoire des enemis
+-Objets récupérable (via collision)
+-Convertisseur I->M finis et fonctionnel
+-Avancement sur la map graphique
+-Test de l'abastraction des classes
+
+Mercredi 31/04:
+-Fin de map
+-Améliorer le traducteur I->M
+-Rajout de la map dans le jeu
+-Pseudo player bag
+-Refactoring
