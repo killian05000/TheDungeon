@@ -8,86 +8,89 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Enemy {
 	
+	private Texture pacMove;
 	private int posX;
-	private int posY;
-	
-	private int defaultPostionX = 4;
-	private int defaultPositionY = 8;
-	
-	private int speed;//Multiple of mapScale
-	
-	private int mapScale;
-	
+	private int posY;	
+	private int speed=10;
 	private int direction;
 	
-	private Texture pacMove;
+	private int mapScale;	
 	
-	public Enemy(int defaultPostionX, int defaultPositionY, int mapScale)
+	/**
+	 * 
+	 * @param x : default x enemy's position
+	 * @param y : default y enemy's position
+	 * @param scale : tile size
+	 */
+	public Enemy(int x, int y, int scale)
 	{
-		posX = defaultPostionX*mapScale;
-		posY = defaultPositionY*mapScale;
-		pacMove = new Texture("pacMoveLeft.png");
-		speed = 10;
-		this.mapScale = mapScale;
-		direction = 0;
+		pacMove = new Texture("badGuy/pacMoveLeft.png");
+		mapScale = scale;
+		posX = x*mapScale;
+		posY = y*mapScale;		
 	}
 	
+	/**
+	 * Update the enemy direction randomly
+	 * @param maze : maze instance to check collisions with the walls and different fixed objects
+	 */
 	public  void  update (Maze maze) 
-	{ 
-		
+	{		
 		int newPosX;
     	int newPosY;
-		//System.out.println((int) (Math.random() * (4-0)));
 
     	switch(direction)
     	{
-			case 0:
-				newPosX= posX-speed;
-				
-				if(newPosX/mapScale>=0 
-					&& maze.getMatrix()[newPosX/mapScale][posY/mapScale] == 0
-					&& maze.getMatrix()[newPosX/mapScale][(posY+mapScale-speed)/mapScale] == 0
+			case 0: // UP
+				newPosX = posX - speed;				
+				if(newPosX >=0 
+					&& maze.getMatrix()[newPosX / mapScale][posY / mapScale] == 0
+					&& maze.getMatrix()[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0
 					)
-					posX =newPosX;
+					posX = newPosX;
 				else
-					direction = (int) (Math.random() * (4-0));
+					direction = (int)(Math.random() * (4-0));				
 				break;
-			case 1:
-				newPosY = posY+speed;
-	    		
-	    		if((newPosY+mapScale-speed)/mapScale<maze.getMatrix()[0].length 
-					&& maze.getMatrix()[posX/mapScale][(newPosY+mapScale-speed)/mapScale] == 0
-					&& maze.getMatrix()[(posX+mapScale-speed)/mapScale][(newPosY+mapScale-speed)/mapScale] == 0
+				
+			case 1: // RIGHT
+				newPosY = posY + speed;	    		
+	    		if((newPosY + mapScale - speed) / mapScale < maze.getMatrix()[0].length 
+					&& maze.getMatrix()[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
+					&& maze.getMatrix()[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
 					)
 					posY = newPosY;
 	    		else
-	    			direction = (int) (Math.random() * (4-0));
+	    			direction = (int)(Math.random() * (4-0));
 				break;
-			case 2:
-				newPosX = posX+speed;
-	    		
-				if((newPosX+mapScale-speed)/mapScale<maze.getMatrix().length 
-						&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][posY/mapScale] == 0
-						&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][(posY+mapScale-speed)/mapScale] == 0
+				
+			case 2: // DOWN
+				newPosX = posX + speed;	    		
+				if((newPosX + mapScale - speed) / mapScale < maze.getMatrix().length 
+						&& maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
+						&& maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0
 						) 
 						posX = newPosX;
 	    		else
-	    			direction = (int) (Math.random() * (4-0));
+	    			direction = (int)(Math.random() * (4-0));
 				break;
-			case 3:
-				newPosY = posY-speed;
 				
-	    		if(newPosY>=0 
-					&& maze.getMatrix()[posX/mapScale][newPosY/mapScale] == 0
-					&& maze.getMatrix()[(posX+mapScale-speed)/mapScale][newPosY/mapScale] == 0
+			case 3: // LEFT
+				newPosY = posY - speed;				
+	    		if(newPosY >= 0 
+					&& maze.getMatrix()[posX / mapScale][newPosY / mapScale] == 0
+					&& maze.getMatrix()[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0
 					) 
 					posY = newPosY;
 	    		else
-	    			direction = (int) (Math.random() * (4-0));
+	    			direction = (int)(Math.random() * (4-0));
 	    		break;		
 		}
 	}
 	
+	/**
+	 * render the enemy sprite
+	 * @param g
+	 */
 	public void render(Graphics g) 
 	{	
 		g.drawTexture(pacMove, posY, posX, mapScale, mapScale);

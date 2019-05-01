@@ -1,10 +1,6 @@
 package com.mystudio.themaze;
 
-import org.mini2Dx.core.collisions.PointQuadTree;
-import org.mini2Dx.core.collisions.QuadTree;
-import org.mini2Dx.core.engine.geom.CollisionPoint;
 import org.mini2Dx.core.graphics.Graphics;
-
 import com.badlogic.gdx.graphics.Texture;
 
 public class Item 
@@ -15,13 +11,20 @@ public class Item
 	
 	int mapScale;
 
-	public Item(int x, int y, int mapScale, String path)
+	/**
+	 * 
+	 * @param x : default x item's position
+	 * @param y : default y item's position
+	 * @param scale : tile size
+	 * @param path : sprite path
+	 */
+	public Item(int x, int y, int scale, String path)
 	{
-		posX = x;
-		posY = y;
 		sprite = new Texture(path);
+		posX = x*scale;
+		posY = y*scale;
 
-		this.mapScale = mapScale;
+		this.mapScale = scale;
 	}
 	
 	public void update()
@@ -29,29 +32,33 @@ public class Item
 		
 	}
 	
+	/**
+	 * Render the item sprite
+	 * @param g
+	 */
 	public void render(Graphics g) 
 	{	
-		g.drawTexture(sprite, posY*mapScale, posX*mapScale, mapScale, mapScale);
+		g.drawTexture(sprite, posY, posX, mapScale, mapScale);
 	}
 	
 	
-	public int getPixelX() 
+	public int getPosX() 
 	{
-		return posX*mapScale;
+		return posX;
 	}
 	
-	public int getPixelY() 
+	public int getPosY() 
 	{
-		return posY*mapScale;
+		return posY;
 	}
 	
 	public void setPosX(int x)
 	{
-		posX=x;
+		posX = x;
 	}
 	
 	public void setPosY(int y)
 	{
-		posY=y;
+		posY = y;
 	}
 }

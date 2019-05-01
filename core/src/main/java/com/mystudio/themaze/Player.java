@@ -11,107 +11,120 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 
 public class Player 
 {
+	private Texture badpac;	
 	private int posX;
 	private int posY;
-
-	private int speed;//Multiple of mapScale	
-	private int mapScale;	
+	private int speed = 5;
 	private int direction;	
-	public ArrayList<Item> items;	
-	private Texture badpac;
 	
-	private int itemPos=0;
+	private int mapScale;	
 
-	public Player(int defaultPostionX, int defaultPositionY, int mapScale) 
+	private ArrayList<Item> items;	
+	private int itemPos = 0;
+
+	/**
+	 * @param x : default x player's position
+	 * @param y : default y player's position
+	 * @param scale : tile size
+	 */
+	public Player(int x, int y, int scale) 
 	{
-		posX = defaultPostionX*mapScale;
-		posY = defaultPositionY*mapScale;
-		badpac = new Texture("badpacLeft.png");
-		speed = 5;
-		direction =-1;
-		this.mapScale = mapScale;
+		badpac = new Texture("player/badpacLeft.png");
+		mapScale = scale;
+		posX = x*mapScale;
+		posY = y*mapScale;
+				
 		items = new ArrayList<Item>();
 	}
+	
 	/**
-	 * Update the direction
+	 * Update the player direction and the player movements according to the user input
+	 * @param maze : maze instance to check collisions with the walls and different fixed objects
 	 */
-	public  void  update (Maze maze) { // update the player direction according to the user input
-		
+	public  void  update (Maze maze) 
+	{		
 		int newPosX;
     	int newPosY;
     	
 		if(Gdx.input.isKeyPressed(Keys.UP)) 
 		{
-			badpac = new Texture("badpacUp.png");
+			badpac = new Texture("player/badpacUp.png");
 			direction=0;
 		}
     	if(Gdx.input.isKeyPressed(Keys.RIGHT))
     	{
-    		badpac = new Texture("badpacRight.png");
+    		badpac = new Texture("player/badpacRight.png");
     		direction=1;
     	}
     	if(Gdx.input.isKeyPressed(Keys.DOWN))
     	{
-    		badpac = new Texture("badpacDown.png");
+    		badpac = new Texture("player/badpacDown.png");
     		direction=2;
     	}
     	if(Gdx.input.isKeyPressed(Keys.LEFT))
     	{
-    		badpac = new Texture("badpacLeft.png");
+    		badpac = new Texture("player/badpacLeft.png");
     		direction=3;
     	}
     	
     	switch(direction)
     	{
 			case 0: // UP
-				newPosX= posX-speed;
-				
-				if(newPosX>=0 
-					&& maze.getMatrix()[newPosX/mapScale][posY/mapScale] == 0
-					&& maze.getMatrix()[newPosX/mapScale][(posY+mapScale-speed)/mapScale] == 0
+				newPosX = posX - speed;				
+				if(newPosX >= 0 
+					&& maze.getMatrix()[newPosX / mapScale][posY / mapScale] == 0
+					&& maze.getMatrix()[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0
 					)
-					posX =newPosX;
-				//System.out.println(posX);
+					posX = newPosX;
 				break;
+				
 			case 1: // RIGHT
-				newPosY = posY+speed;
-	    		
-	    		if((newPosY+mapScale-speed)/mapScale<maze.getMatrix()[0].length 
-					&& maze.getMatrix()[posX/mapScale][(newPosY+mapScale-speed)/mapScale] == 0
-					&& maze.getMatrix()[(posX+mapScale-speed)/mapScale][(newPosY+mapScale-speed)/mapScale] == 0
+				newPosY = posY + speed;	    		
+	    		if((newPosY + mapScale - speed) / mapScale < maze.getMatrix()[0].length 
+					&& maze.getMatrix()[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
+					&& maze.getMatrix()[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
 					)
 					posY = newPosY;
+	    		break;
 	    		
-				//System.out.println(posY);
-				break;
 			case 2: // DOWN
-				newPosX = posX+speed;
-	    		
-	    		if((newPosX+mapScale-speed)/mapScale<maze.getMatrix().length 
-					&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][posY/mapScale] == 0
-					&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][(posY+mapScale-speed)/mapScale] == 0
+				newPosX = posX + speed;	    		
+	    		if((newPosX + mapScale - speed) / mapScale < maze.getMatrix().length 
+					&& maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
+					&& maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0
 					) 
 					posX = newPosX;		
-	    		//System.out.println(posX);
 				break;
-			case 3: // LEFT
-
-				newPosY = posY-speed;
 				
-	    		if(newPosY>=0 
-					&& maze.getMatrix()[posX/mapScale][newPosY/mapScale] == 0
-					&& maze.getMatrix()[(posX+mapScale-speed)/mapScale][newPosY/mapScale] == 0
+			case 3: // LEFT
+				newPosY = posY - speed;				
+	    		if(newPosY >= 0 
+					&& maze.getMatrix()[posX / mapScale][newPosY / mapScale] == 0
+					&& maze.getMatrix()[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0
 					) 
 					posY = newPosY;
-	    		//System.out.println(posY);
 	    		break;		
 		}
 	}
 	
-	
+	/**
+	 * Render the player sprite
+	 * @param g
+	 */
 	public void render(Graphics g) 
 	{	
 		g.drawTexture(badpac, posY, posX, mapScale, mapScale);
+	}
+	
+	/**
+	 * Add an item to the player bag
+	 * @param item : item instance
+	 */
+	public void addItem(Item item) {
+		items.add(item);
+		item.setPosX(0);
+		item.setPosY(itemPos*mapScale);
+		itemPos++;
 	}
 
 	public int getSpeed() {
@@ -128,11 +141,9 @@ public class Player
 		return posY;
 	}
 	
-	public void addItem(Item item) {
-		items.add(item);
-		item.setPosX(0);
-		item.setPosY(itemPos);
-		itemPos++;
+	public ArrayList<Item> getItems()
+	{
+		return items;
 	}
 	
 }

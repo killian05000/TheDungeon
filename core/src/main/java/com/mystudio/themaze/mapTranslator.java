@@ -91,6 +91,8 @@ public class mapTranslator
 	 */
 	public void displayMatrix()
 	{
+		//System.out.println("Height : "+matrix.length);
+		//System.out.println("Width : "+matrix[0].length);
 		for(int x=0; x<matrix.length; x+=1)
 		{
 			for(int y=0; y<matrix[0].length; y+=1)
@@ -99,8 +101,6 @@ public class mapTranslator
 			}
 			System.out.println();
 		}
-		System.out.println("Width : "+matrix.length);
-		System.out.println("Height : "+matrix[0].length);
 	}
 	
 	public int[][] getMatrix()
