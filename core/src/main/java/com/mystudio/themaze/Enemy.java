@@ -22,7 +22,7 @@ public class Enemy {
 	
 	private Texture pacMove;
 	
-	public Enemy(int mapScale)
+	public Enemy(int defaultPostionX, int defaultPositionY, int mapScale)
 	{
 		posX = defaultPostionX*mapScale;
 		posY = defaultPositionY*mapScale;
