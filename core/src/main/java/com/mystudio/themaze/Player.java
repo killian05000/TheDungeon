@@ -13,20 +13,14 @@ public class Player
 {
 	private int posX;
 	private int posY;
-	
-	//private int defaultPostionX = 8;
-	//private int defaultPositionY = 5;
-	
-	
-	private int speed;//Multiple of mapScale
-	
-	private int mapScale;
-	
-	private int direction;
-	
-	public ArrayList<Item> items;
-	
+
+	private int speed;//Multiple of mapScale	
+	private int mapScale;	
+	private int direction;	
+	public ArrayList<Item> items;	
 	private Texture badpac;
+	
+	private int itemPos=0;
 
 	public Player(int defaultPostionX, int defaultPositionY, int mapScale) 
 	{
@@ -72,11 +66,12 @@ public class Player
 			case 0: // UP
 				newPosX= posX-speed;
 				
-				if(newPosX/mapScale>=0 
+				if(newPosX>=0 
 					&& maze.getMatrix()[newPosX/mapScale][posY/mapScale] == 0
 					&& maze.getMatrix()[newPosX/mapScale][(posY+mapScale-speed)/mapScale] == 0
 					)
 					posX =newPosX;
+				//System.out.println(posX);
 				break;
 			case 1: // RIGHT
 				newPosY = posY+speed;
@@ -86,6 +81,8 @@ public class Player
 					&& maze.getMatrix()[(posX+mapScale-speed)/mapScale][(newPosY+mapScale-speed)/mapScale] == 0
 					)
 					posY = newPosY;
+	    		
+				//System.out.println(posY);
 				break;
 			case 2: // DOWN
 				newPosX = posX+speed;
@@ -94,7 +91,8 @@ public class Player
 					&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][posY/mapScale] == 0
 					&& maze.getMatrix()[(newPosX+mapScale-speed)/mapScale][(posY+mapScale-speed)/mapScale] == 0
 					) 
-					posX = newPosX;			
+					posX = newPosX;		
+	    		//System.out.println(posX);
 				break;
 			case 3: // LEFT
 
@@ -105,6 +103,7 @@ public class Player
 					&& maze.getMatrix()[(posX+mapScale-speed)/mapScale][newPosY/mapScale] == 0
 					) 
 					posY = newPosY;
+	    		//System.out.println(posY);
 	    		break;		
 		}
 	}
@@ -131,6 +130,9 @@ public class Player
 	
 	public void addItem(Item item) {
 		items.add(item);
+		item.setPosX(0);
+		item.setPosY(itemPos);
+		itemPos++;
 	}
 	
 }
