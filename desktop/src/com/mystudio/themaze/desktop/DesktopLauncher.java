@@ -12,8 +12,8 @@ public class DesktopLauncher {
 	{
 		DesktopMini2DxConfig cfg = new DesktopMini2DxConfig(Game.GAME_IDENTIFIER);
 		cfg.title = "The Maze";
-		cfg.width = 900;
-		cfg.height = 900;
+		cfg.width = 1024;
+		cfg.height = 736;
 		cfg.vSyncEnabled = true;
 		new DesktopMini2DxGame(new Game(), cfg);
 	}
