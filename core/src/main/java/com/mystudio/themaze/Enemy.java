@@ -96,4 +96,14 @@ public class Enemy {
 		g.drawTexture(pacMove, posY, posX, mapScale, mapScale);
 	}
 	
+	public int getPosX()
+	{
+		return posX;
+	}
+	
+	public int getPosY()
+	{
+		return posY;
+	}
+	
 }
