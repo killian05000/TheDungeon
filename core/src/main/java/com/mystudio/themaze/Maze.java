@@ -103,7 +103,7 @@ public class Maze
 			rand = (int)(Math.random() * (4-0));
 			newX = teleporters.get(rand).get(0);
 			newY = teleporters.get(rand).get(1);
-			System.out.println("new teleporter : "+newX+" / "+newY+" and old teleporter "+x+" / "+y);
+			System.out.println("new X / new Y : "+newX+" / "+newY+" from x / y "+x+" / "+y);
 		} while (teleporters.get(rand).get(0) == x && teleporters.get(rand).get(1) == y );
 		int[] newPos = {newX,newY};
 		return newPos;
