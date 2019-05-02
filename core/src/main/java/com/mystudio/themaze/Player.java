@@ -19,7 +19,7 @@ public class Player
 	
 	private int mapScale;	
 
-	private ArrayList<Item> items;	
+	private ArrayList<Item> bag;	
 	private int itemPos = 0;
 
 	/**
@@ -34,7 +34,7 @@ public class Player
 		posX = x*mapScale;
 		posY = y*mapScale;
 				
-		items = new ArrayList<Item>();
+		bag = new ArrayList<Item>();
 	}
 	
 	/**
@@ -51,17 +51,17 @@ public class Player
 			badpac = new Texture("player/badpacUp.png");
 			direction=0;
 		}
-		else if(Gdx.input.isKeyPressed(Keys.RIGHT))
+		if(Gdx.input.isKeyPressed(Keys.RIGHT))
     	{
     		badpac = new Texture("player/badpacRight.png");
     		direction=1;
     	}
-		else if(Gdx.input.isKeyPressed(Keys.DOWN))
+		if(Gdx.input.isKeyPressed(Keys.DOWN))
     	{
     		badpac = new Texture("player/badpacDown.png");
     		direction=2;
     	}
-		else if(Gdx.input.isKeyPressed(Keys.LEFT))
+		if(Gdx.input.isKeyPressed(Keys.LEFT))
     	{
     		badpac = new Texture("player/badpacLeft.png");
     		direction=3;
@@ -108,24 +108,24 @@ public class Player
 	}
 	
 	/**
+	 * Add an item to the player bag
+	 * @param item : item instance
+	 */
+	public void addItem(Item item) {
+		bag.add(item);
+		item.setPosX(0);
+		item.setPosY(itemPos*mapScale);
+		itemPos++;
+	}
+	
+	/**
 	 * Render the player sprite
 	 * @param g
 	 */
 	public void render(Graphics g) 
 	{	
 		g.drawTexture(badpac, posY, posX, mapScale, mapScale);
-	}
-	
-	/**
-	 * Add an item to the player bag
-	 * @param item : item instance
-	 */
-	public void addItem(Item item) {
-		items.add(item);
-		item.setPosX(0);
-		item.setPosY(itemPos*mapScale);
-		itemPos++;
-	}
+	}	
 
 	public int getSpeed() {
 		return speed;
@@ -141,9 +141,9 @@ public class Player
 		return posY;
 	}
 	
-	public ArrayList<Item> getItems()
+	public ArrayList<Item> getBag()
 	{
-		return items;
+		return bag;
 	}
 	
 }
