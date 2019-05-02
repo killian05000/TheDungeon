@@ -13,6 +13,7 @@ public class Maze
 	private int [][] matrix;
 	private ArrayList<Integer> playerSpawn;
 	private ArrayList<ArrayList<Integer>> enemiesSpawn;	
+	private ArrayList<ArrayList<Integer>> teleporters;
 	private ArrayList<Item> items;
 	
 	/**
@@ -20,19 +21,20 @@ public class Maze
 	 * @param map : the mapTranslator object containing the game matrix
 	 * @param player : player instance
 	 */
-	public Maze(mapTranslator map, Player player)
+	public Maze(mapTranslator map)
 	{
 		matrix = new int[map.getMatrix().length][map.getMatrix()[0].length];
 		matrix = map.getMatrix();
 		
-		
 		playerSpawn = new ArrayList<Integer>();
 		enemiesSpawn = new ArrayList<ArrayList<Integer>>();
+		teleporters = new ArrayList<ArrayList<Integer>>();
 		items = new ArrayList<Item>();
 		
 		mapScale = map.getTileSize();
 		initialiseDefaultPositionPlayer();
 		initialiseDefaultPositionEnemy();
+		initialiseTeleporterPosition();
 	}
 	
 	/**
@@ -71,6 +73,40 @@ public class Maze
 				}
 			}	
 		}		
+	}
+	
+	private void initialiseTeleporterPosition() 
+	{
+		for (int i=0; i<matrix.length; i++)
+		{
+			for (int j=0; j<matrix[0].length; j++) 
+			{
+				if(matrix[i][j]==9) 
+				{
+					ArrayList<Integer> pos = new ArrayList<Integer>();
+					pos.add(i);
+					pos.add(j);
+					teleporters.add(pos);
+				}
+			}	
+		}		
+	}
+	
+	public int[] teleportPlayer(int x, int y)
+	{
+		System.out.println("TELEPORT !!!!!!");
+		int rand = 0;
+		int newX = 0;
+		int newY = 0;
+		do 
+		{
+			rand = (int)(Math.random() * (4-0));
+			newX = teleporters.get(rand).get(0);
+			newY = teleporters.get(rand).get(1);
+			System.out.println("new teleporter : "+newX+" / "+newY+" and old teleporter "+x+" / "+y);
+		} while (teleporters.get(rand).get(0) == x && teleporters.get(rand).get(1) == y );
+		int[] newPos = {newX,newY};
+		return newPos;
 	}
 	
 	/**
@@ -152,7 +188,7 @@ public class Maze
 	{
 		items.add(item);
 	}
-	
+
 	public int[][] getMatrix() 
 	{
 		return matrix;
