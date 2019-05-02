@@ -94,7 +94,7 @@ public class Player
 					if(topLeft == 9 && topRight == 9)
 		    		{
 						//posY = newPosY;
-						int[] newPos = maze.teleportPlayer(newPosX / mapScale, posY / mapScale);
+						int[] newPos = maze.teleportPlayer(newPosX  / mapScale, posY / mapScale);
 						posX = newPos[0]*mapScale;
 						posY = newPos[1]*mapScale;
 		    		}
@@ -113,7 +113,7 @@ public class Player
 		    		if(topRight == 9 && botRight == 9)
 		    		{
 						//posY = newPosY;
-						int[] newPos = maze.teleportPlayer(posX / mapScale, newPosY / mapScale);
+						int[] newPos = maze.teleportPlayer(posX / mapScale, (newPosY+mapScale) / mapScale);
 						posX = newPos[0]*mapScale;
 						posY = newPos[1]*mapScale;
 		    		}
@@ -132,7 +132,7 @@ public class Player
 		    		if(botLeft == 9 && botRight == 9)
 		    		{
 						//posY = newPosY;
-						int[] newPos = maze.teleportPlayer(newPosX / mapScale, posY / mapScale);
+						int[] newPos = maze.teleportPlayer((newPosX+mapScale) / mapScale, posY / mapScale);
 						posX = newPos[0]*mapScale;
 						posY = newPos[1]*mapScale;
 		    		}
