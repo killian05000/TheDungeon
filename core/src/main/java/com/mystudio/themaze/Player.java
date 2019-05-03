@@ -66,14 +66,7 @@ public class Player
 				topLeft = maze.getMatrix()[newPosX / mapScale][posY / mapScale];
 				topRight = maze.getMatrix()[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
 				
-				if(topLeft == 0 && topRight == 0)
-				{
-					//posX = newPosX;
-					badpac = new Texture("player/badpacUp.png");
-					direction = 0;
-				}
-				else
-					nextDirection = 0;
+				setDir(topLeft, topRight, 0);
 			}
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.RIGHT))
@@ -85,14 +78,7 @@ public class Player
 				topRight = maze.getMatrix()[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
 				botRight = maze.getMatrix()[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
 				
-	    		if(topRight == 0 && botRight == 0)
-	    		{
-					//posY = newPosY;
-		    		badpac = new Texture("player/badpacRight.png");
-					direction = 1;
-	    		}
-	    		else
-	    			nextDirection=1;
+	    		setDir(topRight, botRight, 1);
 			}
     	}
 		if(Gdx.input.isKeyJustPressed(Keys.DOWN))
@@ -103,14 +89,7 @@ public class Player
 				botLeft = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
 				botRight = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
 					
-	    		if(botLeft == 0 && botRight == 0)
-	    		{
-					//posX = newPosX;	
-		    		badpac = new Texture("player/badpacDown.png");
-					direction = 2;
-	    		}
-	    		else
-	    			nextDirection=2;
+	    		setDir(botLeft, botRight, 2);
 			}
     	}
 		if(Gdx.input.isKeyJustPressed(Keys.LEFT))
@@ -121,20 +100,14 @@ public class Player
 				topLeft = maze.getMatrix()[posX / mapScale][newPosY / mapScale];
 				botLeft = maze.getMatrix()[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
 				
-	    		if(topLeft == 0 && botLeft == 0)
-	    		{
-					//posY = newPosY;	
-		    		badpac = new Texture("player/badpacLeft.png");
-		    		direction = 3;
-	    		}
-	    		else
-	    			nextDirection=3;
+	    		setDir(topLeft, botLeft, 3);
 			}
     	}
 		if(Gdx.input.isKeyJustPressed(Keys.A))
     	{
     		throwItem();
     	}
+
 	
     	switch(direction)
     	{
@@ -145,25 +118,7 @@ public class Player
 					topLeft = maze.getMatrix()[newPosX / mapScale][posY / mapScale];
 					topRight = maze.getMatrix()[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
 					
-					if(topLeft == 0 && topRight == 0)
-					{
-						posX = newPosX;
-					}					
-					else if(topLeft == 5 && topRight == 5 && bag.size()==3)
-					{
-						posX = newPosX;
-					}
-					else if(topLeft == 6 && topRight == 6)
-		    		{
-						posX = newPosX;
-			    		escape=true;
-		    		}
-					else if(topLeft == 9 && topRight == 9)
-		    		{
-						int[] newPos = maze.teleportPlayer(newPosX  / mapScale, posY / mapScale);
-						posX = newPos[0]*mapScale;
-						posY = newPos[1]*mapScale;
-		    		}
+					move(topLeft, topRight, newPosX, 0, maze);
 				}
 				break;
 				
@@ -174,26 +129,7 @@ public class Player
 					topRight = maze.getMatrix()[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
 					botRight = maze.getMatrix()[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
 					
-		    		if(topRight == 0 && botRight == 0)
-		    		{
-						posY = newPosY;
-		    		}
-		    		
-		    		else if(topRight == 5 && botRight == 5 && bag.size()==3)
-		    		{
-						posY = newPosY;
-		    		}
-		    		else if(topRight == 6 && botRight == 6)
-		    		{
-						posY = newPosY;
-			    		escape=true;
-		    		}
-		    		else if(topRight == 9 && botRight == 9)
-		    		{
-						int[] newPos = maze.teleportPlayer(posX / mapScale, (newPosY+mapScale) / mapScale);
-						posX = newPos[0]*mapScale;
-						posY = newPos[1]*mapScale;
-		    		}
+		    		move(topRight, botRight, newPosY, 1, maze);
 				}
 	    		break;
 	    		
@@ -204,25 +140,7 @@ public class Player
 					botLeft = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
 					botRight = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
 					
-		    		if(botLeft == 0 && botRight == 0)
-		    		{
-						posX = newPosX;	
-		    		}
-		    		else if(botLeft == 5 && botRight == 5 && bag.size()==3)
-		    		{
-						posX = newPosX;	
-		    		}
-		    		else if(botLeft == 6 && botRight == 6)
-		    		{
-						posX = newPosX;
-			    		escape=true;
-		    		}
-		    		else if(botLeft == 9 && botRight == 9)
-		    		{
-						int[] newPos = maze.teleportPlayer((newPosX+mapScale) / mapScale, posY / mapScale);
-						posX = newPos[0]*mapScale;
-						posY = newPos[1]*mapScale;
-		    		}
+		    		move(botLeft, botRight, newPosX, 2, maze);
 				}
 				break;
 				
@@ -233,25 +151,7 @@ public class Player
 					topLeft = maze.getMatrix()[posX / mapScale][newPosY / mapScale];
 					botLeft = maze.getMatrix()[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
 					
-		    		if(topLeft == 0 && botLeft == 0)
-		    		{
-						posY = newPosY;
-		    		}		    		
-		    		else if(topLeft == 5 && botLeft == 5 && bag.size()==3)
-		    		{
-						posY = newPosY;
-		    		}
-		    		else if(topLeft == 6 && botLeft == 6)
-		    		{
-						posY = newPosY;
-			    		escape=true;
-		    		}
-		    		else if(topLeft == 9 && botLeft == 9)
-		    		{
-						int[] newPos = maze.teleportPlayer(posX / mapScale, newPosY / mapScale);
-						posX = newPos[0]*mapScale;
-						posY = newPos[1]*mapScale;
-		    		}
+		    		move(topLeft, botLeft, newPosY, 3, maze);
 				}
 	    		
 	    		break;		
@@ -267,12 +167,7 @@ public class Player
 					topLeft = maze.getMatrix()[newPosX / mapScale][posY / mapScale];
 					topRight = maze.getMatrix()[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
 					
-					if(topLeft == 0 && topRight == 0)
-					{
-						direction = nextDirection;
-						badpac = new Texture("player/badpacUp.png");
-						nextDirection=-1;
-					}
+					setNextDir(topLeft, topRight, 0);
 				}
 	    	}
 	    	else if(nextDirection == 1)
@@ -284,12 +179,7 @@ public class Player
 					topRight = maze.getMatrix()[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
 					botRight = maze.getMatrix()[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
 					
-		    		if(topRight == 0 && botRight == 0)
-		    		{
-						direction = nextDirection;
-			    		badpac = new Texture("player/badpacRight.png");
-						nextDirection = -1;
-		    		}
+		    		setNextDir(topRight, botRight, 1);
 				}
 	    	}
 	    	else if(nextDirection == 2)
@@ -300,12 +190,7 @@ public class Player
 					botLeft = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
 					botRight = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
 						
-		    		if(botLeft == 0 && botRight == 0)
-		    		{
-						direction = nextDirection;
-						badpac = new Texture("player/badpacDown.png");
-						nextDirection = -1;
-		    		}
+		    		setNextDir(botLeft, botRight, 2);
 				}
 	    	}
 	    	else if(nextDirection == 3)
@@ -316,15 +201,154 @@ public class Player
 					topLeft = maze.getMatrix()[posX / mapScale][newPosY / mapScale];
 					botLeft = maze.getMatrix()[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
 					
-		    		if(topLeft == 0 && botLeft == 0)
-		    		{
-			    		direction = nextDirection;
-			    		badpac = new Texture("player/badpacLeft.png");
-			    		nextDirection = -1;
-		    		}
+		    		setNextDir(topLeft, botLeft, 3);
 				}
 	    	}
     	}
+	}
+	
+	public void move(int corner1, int corner2, int newPos, int dir, Maze maze)
+	{
+		if(dir == 0 || dir == 2)
+		{
+			if(corner1 == 0 && corner2 == 0)
+			{
+				posX = newPos;
+			}		    		
+			else if(corner1 == 5 && corner2 == 5 && bag.size()==3)
+			{
+				posX = newPos;
+			}
+			else if(corner1 == 6 && corner2 == 6)
+			{
+				posX = newPos;
+	    		escape=true;
+			}
+		}
+		else if( dir == 1 || dir == 3)
+		{
+			if(corner1 == 0 && corner2 == 0)
+			{
+				posY = newPos;
+			}		    		
+			else if(corner1 == 5 && corner2 == 5 && bag.size()==3)
+			{
+				posY = newPos;
+			}
+			else if(corner1 == 6 && corner2 == 6)
+			{
+				posY = newPos;
+	    		escape=true;
+			}
+		}
+		
+		if(corner1 == 9 && corner2 == 9)
+		{
+			if(dir == 0)
+			{
+				int[] newTabPos = maze.teleportPlayer(newPos  / mapScale, posY / mapScale);
+				posX = newTabPos[0]*mapScale;
+				posY = newTabPos[1]*mapScale;
+			}
+			else if(dir == 1)
+			{
+				int[] newTabPos = maze.teleportPlayer(posX / mapScale, (newPos+mapScale) / mapScale);
+				posX = newTabPos[0]*mapScale;
+				posY = newTabPos[1]*mapScale;
+			}
+			else if(dir == 2)
+			{
+				int[] newTabPos = maze.teleportPlayer((newPos+mapScale) / mapScale, posY / mapScale);
+				posX = newTabPos[0]*mapScale;
+				posY = newTabPos[1]*mapScale;
+			}
+			else if(dir == 3)
+			{
+				int[] newTabPos = maze.teleportPlayer(posX / mapScale, newPos / mapScale);
+				posX = newTabPos[0]*mapScale;
+				posY = newTabPos[1]*mapScale;
+			}
+		}
+	}
+	
+	public void setDir(int corner1, int corner2, int dir)
+	{
+		String spritePath = "";
+		if(dir == 0)
+			spritePath = "player/badpacUp.png";
+		else if(dir == 1)
+			spritePath = "player/badPacRight.png";
+		else if(dir == 2)
+			spritePath = "player/badpacDown.png";
+		else if(dir == 3)
+			spritePath = "player/badpacLeft.png";
+		
+		if(corner1 == 0 && corner2 == 0)
+		{
+			direction = dir;
+			badpac = new Texture(spritePath);
+			nextDirection=-1;
+			
+		}
+		else if(corner1 == 5 && corner2 == 5)
+		{
+			direction = dir;
+			badpac = new Texture(spritePath);
+			nextDirection=-1;
+		}
+		else if(corner1 == 6 && corner2 == 6)
+		{
+			direction = dir;
+			badpac = new Texture(spritePath);
+			nextDirection=-1;
+		}
+		else if(corner1 == 9 && corner2 == 9)
+		{
+			direction = dir;
+			badpac = new Texture(spritePath);
+			nextDirection=-1;
+		}
+		else
+			nextDirection = dir;
+	}
+	
+	public void setNextDir(int corner1, int corner2, int dir)
+	{
+		String spritePath = "";
+		if(dir == 0)
+			spritePath = "player/badpacUp.png";
+		else if(dir == 1)
+			spritePath = "player/badPacRight.png";
+		else if(dir == 2)
+			spritePath = "player/badpacDown.png";
+		else if(dir == 3)
+			spritePath = "player/badpacLeft.png";
+		
+		
+		if(corner1 == 0 && corner2 == 0)
+		{
+			direction = nextDirection;
+			badpac = new Texture(spritePath);
+			nextDirection=-1;
+		}
+		else if(corner1 == 5 && corner2 == 5)
+		{
+			direction = nextDirection;
+			badpac = new Texture(spritePath);
+			nextDirection=-1;
+		}
+		else if(corner1 == 6 && corner2 == 6)
+		{
+			direction = nextDirection;
+			badpac = new Texture(spritePath);
+			nextDirection=-1;
+		}
+		else if(corner1 == 9 && corner2 == 9)
+		{
+			direction = nextDirection;
+			badpac = new Texture(spritePath);
+			nextDirection=-1; 
+		}			
 	}
 	
 	/**
