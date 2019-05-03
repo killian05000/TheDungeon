@@ -40,7 +40,8 @@ public class Game extends BasicGame {
     	{
 	    	player.update(maze);
 	    	for(int i=0; i<enemies.size(); i++)
-				enemies.get(i).update(maze);
+	    		if(enemies.get(i).getAlive())
+	    			enemies.get(i).update(maze);
 	    	collision.verify();    
 	    	collision.verifyEnemy();
     	}
@@ -62,7 +63,8 @@ public class Game extends BasicGame {
 		player.render(g);
 		maze.displayItems(g);
 		for(int i=0; i<enemies.size(); i++)
-			enemies.get(i).render(g);
+			if(enemies.get(i).getAlive())
+				enemies.get(i).render(g);
 		
 		maze.displayUserMapSecondLayer(g, player);			
     }	
