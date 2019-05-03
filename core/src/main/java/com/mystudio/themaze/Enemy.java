@@ -1,5 +1,7 @@
 package com.mystudio.themaze;
 
+import java.util.ArrayList;
+
 import org.mini2Dx.core.graphics.Graphics;
 
 import com.badlogic.gdx.Gdx;
@@ -9,10 +11,12 @@ import com.badlogic.gdx.graphics.Texture;
 public class Enemy {
 	
 	private Texture pacMove;
+	private ArrayList<Texture> textures;
 	private int posX;
 	private int posY;	
-	private int speed=10;
+	private int speed=5;
 	private int direction;
+	private boolean alive=true;
 	
 	private int mapScale;	
 	
@@ -28,6 +32,12 @@ public class Enemy {
 		mapScale = scale;
 		posX = x*mapScale;
 		posY = y*mapScale;		
+		
+		textures = new ArrayList<Texture>();
+		textures.add(new Texture("badGuy/pacMoveUp.png"));
+		textures.add(new Texture("badGuy/pacMoveRight.png"));
+		textures.add(new Texture("badGuy/pacMoveDown.png"));
+		textures.add(new Texture("badGuy/pacMoveLeft.png"));
 	}
 	
 	/**
@@ -47,7 +57,10 @@ public class Enemy {
 					&& maze.getMatrix()[newPosX / mapScale][posY / mapScale] == 0
 					&& maze.getMatrix()[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0
 					)
+				{
 					posX = newPosX;
+					pacMove = textures.get(direction);
+				}
 				else
 					direction = (int)(Math.random() * (4-0));				
 				break;
@@ -58,7 +71,10 @@ public class Enemy {
 					&& maze.getMatrix()[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
 					&& maze.getMatrix()[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
 					)
+	    		{
 					posY = newPosY;
+					pacMove = textures.get(direction);
+	    		}
 	    		else
 	    			direction = (int)(Math.random() * (4-0));
 				break;
@@ -69,7 +85,10 @@ public class Enemy {
 						&& maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
 						&& maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0
 						) 
+				{
 						posX = newPosX;
+						pacMove = textures.get(direction);
+				}
 	    		else
 	    			direction = (int)(Math.random() * (4-0));
 				break;
@@ -80,7 +99,10 @@ public class Enemy {
 					&& maze.getMatrix()[posX / mapScale][newPosY / mapScale] == 0
 					&& maze.getMatrix()[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0
 					) 
+	    		{
 					posY = newPosY;
+					pacMove = textures.get(direction);
+	    		}
 	    		else
 	    			direction = (int)(Math.random() * (4-0));
 	    		break;		
@@ -104,6 +126,21 @@ public class Enemy {
 	public int getPosY()
 	{
 		return posY;
+	}
+	
+	public int getSpeed()
+	{
+		return speed;
+	}
+	
+	public boolean getAlive()
+	{
+		return alive;
+	}
+	
+	public void setAlive(boolean _alive)
+	{
+		alive = _alive;
 	}
 	
 }
