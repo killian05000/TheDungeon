@@ -36,7 +36,7 @@ public class Game extends BasicGame {
     @Override
     public void update(float delta) 
     {
-    	if(player.getAlive())
+    	if(player.getAlive() && !player.getEscape())
     	{
 	    	player.update(maze);
 	    	for(int i=0; i<enemies.size(); i++)
@@ -56,14 +56,14 @@ public class Game extends BasicGame {
     public void render(Graphics g) 
     {
 		//maze.PaintMaze(g);
-    	maze.paintTrueMap(g, "map/m1.png");
+    	
+    	maze.displayUserMap(g, player);
+    	
 		player.render(g);
-		//maze.paintTrueMap(g, "map/MapLevel1Layer2.png");
-		maze.paintItems(g);
+		maze.displayItems(g);
 		for(int i=0; i<enemies.size(); i++)
-			enemies.get(i).render(g);	
-
-		if(!player.getAlive())
-			maze.paintTrueMap(g, "map/GameOver.png");
+			enemies.get(i).render(g);
+		
+		maze.displayUserMapSecondLayer(g, player);			
     }	
 }
