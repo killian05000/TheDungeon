@@ -94,7 +94,6 @@ public class Maze
 	
 	public int[] teleportPlayer(int x, int y)
 	{
-		System.out.println("TELEPORT !!!!!!");
 		int rand = 0;
 		int newX = 0;
 		int newY = 0;
@@ -106,6 +105,8 @@ public class Maze
 			System.out.println("new X / new Y : "+newX+" / "+newY+" from x / y "+x+" / "+y);
 		} while (teleporters.get(rand).get(0) == x && teleporters.get(rand).get(1) == y );
 		int[] newPos = {newX,newY};
+		System.out.println("TELEPORT !!!!!!");
+
 		return newPos;
 	}
 	
@@ -163,17 +164,42 @@ public class Maze
 	 * @param g
 	 * @param path : map path
 	 */
-	public void paintTrueMap(Graphics g, String path)
+	public void displayUserMap(Graphics g, Player player)
 	{
-		Texture map = new Texture(path);
+		if(player.getBag().size()!=3)
+		{
+			Texture map = new Texture("map/mapLevel1doorLocked.png");
+			g.drawTexture(map, 0, 0, map.getWidth(), map.getHeight());
+		}
+		else
+		{
+			Texture map = new Texture("map/mapLevel1doorUnlocked.png");
+			g.drawTexture(map, 0, 0, map.getWidth(), map.getHeight());
+		}
+	}
+	
+	public void displayUserMapSecondLayer(Graphics g, Player player)
+	{
+		Texture map = new Texture("map/MapLevel1Layer2.png");
 		g.drawTexture(map, 0, 0, map.getWidth(), map.getHeight());
+		
+		if(!player.getAlive())
+		{
+			map = new Texture("map/GameOver.png");
+			g.drawTexture(map, 0, 0, map.getWidth(), map.getHeight());
+		}
+		else if (player.getEscape())
+		{
+			map = new Texture("map/Victory.png");
+			g.drawTexture(map, 0, 0, map.getWidth(), map.getHeight());
+		}
 	}
 	
 	/**
 	 * Paint the items
 	 * @param g
 	 */
-	public void paintItems(Graphics g) 
+	public void displayItems(Graphics g) 
 	{
 		if(items.size()>0) 
     	{
