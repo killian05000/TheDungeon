@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 public class Player 
 {
 	private Texture badpac;	
+	private ArrayList<Texture> textures;
 	private int posX;
 	private int posY;
 	private int speed = 4;
@@ -45,6 +46,12 @@ public class Player
 		escape=false;
 				
 		bag = new ArrayList<Item>();
+		textures = new ArrayList<Texture>();
+		textures.add(new Texture("player/badpacUp.png"));
+		textures.add(new Texture("player/badpacRight.png"));
+		textures.add(new Texture("player/badpacDown.png"));
+		textures.add(new Texture("player/badpacLeft.png"));
+		
 	}
 	
 	/**
@@ -273,39 +280,39 @@ public class Player
 	
 	public void setDir(int corner1, int corner2, int dir)
 	{
-		String spritePath = "";
-		if(dir == 0)
-			spritePath = "player/badpacUp.png";
-		else if(dir == 1)
-			spritePath = "player/badPacRight.png";
-		else if(dir == 2)
-			spritePath = "player/badpacDown.png";
-		else if(dir == 3)
-			spritePath = "player/badpacLeft.png";
+//		String spritePath = "";
+//		if(dir == 0)
+//			spritePath = "player/badpacUp.png";
+//		else if(dir == 1)
+//			spritePath = "player/badPacRight.png";
+//		else if(dir == 2)
+//			spritePath = "player/badpacDown.png";
+//		else if(dir == 3)
+//			spritePath = "player/badpacLeft.png";
 		
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = dir;
-			badpac = new Texture(spritePath);
+			badpac = textures.get(dir);
 			nextDirection=-1;
 			
 		}
 		else if(corner1 == 5 && corner2 == 5)
 		{
 			direction = dir;
-			badpac = new Texture(spritePath);
+			badpac = textures.get(dir);
 			nextDirection=-1;
 		}
 		else if(corner1 == 6 && corner2 == 6)
 		{
 			direction = dir;
-			badpac = new Texture(spritePath);
+			badpac = textures.get(dir);
 			nextDirection=-1;
 		}
 		else if(corner1 == 9 && corner2 == 9)
 		{
 			direction = dir;
-			badpac = new Texture(spritePath);
+			badpac = textures.get(dir);
 			nextDirection=-1;
 		}
 		else
@@ -314,39 +321,39 @@ public class Player
 	
 	public void setNextDir(int corner1, int corner2, int dir)
 	{
-		String spritePath = "";
-		if(dir == 0)
-			spritePath = "player/badpacUp.png";
-		else if(dir == 1)
-			spritePath = "player/badPacRight.png";
-		else if(dir == 2)
-			spritePath = "player/badpacDown.png";
-		else if(dir == 3)
-			spritePath = "player/badpacLeft.png";
+//		String spritePath = "";
+//		if(dir == 0)
+//			spritePath = "player/badpacUp.png";
+//		else if(dir == 1)
+//			spritePath = "player/badPacRight.png";
+//		else if(dir == 2)
+//			spritePath = "player/badpacDown.png";
+//		else if(dir == 3)
+//			spritePath = "player/badpacLeft.png";
 		
 		
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = nextDirection;
-			badpac = new Texture(spritePath);
+			badpac = textures.get(dir);
 			nextDirection=-1;
 		}
 		else if(corner1 == 5 && corner2 == 5)
 		{
 			direction = nextDirection;
-			badpac = new Texture(spritePath);
+			badpac = textures.get(dir);
 			nextDirection=-1;
 		}
 		else if(corner1 == 6 && corner2 == 6)
 		{
 			direction = nextDirection;
-			badpac = new Texture(spritePath);
+			badpac = textures.get(dir);
 			nextDirection=-1;
 		}
 		else if(corner1 == 9 && corner2 == 9)
 		{
 			direction = nextDirection;
-			badpac = new Texture(spritePath);
+			badpac = textures.get(dir);
 			nextDirection=-1; 
 		}			
 	}
