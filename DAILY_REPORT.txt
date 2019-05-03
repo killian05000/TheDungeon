@@ -27,9 +27,19 @@ Mardi 30/04:
 -Avancement sur la map graphique
 -Test de l'abastraction des classes
 
-Mercredi 31/04:
+Mercredi 01/04:
 -Fin de map
 -Améliorer le traducteur I->M
 -Rajout de la map dans le jeu
 -Pseudo player bag
 -Refactoring
+
+Jeudi 02/04:
+-Game Over implemented
+-Teleporteur working
+-Recherches sur les différents algo de plus court chemin
+-Recherche d'optimisation de l'algo
+-Grosse galère sur l'algo et sur les déplacements joueurs
+-Brainstorming, remise en question de l'architecture
+-Inspiration des solutions existante pour la gestion de déplacements
+(prediction)
