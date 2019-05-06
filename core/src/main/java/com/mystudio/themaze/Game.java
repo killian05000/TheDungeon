@@ -12,7 +12,6 @@ public class Game extends BasicGame {
 	private Player player;
 	private Collision collision;
 	private ArrayList<Enemy> enemies;
-	private boolean mapPainted=false;
 	
 	@Override
     public void initialise() 
