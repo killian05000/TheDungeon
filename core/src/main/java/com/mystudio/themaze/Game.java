@@ -26,14 +26,15 @@ public class Game extends BasicGame {
     	
     	player = new Player(maze.getPlayerSpawnX(), maze.getPlayerSpawnY(), maze.getMapScale(), maze);
     	enemies = new ArrayList<Enemy>();
-    	enemies.add(new Enemy(maze.getEnemySpawnX(0), maze.getEnemySpawnY(0), maze.getMapScale()));
-    	enemies.add(new Enemy(maze.getEnemySpawnX(1), maze.getEnemySpawnX(1), maze.getMapScale()));
+    	enemies.add(new Enemy(maze.getEnemySpawnX(0), maze.getEnemySpawnY(0), maze.getMapScale(), maze));
+    	enemies.add(new Enemy(maze.getEnemySpawnX(1), maze.getEnemySpawnY(1), maze.getMapScale(), maze));
     	
     	maze.addItem(new Item(23, 27, maze.getMapScale(), "item/key.png"));
     	maze.addItem(new Item(23, 28, maze.getMapScale(), "item/sword.png"));
     	maze.addItem(new Item(23, 29, maze.getMapScale(), "item/potion.png"));
     	
     	collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale());
+    	
     }
     
     @Override
@@ -44,7 +45,7 @@ public class Game extends BasicGame {
 	    	player.update();
 	    	for(int i=0; i<enemies.size(); i++)
 	    		if(enemies.get(i).getAlive())
-	    			enemies.get(i).update(maze);
+	    			enemies.get(i).update();
 	    	collision.verify();    
 	    	collision.verifyEnemy();
     	}

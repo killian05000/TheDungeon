@@ -8,6 +8,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 
 
+
 public class Player 
 {
 	private Texture badpac;	
@@ -19,8 +20,9 @@ public class Player
 	private boolean alive;
 	private boolean escape;
 	private int nextDirection=-1;
-	int[][] matrix;
-	Maze maze;
+	
+	private int[][] matrix;
+	private Maze maze;
 	
 	private int mapScale;	
 
@@ -45,6 +47,7 @@ public class Player
 		posY = y*mapScale;
 		alive=true;
 		escape=false;
+		
 		this.maze= maze;
 		matrix = maze.getMatrix();
 				
@@ -283,7 +286,8 @@ public class Player
 	}
 	
 	public void setDir(int corner1, int corner2, int dir)
-	{		
+	{	
+
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = dir;
