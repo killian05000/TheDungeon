@@ -43,3 +43,14 @@ Jeudi 02/04:
 -Brainstorming, remise en question de l'architecture
 -Inspiration des solutions existante pour la gestion de déplacements
 (prediction)
+
+Vendredi 03/04:
+-Résolution des déplacements joueurs, mtn ça marche mieux (slide effect)
+-Recherche algo
+-Création de map porte ouverte/fermé + map pillier
+-Condition de victoire est Victory screen implémenté + changement des print de map pour éviter la surcharge du main
+-Résolution du pb de collision avec tous les objets map du à la nouvelle implémentation des déplacements
+-Rajout de la possibilité de buter des enemies
+-Implémentation de la matrice en graphe (en cours) + recherches
+-Optimisation du calcul des collisions des moving objects (class colission) donc enemy, objets, player
+-Optimisation du changement de texture du player et des enemies
