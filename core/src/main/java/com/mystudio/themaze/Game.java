@@ -58,8 +58,8 @@ public class Game extends BasicGame {
     public void render(Graphics g) 
     {
 		//maze.PaintMaze(g);
-    	
-    	maze.displayUserMap(g, player);
+  
+		maze.displayUserMap(g, player);
     	
 		player.render(g);
 		maze.displayItems(g);

@@ -7,6 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 
+
+
 public class Player 
 {
 	private Texture badpac;	
@@ -285,6 +287,7 @@ public class Player
 	
 	public void setDir(int corner1, int corner2, int dir)
 	{	
+
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = dir;
@@ -315,7 +318,7 @@ public class Player
 	}
 	
 	public void setNextDir(int corner1, int corner2, int dir)
-	{	
+	{
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = nextDirection;
