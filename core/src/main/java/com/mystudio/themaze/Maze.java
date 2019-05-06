@@ -15,6 +15,7 @@ public class Maze
 	private ArrayList<ArrayList<Integer>> enemiesSpawn;	
 	private ArrayList<ArrayList<Integer>> teleporters;
 	private ArrayList<Item> items;
+	private ArrayList<Texture> maps;
 	
 	/**
 	 * 
@@ -30,6 +31,14 @@ public class Maze
 		enemiesSpawn = new ArrayList<ArrayList<Integer>>();
 		teleporters = new ArrayList<ArrayList<Integer>>();
 		items = new ArrayList<Item>();
+		
+		maps = new ArrayList<Texture>();
+		maps.add(new Texture("map/mapLevel1doorLocked.png"));
+		maps.add(new Texture("map/mapLevel1doorUnlocked.png"));
+		maps.add(new Texture("map/MapLevel1Layer2.png"));
+		maps.add(new Texture("map/GameOver.png"));
+		maps.add(new Texture("map/Victory.png"));
+
 		
 		mapScale = map.getTileSize();
 		initialiseDefaultPositionPlayer();
@@ -167,32 +176,21 @@ public class Maze
 	public void displayUserMap(Graphics g, Player player)
 	{
 		if(player.getBag().size()!=3)
-		{
-			Texture map = new Texture("map/mapLevel1doorLocked.png");
-			g.drawTexture(map, 0, 0, map.getWidth(), map.getHeight());
-		}
+			g.drawTexture(maps.get(0), 0, 0, maps.get(0).getWidth(), maps.get(0).getHeight());
+
 		else
-		{
-			Texture map = new Texture("map/mapLevel1doorUnlocked.png");
-			g.drawTexture(map, 0, 0, map.getWidth(), map.getHeight());
-		}
+			g.drawTexture(maps.get(1), 0, 0, maps.get(1).getWidth(), maps.get(1).getHeight());
 	}
 	
 	public void displayUserMapSecondLayer(Graphics g, Player player)
 	{
-		Texture map = new Texture("map/MapLevel1Layer2.png");
-		g.drawTexture(map, 0, 0, map.getWidth(), map.getHeight());
+		g.drawTexture(maps.get(2), 0, 0, maps.get(2).getWidth(), maps.get(2).getHeight());
 		
 		if(!player.getAlive())
-		{
-			map = new Texture("map/GameOver.png");
-			g.drawTexture(map, 0, 0, map.getWidth(), map.getHeight());
-		}
+			g.drawTexture(maps.get(3), 0, 0, maps.get(3).getWidth(), maps.get(3).getHeight());
+		
 		else if (player.getEscape())
-		{
-			map = new Texture("map/Victory.png");
-			g.drawTexture(map, 0, 0, map.getWidth(), map.getHeight());
-		}
+			g.drawTexture(maps.get(4), 0, 0, maps.get(4).getWidth(), maps.get(4).getHeight());
 	}
 	
 	/**
