@@ -20,6 +20,8 @@ public class Player
 	private boolean alive;
 	private boolean escape;
 	private int nextDirection=-1;
+	int[][] matrix;
+	Maze maze;
 	
 	private int mapScale;	
 
@@ -36,7 +38,7 @@ public class Player
 	 * @param y : default y player's position
 	 * @param scale : tile size
 	 */
-	public Player(int x, int y, int scale) 
+	public Player(int x, int y, int scale, Maze maze) 
 	{
 		badpac = new Texture("player/badpacLeft.png");
 		mapScale = scale;
@@ -44,6 +46,8 @@ public class Player
 		posY = y*mapScale;
 		alive=true;
 		escape=false;
+		this.maze= maze;
+		matrix = maze.getMatrix();
 				
 		bag = new ArrayList<Item>();
 		textures = new ArrayList<Texture>();
@@ -58,20 +62,21 @@ public class Player
 	 * Update the player direction and the player movements according to the user input
 	 * @param maze : maze instance to check collisions with the walls and different fixed objects
 	 */
-	public  void  update (Maze maze) 
+	public  void  update () 
 	{		
 		int newPosX;
     	int newPosY;
 		int topLeft, topRight, botLeft, botRight;
-
+		
     	
 		if(Gdx.input.isKeyJustPressed(Keys.UP)) 
 		{
 			newPosX = posX - speed;	
 			if(newPosX >= 0)
 			{
-				topLeft = maze.getMatrix()[newPosX / mapScale][posY / mapScale];
-				topRight = maze.getMatrix()[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
+				
+				topLeft = matrix[newPosX / mapScale][posY / mapScale];
+				topRight = matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
 				
 				setDir(topLeft, topRight, 0);
 			}
@@ -82,19 +87,19 @@ public class Player
 
 			if((newPosY + mapScale - speed) / mapScale < maze.getMatrix()[0].length)
 			{
-				topRight = maze.getMatrix()[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
-				botRight = maze.getMatrix()[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
+				topRight = matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
+				botRight = matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
 				
 	    		setDir(topRight, botRight, 1);
 			}
     	}
 		if(Gdx.input.isKeyJustPressed(Keys.DOWN))
     	{
-			newPosX = posX + speed;	 
+			newPosX = posX + speed;
 			if((newPosX + mapScale - speed) / mapScale < maze.getMatrix().length)
 			{
-				botLeft = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
-				botRight = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
+				botLeft = matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
+				botRight = matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
 					
 	    		setDir(botLeft, botRight, 2);
 			}
@@ -104,8 +109,8 @@ public class Player
 			newPosY = posY - speed;
 			if(newPosY >= 0)
 			{
-				topLeft = maze.getMatrix()[posX / mapScale][newPosY / mapScale];
-				botLeft = maze.getMatrix()[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
+				topLeft = matrix[posX / mapScale][newPosY / mapScale];
+				botLeft = matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
 				
 	    		setDir(topLeft, botLeft, 3);
 			}
@@ -122,8 +127,8 @@ public class Player
 				newPosX = posX - speed;			
 				if(newPosX >= 0)
 				{
-					topLeft = maze.getMatrix()[newPosX / mapScale][posY / mapScale];
-					topRight = maze.getMatrix()[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
+					topLeft = matrix[newPosX / mapScale][posY / mapScale];
+					topRight = matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
 					
 					move(topLeft, topRight, newPosX, 0, maze);
 				}
@@ -133,8 +138,8 @@ public class Player
 				newPosY = posY + speed;
 				if((newPosY + mapScale - speed) / mapScale < maze.getMatrix()[0].length)
 				{  		
-					topRight = maze.getMatrix()[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
-					botRight = maze.getMatrix()[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
+					topRight = matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
+					botRight = matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
 					
 		    		move(topRight, botRight, newPosY, 1, maze);
 				}
@@ -142,10 +147,10 @@ public class Player
 	    		
 			case 2: // DOWN
 				newPosX = posX + speed;	 
-				if((newPosX + mapScale - speed) / mapScale < maze.getMatrix().length)
+				if((newPosX + mapScale - speed) / mapScale < matrix.length)
 				{
-					botLeft = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
-					botRight = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
+					botLeft = matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
+					botRight = matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
 					
 		    		move(botLeft, botRight, newPosX, 2, maze);
 				}
@@ -155,8 +160,8 @@ public class Player
 				newPosY = posY - speed;	
 				if(newPosY >= 0)
 				{
-					topLeft = maze.getMatrix()[posX / mapScale][newPosY / mapScale];
-					botLeft = maze.getMatrix()[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
+					topLeft = matrix[posX / mapScale][newPosY / mapScale];
+					botLeft = matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
 					
 		    		move(topLeft, botLeft, newPosY, 3, maze);
 				}
@@ -171,8 +176,8 @@ public class Player
 	    		newPosX = posX - speed;	
 				if(newPosX >= 0)
 				{
-					topLeft = maze.getMatrix()[newPosX / mapScale][posY / mapScale];
-					topRight = maze.getMatrix()[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
+					topLeft = matrix[newPosX / mapScale][posY / mapScale];
+					topRight = matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
 					
 					setNextDir(topLeft, topRight, 0);
 				}
@@ -181,10 +186,10 @@ public class Player
 	    	{
 	    		newPosY = posY + speed;	
 	
-				if((newPosY + mapScale - speed) / mapScale < maze.getMatrix()[0].length)
+				if((newPosY + mapScale - speed) / mapScale < matrix[0].length)
 				{
-					topRight = maze.getMatrix()[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
-					botRight = maze.getMatrix()[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
+					topRight = matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
+					botRight = matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
 					
 		    		setNextDir(topRight, botRight, 1);
 				}
@@ -192,10 +197,10 @@ public class Player
 	    	else if(nextDirection == 2)
 	    	{
 	    		newPosX = posX + speed;	 
-				if((newPosX + mapScale - speed) / mapScale < maze.getMatrix().length)
+				if((newPosX + mapScale - speed) / mapScale < matrix.length)
 				{
-					botLeft = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
-					botRight = maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
+					botLeft = matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
+					botRight = matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
 						
 		    		setNextDir(botLeft, botRight, 2);
 				}
@@ -205,8 +210,8 @@ public class Player
 	    		newPosY = posY - speed;
 				if(newPosY >= 0)
 				{
-					topLeft = maze.getMatrix()[posX / mapScale][newPosY / mapScale];
-					botLeft = maze.getMatrix()[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
+					topLeft = matrix[posX / mapScale][newPosY / mapScale];
+					botLeft = matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
 					
 		    		setNextDir(topLeft, botLeft, 3);
 				}
@@ -310,7 +315,7 @@ public class Player
 	}
 	
 	public void setNextDir(int corner1, int corner2, int dir)
-	{		
+	{
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = nextDirection;
@@ -353,27 +358,27 @@ public class Player
 		if(itemPos>0)
 		{
 			System.out.println("itemPos : "+itemPos);
-			bag.get(itemPos-1);
+			Item item = bag.get(itemPos-1);
 			
 			if(direction==0)
 			{
-				bag.get(itemPos-1).setPosX(posX-3*mapScale);
-				bag.get(itemPos-1).setPosY(posY);
+				item.setPosX(posX-3*mapScale);
+				item.setPosY(posY);
 			}
 			else if(direction==1)
 			{
-				bag.get(itemPos-1).setPosX(posX);
-				bag.get(itemPos-1).setPosY(posY+3*mapScale);
+				item.setPosX(posX);
+				item.setPosY(posY+3*mapScale);
 			}
 			else if(direction==2)
 			{
-				bag.get(itemPos-1).setPosX(posX+3*mapScale);
-				bag.get(itemPos-1).setPosY(posY);
+				item.setPosX(posX+3*mapScale);
+				item.setPosY(posY);
 			}
 			else if(direction==3)
 			{
-				bag.get(itemPos-1).setPosX(posX);
-				bag.get(itemPos-1).setPosY(posY-3*mapScale);
+				item.setPosX(posX);
+				item.setPosY(posY-3*mapScale);
 			}
 			
 			bag.remove(itemPos-1);

@@ -12,6 +12,7 @@ public class Game extends BasicGame {
 	private Player player;
 	private Collision collision;
 	private ArrayList<Enemy> enemies;
+	private boolean mapPainted=false;
 	
 	@Override
     public void initialise() 
@@ -21,7 +22,7 @@ public class Game extends BasicGame {
 		
     	maze = new Maze(map);
     	
-    	player = new Player(maze.getPlayerSpawnX(), maze.getPlayerSpawnY(), maze.getMapScale());
+    	player = new Player(maze.getPlayerSpawnX(), maze.getPlayerSpawnY(), maze.getMapScale(), maze);
     	enemies = new ArrayList<Enemy>();
     	enemies.add(new Enemy(maze.getEnemySpawnX(0), maze.getEnemySpawnY(0), maze.getMapScale()));
     	enemies.add(new Enemy(maze.getEnemySpawnX(1), maze.getEnemySpawnX(1), maze.getMapScale()));
@@ -38,7 +39,7 @@ public class Game extends BasicGame {
     {
     	if(player.getAlive() && !player.getEscape())
     	{
-	    	player.update(maze);
+	    	player.update();
 	    	for(int i=0; i<enemies.size(); i++)
 	    		if(enemies.get(i).getAlive())
 	    			enemies.get(i).update(maze);
@@ -57,8 +58,8 @@ public class Game extends BasicGame {
     public void render(Graphics g) 
     {
 		//maze.PaintMaze(g);
-    	
-    	maze.displayUserMap(g, player);
+  
+		maze.displayUserMap(g, player);
     	
 		player.render(g);
 		maze.displayItems(g);
