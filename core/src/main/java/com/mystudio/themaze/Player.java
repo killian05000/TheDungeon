@@ -279,17 +279,7 @@ public class Player
 	}
 	
 	public void setDir(int corner1, int corner2, int dir)
-	{
-//		String spritePath = "";
-//		if(dir == 0)
-//			spritePath = "player/badpacUp.png";
-//		else if(dir == 1)
-//			spritePath = "player/badPacRight.png";
-//		else if(dir == 2)
-//			spritePath = "player/badpacDown.png";
-//		else if(dir == 3)
-//			spritePath = "player/badpacLeft.png";
-		
+	{		
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = dir;
@@ -320,18 +310,7 @@ public class Player
 	}
 	
 	public void setNextDir(int corner1, int corner2, int dir)
-	{
-//		String spritePath = "";
-//		if(dir == 0)
-//			spritePath = "player/badpacUp.png";
-//		else if(dir == 1)
-//			spritePath = "player/badPacRight.png";
-//		else if(dir == 2)
-//			spritePath = "player/badpacDown.png";
-//		else if(dir == 3)
-//			spritePath = "player/badpacLeft.png";
-		
-		
+	{		
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = nextDirection;
