@@ -6,8 +6,6 @@ import org.mini2Dx.core.graphics.Graphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData.Region;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 
 public class Player 
 {
@@ -20,8 +18,9 @@ public class Player
 	private boolean alive;
 	private boolean escape;
 	private int nextDirection=-1;
-	int[][] matrix;
-	Maze maze;
+	
+	private int[][] matrix;
+	private Maze maze;
 	
 	private int mapScale;	
 
@@ -46,6 +45,7 @@ public class Player
 		posY = y*mapScale;
 		alive=true;
 		escape=false;
+		
 		this.maze= maze;
 		matrix = maze.getMatrix();
 				
@@ -284,17 +284,7 @@ public class Player
 	}
 	
 	public void setDir(int corner1, int corner2, int dir)
-	{
-//		String spritePath = "";
-//		if(dir == 0)
-//			spritePath = "player/badpacUp.png";
-//		else if(dir == 1)
-//			spritePath = "player/badPacRight.png";
-//		else if(dir == 2)
-//			spritePath = "player/badpacDown.png";
-//		else if(dir == 3)
-//			spritePath = "player/badpacLeft.png";
-		
+	{	
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = dir;

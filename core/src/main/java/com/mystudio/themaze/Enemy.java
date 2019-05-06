@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.mini2Dx.core.graphics.Graphics;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Enemy {
@@ -17,6 +15,7 @@ public class Enemy {
 	private int speed=5;
 	private int direction;
 	private boolean alive=true;
+	private int[][] matrix;
 	
 	private int mapScale;	
 	
@@ -26,12 +25,14 @@ public class Enemy {
 	 * @param y : default y enemy's position
 	 * @param scale : tile size
 	 */
-	public Enemy(int x, int y, int scale)
+	public Enemy(int x, int y, int scale, Maze maze)
 	{
 		pacMove = new Texture("badGuy/pacMoveLeft.png");
 		mapScale = scale;
 		posX = x*mapScale;
-		posY = y*mapScale;		
+		posY = y*mapScale;
+		
+		matrix = maze.getMatrix();
 		
 		textures = new ArrayList<Texture>();
 		textures.add(new Texture("badGuy/pacMoveUp.png"));
@@ -44,7 +45,7 @@ public class Enemy {
 	 * Update the enemy direction randomly
 	 * @param maze : maze instance to check collisions with the walls and different fixed objects
 	 */
-	public  void  update (Maze maze) 
+	public  void  update () 
 	{		
 		int newPosX;
     	int newPosY;
@@ -54,8 +55,8 @@ public class Enemy {
 			case 0: // UP
 				newPosX = posX - speed;				
 				if(newPosX >=0 
-					&& maze.getMatrix()[newPosX / mapScale][posY / mapScale] == 0
-					&& maze.getMatrix()[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0
+					&& matrix[newPosX / mapScale][posY / mapScale] == 0
+					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0
 					)
 				{
 					posX = newPosX;
@@ -67,9 +68,9 @@ public class Enemy {
 				
 			case 1: // RIGHT
 				newPosY = posY + speed;	    		
-	    		if((newPosY + mapScale - speed) / mapScale < maze.getMatrix()[0].length 
-					&& maze.getMatrix()[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
-					&& maze.getMatrix()[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
+	    		if((newPosY + mapScale - speed) / mapScale < matrix[0].length 
+					&& matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
+					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
 					)
 	    		{
 					posY = newPosY;
@@ -81,9 +82,9 @@ public class Enemy {
 				
 			case 2: // DOWN
 				newPosX = posX + speed;	    		
-				if((newPosX + mapScale - speed) / mapScale < maze.getMatrix().length 
-						&& maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
-						&& maze.getMatrix()[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0
+				if((newPosX + mapScale - speed) / mapScale < matrix.length 
+						&& matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
+						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0
 						) 
 				{
 						posX = newPosX;
@@ -96,8 +97,8 @@ public class Enemy {
 			case 3: // LEFT
 				newPosY = posY - speed;				
 	    		if(newPosY >= 0 
-					&& maze.getMatrix()[posX / mapScale][newPosY / mapScale] == 0
-					&& maze.getMatrix()[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0
+					&& matrix[posX / mapScale][newPosY / mapScale] == 0
+					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0
 					) 
 	    		{
 					posY = newPosY;
