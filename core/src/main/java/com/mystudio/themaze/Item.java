@@ -8,6 +8,11 @@ public class Item
 	private Texture sprite;
 	int posX;
 	int posY;
+	private int frameCounter;
+	private boolean isHarmfull;
+	private boolean isLaunched;
+	private int defaultPosX;
+	private int defaultPosY;
 	
 	int mapScale;
 
@@ -21,8 +26,10 @@ public class Item
 	public Item(int x, int y, int scale, String path)
 	{
 		sprite = new Texture(path);
-		posX = x*scale;
-		posY = y*scale;
+		defaultPosX=x*scale;
+		defaultPosY=y*scale;
+		posX = defaultPosX;
+		posY = defaultPosY;
 
 		this.mapScale = scale;
 	}
@@ -39,6 +46,30 @@ public class Item
 	public void render(Graphics g) 
 	{	
 		g.drawTexture(sprite, posY, posX, mapScale, mapScale);
+	}
+	
+	public void isGettingThrown(int x, int y, int dir)
+	{
+		if(posX != x || posY != y)
+		{
+			if(dir==0)
+				posX--;
+			else if(dir==1)
+				posY++;
+			else if(dir==2)
+				posX++;
+			else if(dir==3)
+				posY--;
+		}
+		else
+			frameCounter=0;
+			
+	}
+	
+	public void respawn()
+	{
+		posX=defaultPosX;
+		posY=defaultPosY;
 	}
 	
 	
