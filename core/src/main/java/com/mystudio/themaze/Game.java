@@ -73,7 +73,6 @@ public class Game extends BasicGame {
 		player.render(g);
 		maze.displayItems(g);
 		for(int i=0; i<enemies.size(); i++)
-			if(enemies.get(i).getAlive())
 				enemies.get(i).render(g);
 		
 		maze.displayUserMapSecondLayer(g, player);			
