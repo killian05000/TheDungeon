@@ -16,7 +16,6 @@ public class Enemy {
 	private int defaultPosY;
 	private int speed=5;
 	private int direction;
-	private boolean alive=true;
 	private int[][] matrix;
 	
 	private int mapScale;	
@@ -51,76 +50,73 @@ public class Enemy {
 	 */
 	public  void  update () 
 	{		
-		
-		if(alive) {
-			int newPosX;
-	    	int newPosY;
-	
-	    	switch(direction)
-	    	{
-				case 0: // UP
-					newPosX = posX - speed;				
-					if(newPosX >=0 
-						&& matrix[newPosX / mapScale][posY / mapScale] == 0
-						&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0
-						)
-					{
+		int newPosX;
+    	int newPosY;
+
+    	switch(direction)
+    	{
+			case 0: // UP
+				newPosX = posX - speed;				
+				if(newPosX >=0 
+					&& matrix[newPosX / mapScale][posY / mapScale] == 0
+					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0
+					)
+				{
+					posX = newPosX;
+					pacMove = textures.get(direction);
+				}
+				else
+					direction = (int)(Math.random() * (4-0));				
+				break;
+				
+			case 1: // RIGHT
+				newPosY = posY + speed;	    		
+	    		if((newPosY + mapScale - speed) / mapScale < matrix[0].length 
+					&& matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
+					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
+					)
+	    		{
+					posY = newPosY;
+					pacMove = textures.get(direction);
+	    		}
+	    		else
+	    			direction = (int)(Math.random() * (4-0));
+				break;
+				
+			case 2: // DOWN
+				newPosX = posX + speed;	    		
+				if((newPosX + mapScale - speed) / mapScale < matrix.length 
+						&& matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
+						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0
+						) 
+				{
 						posX = newPosX;
 						pacMove = textures.get(direction);
-					}
-					else
-						direction = (int)(Math.random() * (4-0));				
-					break;
-					
-				case 1: // RIGHT
-					newPosY = posY + speed;	    		
-		    		if((newPosY + mapScale - speed) / mapScale < matrix[0].length 
-						&& matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
-						&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
-						)
-		    		{
-						posY = newPosY;
-						pacMove = textures.get(direction);
-		    		}
-		    		else
-		    			direction = (int)(Math.random() * (4-0));
-					break;
-					
-				case 2: // DOWN
-					newPosX = posX + speed;	    		
-					if((newPosX + mapScale - speed) / mapScale < matrix.length 
-							&& matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
-							&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0
-							) 
-					{
-							posX = newPosX;
-							pacMove = textures.get(direction);
-					}
-		    		else
-		    			direction = (int)(Math.random() * (4-0));
-					break;
-					
-				case 3: // LEFT
-					newPosY = posY - speed;				
-		    		if(newPosY >= 0 
-						&& matrix[posX / mapScale][newPosY / mapScale] == 0
-						&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0
-						) 
-		    		{
-						posY = newPosY;
-						pacMove = textures.get(direction);
-		    		}
-		    		else
-		    			direction = (int)(Math.random() * (4-0));
-		    		break;		
-			}
+				}
+	    		else
+	    			direction = (int)(Math.random() * (4-0));
+				break;
+				
+			case 3: // LEFT
+				newPosY = posY - speed;				
+	    		if(newPosY >= 0 
+					&& matrix[posX / mapScale][newPosY / mapScale] == 0
+					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0
+					) 
+	    		{
+					posY = newPosY;
+					pacMove = textures.get(direction);
+	    		}
+	    		else
+	    			direction = (int)(Math.random() * (4-0));
+	    		break;		
 		}
-		else 
-		{
-			posX = defaultPosX;
-			posY = defaultPosY;
-			alive = true;
-		}
+	}
+	
+	public void respawn()
+	{
+		posX = defaultPosX;
+		posY = defaultPosY;
 	}
 	
 	/**
@@ -145,16 +141,5 @@ public class Enemy {
 	public int getSpeed()
 	{
 		return speed;
-	}
-	
-	public boolean getAlive()
-	{
-		return alive;
-	}
-	
-	public void setAlive(boolean _alive)
-	{
-		alive = _alive;
-	}
-	
+	}	
 }
