@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.mini2Dx.core.game.BasicGame;
 import org.mini2Dx.core.graphics.Graphics;
 
-import com.badlogic.gdx.audio.Music;
 
 public class Game extends BasicGame {
 	public static final String GAME_IDENTIFIER = "com.mystudio.themaze";
@@ -14,7 +13,6 @@ public class Game extends BasicGame {
 	private Player player;
 	private Collision collision;
 	private ArrayList<Enemy> enemies;
-	private Music music;
 	
 	@Override
     public void initialise() 
@@ -32,6 +30,11 @@ public class Game extends BasicGame {
     	maze.addItem(new Item(23, 27, maze.getMapScale(), "item/key.png"));
     	maze.addItem(new Item(23, 28, maze.getMapScale(), "item/sword.png"));
     	maze.addItem(new Item(23, 29, maze.getMapScale(), "item/potion.png"));
+    	
+//    	maze.addItem(new Item(6, 0, maze.getMapScale(), "item/key.png"));
+//    	maze.addItem(new Item(6, 31, maze.getMapScale(), "item/sword.png"));
+//    	maze.addItem(new Item(21, 3, maze.getMapScale(), "item/potion.png"));
+
     	
     	collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale());
     	
