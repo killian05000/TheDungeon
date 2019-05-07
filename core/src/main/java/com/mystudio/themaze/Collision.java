@@ -34,33 +34,36 @@ public class Collision {
 		
 		for(int i=0; i<items.size(); i++) 
 		{		
-			iPosX = items.get(i).getPosX();
-			iPosY = items.get(i).getPosY();
-			
-			
-			if(pPosX + mapScale - pSpeed >= iPosX 
-				&& pPosY >= iPosY
-				&& pPosX <= iPosX + mapScale - pSpeed
-				&& pPosY <= iPosY + mapScale - pSpeed
-				) 
+			if(!items.get(i).isLaunched)
 			{
-				player.addItem(items.get(i));
-				System.out.println(player.getBag().size());
-				//items.remove(i);
-				break;
-			}
-			
-			if(pPosY + mapScale - pSpeed >= iPosY 
-					&& pPosX + mapScale - pSpeed >= iPosX
-					&& pPosY + mapScale - pSpeed <= iPosY + mapScale - pSpeed
+				iPosX = items.get(i).getPosX();
+				iPosY = items.get(i).getPosY();
+				
+				
+				if(pPosX + mapScale - pSpeed >= iPosX 
+					&& pPosY >= iPosY
 					&& pPosX <= iPosX + mapScale - pSpeed
+					&& pPosY <= iPosY + mapScale - pSpeed
 					) 
-			{
-				player.addItem(items.get(i));
-				System.out.println(player.getBag().size());
-				//items.remove(i);
-				break;
-			}		
+				{
+					player.addItem(items.get(i));
+					System.out.println("The player just collected an item");
+					//items.remove(i);
+					break;
+				}
+				
+				if(pPosY + mapScale - pSpeed >= iPosY 
+						&& pPosX + mapScale - pSpeed >= iPosX
+						&& pPosY + mapScale - pSpeed <= iPosY + mapScale - pSpeed
+						&& pPosX <= iPosX + mapScale - pSpeed
+						) 
+				{
+					player.addItem(items.get(i));
+					System.out.println("The player just collected an item");
+					//items.remove(i);
+					break;
+				}
+			}
 		}
 	}
 	
@@ -78,51 +81,60 @@ public class Collision {
 			eSpeed = enemies.get(i).getSpeed();
 			
 			if(pPosX + mapScale - pSpeed >= ePosX 
-				&& pPosY > ePosY
-				&& pPosX < ePosX + mapScale - pSpeed
-				&& pPosY < ePosY + mapScale - pSpeed
+				&& pPosY >= ePosY
+				&& pPosX <= ePosX + mapScale - pSpeed
+				&& pPosY <= ePosY + mapScale - pSpeed
 				) 
 			{
+				System.out.println("Enemy has collided with the player");
 				player.setAlive(false);
 				break;
 			}
 			
-			if(pPosY + mapScale - pSpeed > ePosY 
-					&& pPosX + mapScale - pSpeed > ePosX
-					&& pPosY + mapScale - pSpeed < ePosY + mapScale - pSpeed
-					&& pPosX < ePosX + mapScale - pSpeed
+			if(pPosY + mapScale - pSpeed >= ePosY 
+					&& pPosX + mapScale - pSpeed >= ePosX
+					&& pPosY + mapScale - pSpeed <= ePosY + mapScale - pSpeed
+					&& pPosX <= ePosX + mapScale - pSpeed
 					) 
 			{
-					player.setAlive(false);
-					break;
+				System.out.println("Enemy has collided with the player");
+				player.setAlive(false);
+				break;
 			}		
 			
 			for(int j=0; j<items.size(); j++)
 			{
-				iPosX = items.get(j).getPosX();
-				iPosY = items.get(j).getPosY();
-				
-				if(ePosX + mapScale - eSpeed >= iPosX 
-						&& ePosY >= iPosY
-						&& ePosX <= iPosX + mapScale - eSpeed
-						&& ePosY <= iPosY + mapScale - eSpeed
-						) 
-					{
-						enemies.get(i).respawn();
-						items.get(j).respawn();
-						break;
-					}
+				if(items.get(j).isLaunched)
+				{
+					iPosX = items.get(j).getPosX();
+					iPosY = items.get(j).getPosY();
 					
-					if(ePosY + mapScale - eSpeed >= iPosY 
-							&& ePosX + mapScale - eSpeed >= iPosX
-							&& ePosY + mapScale - eSpeed <= iPosY + mapScale - eSpeed
+					if(ePosX + mapScale - eSpeed >= iPosX 
+							&& ePosY >= iPosY
 							&& ePosX <= iPosX + mapScale - eSpeed
+							&& ePosY <= iPosY + mapScale - eSpeed
 							) 
-					{
-						enemies.get(i).respawn();
-						items.get(j).respawn();
-						break;
-					}
+						{
+							System.out.println("Enemy has collided with an object");
+							enemies.get(i).respawn();
+							items.get(j).respawn();
+							items.get(j).isLaunched=false;
+							break;
+						}
+						
+						if(ePosY + mapScale - eSpeed >= iPosY 
+								&& ePosX + mapScale - eSpeed >= iPosX
+								&& ePosY + mapScale - eSpeed <= iPosY + mapScale - eSpeed
+								&& ePosX <= iPosX + mapScale - eSpeed
+								) 
+						{
+							System.out.println("Enemy has collided with an object");
+							enemies.get(i).respawn();
+							items.get(j).respawn();
+							items.get(j).isLaunched=false;
+							break;
+						}
+				}
 			}
 		}
 	}
