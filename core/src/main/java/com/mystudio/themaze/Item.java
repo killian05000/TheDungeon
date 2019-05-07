@@ -8,11 +8,16 @@ public class Item
 	private Texture sprite;
 	int posX;
 	int posY;
-	private int frameCounter;
-	private boolean isHarmfull;
-	private boolean isLaunched;
+	private int frameCounter=0;
+	public boolean isLaunched;
 	private int defaultPosX;
 	private int defaultPosY;
+	private int[][] matrix;
+	
+	//Used when is thrown
+	private int range;
+	private int dir;
+	private int speed;
 	
 	int mapScale;
 
@@ -23,13 +28,14 @@ public class Item
 	 * @param scale : tile size
 	 * @param path : sprite path
 	 */
-	public Item(int x, int y, int scale, String path)
+	public Item(int x, int y, int scale, String path, Maze maze)
 	{
 		sprite = new Texture(path);
 		defaultPosX=x*scale;
 		defaultPosY=y*scale;
 		posX = defaultPosX;
 		posY = defaultPosY;
+		matrix=maze.getMatrix();
 
 		this.mapScale = scale;
 	}
@@ -45,25 +51,53 @@ public class Item
 	 */
 	public void render(Graphics g) 
 	{	
+		if(isLaunched)
+			animation(posX, posY, range, speed, dir);
 		g.drawTexture(sprite, posY, posX, mapScale, mapScale);
 	}
 	
-	public void isGettingThrown(int x, int y, int dir)
+	public void animation(int pPosX, int pPosY, int range, int speed, int dir)
 	{
-		if(posX != x || posY != y)
+		isLaunched=true;
+		posX=pPosX;
+		posY=pPosY;
+		this.range=range;
+		this.dir=dir;
+		this.speed=speed;
+		
+		if(frameCounter<range*mapScale)
 		{
-			if(dir==0)
-				posX--;
-			else if(dir==1)
-				posY++;
-			else if(dir==2)
-				posX++;
-			else if(dir==3)
-				posY--;
+			if(dir==0 && (posX-speed)>0 && matrix[(posX-speed)/mapScale][posY/mapScale]==0)
+			{
+				posX=posX-speed;
+				frameCounter+=8;
+			}
+			else if(dir==1 && (posY+mapScale+speed)/mapScale<matrix[0].length && matrix[posX/mapScale][(posY+mapScale+speed)/mapScale]==0)
+			{
+				posY=posY+speed;
+				frameCounter+=8;
+			}
+			else if(dir==2 && (posX+mapScale+speed)/mapScale<matrix.length && matrix[(posX+mapScale+speed)/mapScale][posY/mapScale]==0)
+			{
+				posX=posX+speed;
+				frameCounter+=8;
+			}
+			else if(dir==3 && (posY-speed)>0 && matrix[posX/mapScale][(posY-speed)/mapScale]==0)
+			{
+				posY=posY-speed;
+				frameCounter+=8;
+			}
+			else
+			{
+				isLaunched=false;
+				frameCounter=0;
+			}
 		}
 		else
+		{
+			isLaunched=false;
 			frameCounter=0;
-			
+		}
 	}
 	
 	public void respawn()
