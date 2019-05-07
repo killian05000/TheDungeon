@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.mini2Dx.core.game.BasicGame;
 import org.mini2Dx.core.graphics.Graphics;
 
+import com.badlogic.gdx.audio.Music;
+
 public class Game extends BasicGame {
 	public static final String GAME_IDENTIFIER = "com.mystudio.themaze";
 	private Maze maze;
@@ -12,7 +14,9 @@ public class Game extends BasicGame {
 	test test;
 	private Collision collision;
 	private ArrayList<Enemy> enemies;
+
 	private Song songStartGame;
+
 	
 	@Override
     public void initialise() 

@@ -8,7 +8,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 
 
-
 public class Player 
 {
 	private Texture badpac;	
@@ -20,14 +19,20 @@ public class Player
 	private boolean alive;
 	private boolean escape;
 	private int nextDirection=-1;
-	
-	private int[][] matrix;
-	private Maze maze;
+	int[][] matrix;
+	Maze maze;
 	
 	private int mapScale;	
 
 	private ArrayList<Item> bag;	
 	private int itemPos = 0;
+	
+	private ArrayList<Texture> animationL;
+	private ArrayList<Texture> animationR;
+
+	private int animCounter=0;
+	private int frameCounter=0;
+	private int previousDir=-1;
 	
 	public enum mapObject
 	{
@@ -47,7 +52,6 @@ public class Player
 		posY = y*mapScale;
 		alive=true;
 		escape=false;
-		
 		this.maze= maze;
 		matrix = maze.getMatrix();
 				
@@ -58,6 +62,15 @@ public class Player
 		textures.add(new Texture("player/badpacDown.png"));
 		textures.add(new Texture("player/badpacLeft.png"));
 		
+		animationL = new ArrayList<Texture>();		
+		animationL.add(new Texture("player/badpacLeft.png"));
+		animationL.add(new Texture("player/badpacLeftG.png"));
+		animationL.add(new Texture("player/badpacLeftP.png"));
+		
+		animationR = new ArrayList<Texture>();		
+		animationR.add(new Texture("player/badpacRight.png"));
+		animationR.add(new Texture("player/badpacRightY.png"));
+		animationR.add(new Texture("player/badpacRightB.png"));		
 	}
 	
 	/**
@@ -286,8 +299,7 @@ public class Player
 	}
 	
 	public void setDir(int corner1, int corner2, int dir)
-	{	
-
+	{		
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = dir;
@@ -395,8 +407,41 @@ public class Player
 	 */
 	public void render(Graphics g) 
 	{	
+		if(previousDir != direction)
+		{
+			animCounter=0;
+			frameCounter=0;
+		}
+		
+		if(direction == 3)	
+		{
+			animate(animationL);
+			previousDir=3;
+		}
+		else if(direction == 1)
+		{
+			animate(animationR);
+			previousDir=1;
+		}
+		
 		g.drawTexture(badpac, posY, posX, mapScale, mapScale);
-	}	
+
+	}
+	
+	public void animate(ArrayList<Texture> anim)
+	{
+		if(frameCounter==animCounter*20)
+		{
+			if(animCounter == anim.size())
+			{
+				animCounter=0;
+				frameCounter=0;
+			}
+			badpac = anim.get(animCounter);
+			animCounter++;
+		}		
+		frameCounter++;
+	}
 
 	public int getSpeed() {
 		return speed;

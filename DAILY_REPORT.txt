@@ -27,14 +27,14 @@ Mardi 30/04:
 -Avancement sur la map graphique
 -Test de l'abastraction des classes
 
-Mercredi 01/04:
+Mercredi 01/05:
 -Fin de map
 -Améliorer le traducteur I->M
 -Rajout de la map dans le jeu
 -Pseudo player bag
 -Refactoring
 
-Jeudi 02/04:
+Jeudi 02/05:
 -Game Over implemented
 -Teleporteur working
 -Recherches sur les différents algo de plus court chemin
@@ -44,7 +44,7 @@ Jeudi 02/04:
 -Inspiration des solutions existante pour la gestion de déplacements
 (prediction)
 
-Vendredi 03/04:
+Vendredi 03/05:
 -Résolution des déplacements joueurs, mtn ça marche mieux (slide effect)
 -Recherche algo
 -Création de map porte ouverte/fermé + map pillier
@@ -54,3 +54,11 @@ Vendredi 03/04:
 -Implémentation de la matrice en graphe (en cours) + recherches
 -Optimisation du calcul des collisions des moving objects (class colission) donc enemy, objets, player
 -Optimisation du changement de texture du player et des enemies
+
+Lundi 06/05:
+-Optimisation du chargement des maps -> plus de lag
+-Musique/Son
+-Animation du joueur
+-Algo 1 / Issam 0 (petit tapis)
+
+
