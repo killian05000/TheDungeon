@@ -7,11 +7,12 @@ import org.mini2Dx.core.graphics.Graphics;
 
 public class Game extends BasicGame {
 	public static final String GAME_IDENTIFIER = "com.mystudio.themaze";
-
 	private Maze maze;
 	private Player player;
+	test test;
 	private Collision collision;
 	private ArrayList<Enemy> enemies;
+	private Song songStartGame;
 	
 	@Override
     public void initialise() 
@@ -20,6 +21,8 @@ public class Game extends BasicGame {
 		map.translate();
 		
     	maze = new Maze(map);
+    	test = new test();
+    	test.createDictionnaire(maze);
     	
     	player = new Player(maze.getPlayerSpawnX(), maze.getPlayerSpawnY(), maze.getMapScale(), maze);
     	enemies = new ArrayList<Enemy>();
@@ -32,6 +35,10 @@ public class Game extends BasicGame {
     	
     	collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale());
     	
+    	songStartGame = new Song("pacman.wav");
+    	songStartGame.startLoop();
+    	System.out.println(test.getNextPostions(1, 2));
+    	
     }
     
     @Override
@@ -41,8 +48,7 @@ public class Game extends BasicGame {
     	{
 	    	player.update();
 	    	for(int i=0; i<enemies.size(); i++)
-	    		if(enemies.get(i).getAlive())
-	    			enemies.get(i).update();
+	    		enemies.get(i).update();
 	    	collision.verify();    
 	    	collision.verifyEnemy();
     	}
