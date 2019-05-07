@@ -29,18 +29,18 @@ public class Game extends BasicGame {
     	enemies.add(new Enemy(maze.getEnemySpawnX(0), maze.getEnemySpawnY(0), maze.getMapScale(), maze));
     	enemies.add(new Enemy(maze.getEnemySpawnX(1), maze.getEnemySpawnY(1), maze.getMapScale(), maze));
     	
-    	maze.addItem(new Item(23, 27, maze.getMapScale(), "item/key.png"));
-    	maze.addItem(new Item(23, 28, maze.getMapScale(), "item/sword.png"));
-    	maze.addItem(new Item(23, 29, maze.getMapScale(), "item/potion.png"));
+//    	maze.addItem(new Item(23, 27, maze.getMapScale(), "item/key.png", maze));
+//    	maze.addItem(new Item(23, 28, maze.getMapScale(), "item/sword.png", maze));
+//    	maze.addItem(new Item(23, 29, maze.getMapScale(), "item/potion.png", maze));
     	
-//    	maze.addItem(new Item(6, 0, maze.getMapScale(), "item/key.png"));
-//    	maze.addItem(new Item(6, 31, maze.getMapScale(), "item/sword.png"));
-//    	maze.addItem(new Item(21, 3, maze.getMapScale(), "item/potion.png"));
+    	maze.addItem(new Item(6, 0, maze.getMapScale(), "item/key.png", maze));
+    	maze.addItem(new Item(6, 31, maze.getMapScale(), "item/sword.png", maze));
+    	maze.addItem(new Item(21, 3, maze.getMapScale(), "item/potion.png", maze));
 
     	
     	collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale());
     	
-    	songStartGame = new Song("pacman.wav");
+    	songStartGame = new Song("Pim Poy.wav");
     	songStartGame.startLoop();    	
     }
     
