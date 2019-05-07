@@ -141,5 +141,5 @@ public class Enemy {
 	public int getSpeed()
 	{
 		return speed;
-	}	
+	}		
 }
