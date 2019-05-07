@@ -78,19 +78,19 @@ public class Collision {
 			eSpeed = enemies.get(i).getSpeed();
 			
 			if(pPosX + mapScale - pSpeed >= ePosX 
-				&& pPosY >= ePosY
-				&& pPosX <= ePosX + mapScale - pSpeed
-				&& pPosY <= ePosY + mapScale - pSpeed
+				&& pPosY > ePosY
+				&& pPosX < ePosX + mapScale - pSpeed
+				&& pPosY < ePosY + mapScale - pSpeed
 				) 
 			{
 				player.setAlive(false);
 				break;
 			}
 			
-			if(pPosY + mapScale - pSpeed >= ePosY 
-					&& pPosX + mapScale - pSpeed >= ePosX
-					&& pPosY + mapScale - pSpeed <= ePosY + mapScale - pSpeed
-					&& pPosX <= ePosX + mapScale - pSpeed
+			if(pPosY + mapScale - pSpeed > ePosY 
+					&& pPosX + mapScale - pSpeed > ePosX
+					&& pPosY + mapScale - pSpeed < ePosY + mapScale - pSpeed
+					&& pPosX < ePosX + mapScale - pSpeed
 					) 
 			{
 					player.setAlive(false);
@@ -108,7 +108,8 @@ public class Collision {
 						&& ePosY <= iPosY + mapScale - eSpeed
 						) 
 					{
-						enemies.get(i).setAlive(false);
+						enemies.get(i).respawn();
+						items.get(j).respawn();
 						break;
 					}
 					
@@ -118,7 +119,8 @@ public class Collision {
 							&& ePosX <= iPosX + mapScale - eSpeed
 							) 
 					{
-						enemies.get(i).setAlive(false);
+						enemies.get(i).respawn();
+						items.get(j).respawn();
 						break;
 					}
 			}
