@@ -14,7 +14,7 @@ public class Player
 	private ArrayList<Texture> textures;
 	private int posX;
 	private int posY;
-	private int speed = 4;
+	private int speed = 5;
 	private int direction;	
 	private boolean alive;
 	private boolean escape;
@@ -377,28 +377,66 @@ public class Player
 			
 			if(direction==0)
 			{
-				item.setPosX(posX-3*mapScale);
+				item.setPosX(posX-checkWalls(3,0)*mapScale);
 				item.setPosY(posY);
 			}
 			else if(direction==1)
 			{
 				item.setPosX(posX);
-				item.setPosY(posY+3*mapScale);
+				item.setPosY(posY+checkWalls(3,1)*mapScale);
 			}
 			else if(direction==2)
 			{
-				item.setPosX(posX+3*mapScale);
+				item.setPosX(posX+checkWalls(3,2)*mapScale);
 				item.setPosY(posY);
 			}
 			else if(direction==3)
 			{
 				item.setPosX(posX);
-				item.setPosY(posY-3*mapScale);
+				item.setPosY(posY-checkWalls(3,3)*mapScale);
 			}
 			
 			bag.remove(itemPos-1);
 			itemPos--;
 		}
+	}
+	
+	public int checkWalls(int x, int dir)
+	{
+		int dist=0;
+		for(int i=1; i<=x; i++)
+		{
+			if(direction==0)
+			{
+				if((posX-i*mapScale)>0 && matrix[(posX-i*mapScale)/mapScale][posY/mapScale]==0)
+					dist++;
+				else
+					break;
+			}
+			else if(direction==1)
+			{
+				if((posY+i*mapScale)/mapScale<matrix[0].length && matrix[posX/mapScale][(posY+i*mapScale)/mapScale]==0)
+					dist++;
+				else
+					break;
+			}
+			else if(direction==2)
+			{
+				if((posX+i*mapScale)/mapScale<matrix.length && matrix[(posX+i*mapScale)/mapScale][posY/mapScale]==0)
+					dist++;
+				else
+					break;
+			}
+			else if(direction==3)
+			{
+				if((posY-i*mapScale)>0 && matrix[posX/mapScale][(posY-i*mapScale)/mapScale]==0)
+					dist++;
+				else
+					break;
+			}
+		}
+		System.out.println(dist);
+		return dist;
 	}
 	
 	/**
