@@ -61,4 +61,13 @@ Lundi 06/05:
 -Animation du joueur
 -Algo 1 / Issam 0 (petit tapis)
 
+Mardi 07/05:
+-respawn enemy/item
+-item wall collision
+-item animation
+-item harmfull condition
+-background music choice
+-Beta almost ready : tomorrow objective
+-Avancement sur l'algo
+
 
