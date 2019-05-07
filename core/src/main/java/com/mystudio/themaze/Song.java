@@ -17,7 +17,7 @@ public class Song {
 	public void startWithoutLoop() {
 		try {
 			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(new File("../assets/song/"+path)));
+			clip.open(AudioSystem.getAudioInputStream(new File("../assets/music/"+path)));
 			clip.start();
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -27,14 +27,11 @@ public class Song {
 	public void startLoop() {
 		try {
 			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(new File("../assets/song/"+path)));
+			clip.open(AudioSystem.getAudioInputStream(new File("../assets/music/"+path)));
 			
 			clip.loop(LOOP_CONTINUOUSLY);
 		} catch (Exception e) {
 			e.getStackTrace();
 		} 
-	}
-	
-	
-	
+	}	
 }
