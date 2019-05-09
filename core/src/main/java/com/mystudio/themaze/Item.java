@@ -64,25 +64,33 @@ public class Item
 		this.range=range;
 		this.dir=dir;
 		this.speed=speed;
-		
+				
 		if(frameCounter<range*mapScale)
 		{
-			if(dir==0 && (posX-speed)>0 && matrix[(posX-speed)/mapScale][posY/mapScale]==0)
+			if(dir==0 && (posX-speed)>0 &&
+						 (matrix[(posX-speed)/mapScale][(posY+(mapScale*20)/100)/mapScale]==0 &&
+						  matrix[(posX-speed)/mapScale][(posY+(mapScale*80)/100)/mapScale]==0))
 			{
 				posX=posX-speed;
 				frameCounter+=8;
 			}
-			else if(dir==1 && (posY+mapScale+speed)/mapScale<matrix[0].length && matrix[posX/mapScale][(posY+mapScale+speed)/mapScale]==0)
+			else if(dir==1 && (posY+mapScale+speed)/mapScale<matrix[0].length &&
+				   (matrix[(posX+(mapScale*20)/100)/mapScale][(posY+mapScale+speed)/mapScale]==0 &&
+				   	matrix[(posX+(mapScale*80)/100)/mapScale][(posY+mapScale+speed)/mapScale]==0))
 			{
 				posY=posY+speed;
 				frameCounter+=8;
 			}
-			else if(dir==2 && (posX+mapScale+speed)/mapScale<matrix.length && matrix[(posX+mapScale+speed)/mapScale][posY/mapScale]==0)
+			else if(dir==2 && (posX+mapScale+speed)/mapScale<matrix.length &&
+				   (matrix[(posX+mapScale+speed)/mapScale][(posY+(mapScale*20)/100)/mapScale]==0 &&
+					matrix[(posX+mapScale+speed)/mapScale][(posY+(mapScale*80)/100)/mapScale]==0))
 			{
 				posX=posX+speed;
 				frameCounter+=8;
 			}
-			else if(dir==3 && (posY-speed)>0 && matrix[posX/mapScale][(posY-speed)/mapScale]==0)
+			else if(dir==3 && (posY-speed)>0 &&
+				   (matrix[(posX+(mapScale*20)/100)/mapScale][(posY-speed)/mapScale]==0 &&
+				    matrix[(posX+(mapScale*80)/100)/mapScale][(posY-speed)/mapScale]==0))
 			{
 				posY=posY-speed;
 				frameCounter+=8;
