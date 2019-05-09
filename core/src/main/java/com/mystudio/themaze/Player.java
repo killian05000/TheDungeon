@@ -481,8 +481,7 @@ public class Player
 		posX=defaultPosX;
 		posY=defaultPosY;
 		direction=-1;
-		for(int i=0; i<bag.size(); i++)
-			bag.remove(i);
+		bag.clear();	
 		itemPos=0;
 		escape=false;
 		alive=true;
