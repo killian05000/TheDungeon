@@ -265,6 +265,7 @@ public class Player
 			{
 				posX = newPos;
 	    		escape=true;
+	    		eventListener.setVictorySoundON(true);
 			}
 		}
 		else if( dir == 1 || dir == 3)
@@ -286,6 +287,7 @@ public class Player
 			{
 				posY = newPos;
 	    		escape=true;
+	    		eventListener.setVictorySoundON(true);
 			}
 		}
 		
@@ -477,7 +479,11 @@ public class Player
 		posX=defaultPosX;
 		posY=defaultPosY;
 		direction=-1;
+		for(int i=0; i<bag.size(); i++)
+			bag.remove(i);
 		itemPos=0;
+		escape=false;
+		alive=true;
 	}
 	
 	public ArrayList<Item> getBag()
