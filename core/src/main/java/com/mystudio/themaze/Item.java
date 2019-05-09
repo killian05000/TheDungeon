@@ -96,7 +96,7 @@ public class Item
 		else
 		{
 			isLaunched=false;
-			frameCounter=0;
+			frameCounter=0;			
 		}
 	}
 	
