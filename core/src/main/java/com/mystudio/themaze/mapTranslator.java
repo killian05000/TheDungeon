@@ -19,7 +19,7 @@ public class mapTranslator
 	{
 		try
 		{
-			map = ImageIO.read(new File("../assets/"+path));
+			map = ImageIO.read(new File("../assets/map/"+path));
 		}
 		catch(IOException e)
 		{
@@ -57,7 +57,7 @@ public class mapTranslator
 			yM=0;
 			xM++;
 		}
-		displayMatrix();		
+		//displayMatrix();		
 	}
 	
 	/**
