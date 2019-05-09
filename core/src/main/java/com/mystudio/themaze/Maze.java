@@ -33,9 +33,9 @@ public class Maze
 		items = new ArrayList<Item>();
 		
 		maps = new ArrayList<Texture>();
-		maps.add(new Texture("map/mapLevel1doorLocked.png"));
-		maps.add(new Texture("map/mapLevel1doorUnlocked.png"));
-		maps.add(new Texture("map/MapLevel1Layer2.png"));
+		maps.add(new Texture("map/MapDoorClosed.png"));
+		maps.add(new Texture("map/MapDoorOpen.png"));
+		maps.add(new Texture("map/MapSecondLayer.png"));
 		maps.add(new Texture("map/GameOver.png"));
 		maps.add(new Texture("map/Victory.png"));
 
