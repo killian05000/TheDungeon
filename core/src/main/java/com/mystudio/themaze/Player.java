@@ -22,6 +22,9 @@ public class Player
 	int[][] matrix;
 	Maze maze;
 	
+	private int defaultPosX;
+	private int defaultPosY;
+	
 	private int mapScale;	
 
 	private ArrayList<Item> bag;	
@@ -34,6 +37,8 @@ public class Player
 	private int frameCounter=0;
 	private int previousDir=-1;
 	
+	private EventListener eventListener;
+	
 	public enum mapObject
 	{
 		
@@ -44,12 +49,15 @@ public class Player
 	 * @param y : default y player's position
 	 * @param scale : tile size
 	 */
-	public Player(int x, int y, int scale, Maze maze) 
+	public Player(int x, int y, int scale, Maze maze, EventListener _eventListener) 
 	{
+		eventListener = _eventListener;
 		badpac = new Texture("player/badpacLeft.png");
 		mapScale = scale;
-		posX = x*mapScale;
-		posY = y*mapScale;
+		defaultPosX = x*mapScale;
+		defaultPosY = y*mapScale;
+		posX = defaultPosX;
+		posY = defaultPosY;
 		alive=true;
 		escape=false;
 		this.maze= maze;
@@ -243,7 +251,12 @@ public class Player
 			if(corner1 == 0 && corner2 == 0)
 			{
 				posX = newPos;
-			}		    		
+			}	
+			else if(corner1 == 4 || corner2 == 4)
+			{
+				posX = newPos;
+				alive=false;
+			}
 			else if(corner1 == 5 && corner2 == 5 && bag.size()==3)
 			{
 				posX = newPos;
@@ -259,7 +272,12 @@ public class Player
 			if(corner1 == 0 && corner2 == 0)
 			{
 				posY = newPos;
-			}		    		
+			}	
+			else if(corner1 == 4 || corner2 == 4)
+			{
+				posY = newPos;
+				alive=false;
+			}
 			else if(corner1 == 5 && corner2 == 5 && bag.size()==3)
 			{
 				posY = newPos;
@@ -309,6 +327,12 @@ public class Player
 			nextDirection=-1;
 			
 		}
+		else if(corner1 == 4 && corner2 == 4)
+		{
+			direction = dir;
+			badpac = textures.get(dir);
+			nextDirection=-1;
+		}
 		else if(corner1 == 5 && corner2 == 5)
 		{
 			direction = dir;
@@ -334,6 +358,12 @@ public class Player
 	public void setNextDir(int corner1, int corner2, int dir)
 	{
 		if(corner1 == 0 && corner2 == 0)
+		{
+			direction = nextDirection;
+			badpac = textures.get(dir);
+			nextDirection=-1;
+		}
+		if(corner1 == 4 && corner2 == 4)
 		{
 			direction = nextDirection;
 			badpac = textures.get(dir);
@@ -375,6 +405,7 @@ public class Player
 		if(itemPos>0)
 		{
 			Item item = bag.get(itemPos-1);			
+			eventListener.setThrowingObjectSoundON(true);
 			item.animation(posX,  posY, 5, 8, direction);			
 			bag.remove(itemPos-1);
 			itemPos--;
@@ -441,9 +472,22 @@ public class Player
 		return posY;
 	}
 	
+	public void restart()
+	{
+		posX=defaultPosX;
+		posY=defaultPosY;
+		direction=-1;
+		itemPos=0;
+	}
+	
 	public ArrayList<Item> getBag()
 	{
 		return bag;
+	}
+	
+	public void setItemPos(int pos)
+	{
+		itemPos=0;
 	}
 	
 	public boolean getAlive()
