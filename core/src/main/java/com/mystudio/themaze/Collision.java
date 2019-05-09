@@ -7,6 +7,7 @@ public class Collision {
 	ArrayList<Item> items;
 	ArrayList<Enemy> enemies;
 	int mapScale;
+	EventListener eventListener;
 	
 	/**
 	 * 
@@ -14,12 +15,13 @@ public class Collision {
 	 * @param _player : player instance
 	 * @param scale : tile size
 	 */
-	public Collision(ArrayList<Item> _items, Player _player, ArrayList<Enemy> _enemies, int scale) 
+	public Collision(ArrayList<Item> _items, Player _player, ArrayList<Enemy> _enemies, int scale, EventListener _eventListener) 
 	{
 		player = _player;
 		items = _items;
 		enemies = _enemies;
 		mapScale = scale;
+		eventListener = _eventListener;
 	}
 	
 	/**
@@ -48,6 +50,7 @@ public class Collision {
 				{
 					player.addItem(items.get(i));
 					System.out.println("The player just collected an item");
+					eventListener.setPickingObjectSoundON(true);
 					//items.remove(i);
 					break;
 				}
@@ -60,6 +63,7 @@ public class Collision {
 				{
 					player.addItem(items.get(i));
 					System.out.println("The player just collected an item");
+					eventListener.setPickingObjectSoundON(true);
 					//items.remove(i);
 					break;
 				}
@@ -88,6 +92,7 @@ public class Collision {
 			{
 				System.out.println("Enemy has collided with the player");
 				player.setAlive(false);
+				eventListener.setGameOverSoundON(true);
 				break;
 			}
 			
@@ -99,6 +104,7 @@ public class Collision {
 			{
 				System.out.println("Enemy has collided with the player");
 				player.setAlive(false);
+				eventListener.setGameOverSoundON(true);
 				break;
 			}		
 			
