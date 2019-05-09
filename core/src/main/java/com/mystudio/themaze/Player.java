@@ -256,6 +256,7 @@ public class Player
 			{
 				posX = newPos;
 				alive=false;
+				eventListener.setGameOverSoundON(true);
 			}
 			else if(corner1 == 5 && corner2 == 5 && bag.size()==3)
 			{
@@ -278,6 +279,7 @@ public class Player
 			{
 				posY = newPos;
 				alive=false;
+				eventListener.setGameOverSoundON(true);
 			}
 			else if(corner1 == 5 && corner2 == 5 && bag.size()==3)
 			{
