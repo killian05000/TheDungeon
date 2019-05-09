@@ -70,4 +70,10 @@ Mardi 07/05:
 -Beta almost ready : tomorrow objective
 -Avancement sur l'algo
 
+Mercredi 08/05:
+-Algo qui marche a priori
+-musicHandler + eventListener
+-pièges + nouveaux spawn
+-restart function
+
 
