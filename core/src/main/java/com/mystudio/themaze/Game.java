@@ -30,9 +30,9 @@ public class Game extends BasicGame {
     	
     	player = new Player(maze.getPlayerSpawnX(), maze.getPlayerSpawnY(), maze.getMapScale(), maze, eventListener);
     	enemies = new ArrayList<Enemy>();
-    	enemies.add(new Enemy(maze.getEnemySpawnX(0), maze.getEnemySpawnY(0), maze.getMapScale(), maze));
-    	enemies.add(new Enemy(maze.getEnemySpawnX(1), maze.getEnemySpawnY(1), maze.getMapScale(), maze));
-    	enemies.add(new Enemy(maze.getEnemySpawnX(2), maze.getEnemySpawnY(2), maze.getMapScale(), maze));
+    	enemies.add(new Enemy(maze.getEnemySpawnX(0), maze.getEnemySpawnY(0), maze.getMapScale(), maze, player, 4, 1));
+    	enemies.add(new Enemy(maze.getEnemySpawnX(1), maze.getEnemySpawnY(1), maze.getMapScale(), maze, player, 2, 0));
+    	enemies.add(new Enemy(maze.getEnemySpawnX(2), maze.getEnemySpawnY(2), maze.getMapScale(), maze, player, 2, 0));
     	
 //    	maze.addItem(new Item(23, 27, maze.getMapScale(), "item/key.png", maze));
 //    	maze.addItem(new Item(23, 28, maze.getMapScale(), "item/sword.png", maze));

@@ -142,7 +142,7 @@ public class Player
     	{
     		throwItem();
     	}
-
+		
 	
     	switch(direction)
     	{
