@@ -1,139 +1,28 @@
 package com.mystudio.themaze;
 
 import java.util.ArrayList;
-
-import org.mini2Dx.core.graphics.Graphics;
-
 import com.badlogic.gdx.graphics.Texture;
 
-import Algorithm.Astar;
-
-public class Enemy {
-	private Astar brain;
-	private Texture pacMove;
-	private ArrayList<Texture> textures;
-	private int posX;
-	private int posY;
-	private int defaultPosX;
-	private int defaultPosY;
-	private int speed=4;
-	private int direction;
-	private int[][] matrix;
-	private Player target;
-	private int IQ;
-	
-	private int mapScale;	
+public class RandomEnemy extends Enemy
+{
 	
 	/**
-	 * 
+	 * Call the constructor of the mother class
 	 * @param x : default x enemy's position
 	 * @param y : default y enemy's position
-	 * @param scale : tile size
+	 * @param maze : maze instance
+	 * @param speed : enemy speed
 	 */
-	public Enemy(int x, int y, int scale, Maze maze, Player _target, int _speed, int _IQ)
+	public RandomEnemy(int x, int y, Maze maze, int speed)
 	{
-		IQ = _IQ;
-		speed=_speed;
-		target = _target;
-		pacMove = new Texture("badGuy/pacMoveLeft.png");
-		mapScale = scale;
-		defaultPosX = x*mapScale;
-		defaultPosY = y*mapScale;
-		posX = defaultPosX;
-		posY = defaultPosY;
-		
-		matrix = maze.getMatrix();
-		brain = new Astar(matrix, mapScale);
-		
-		textures = new ArrayList<Texture>();
-		textures.add(new Texture("badGuy/pacMoveUp.png"));
-		textures.add(new Texture("badGuy/pacMoveRight.png"));
-		textures.add(new Texture("badGuy/pacMoveDown.png"));
-		textures.add(new Texture("badGuy/pacMoveLeft.png"));
+		super(x, y, maze,speed);
 	}
 	
 	/**
-	 * Update the enemy direction randomly
-	 * @param maze : maze instance to check collisions with the walls and different fixed objects
+	 * Generate random movements for the enemy
 	 */
-	public  void  update () 
-	{		
-		if(IQ==0)
-			lowIQ();
-		else if(IQ==1)
-			highIQ();			
-	}
-	
-	public void highIQ()
-	{
-		int newPosX;
-    	int newPosY;
-    	//Astar brain = new Astar(matrix, mapScale);
-    	direction = brain.updateDirection(posX, posY, target.getPosX(), target.getPosY());
-    	//System.out.println("direction : " + direction);
-		//System.exit(0);
-
-    	switch(direction)
-    	{
-			case 0: // UP
-				newPosX = posX - speed;				
-				if(newPosX >=0 
-					&& (matrix[newPosX / mapScale][posY / mapScale] == 0
-					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0) ||
-					(matrix[newPosX / mapScale][posY / mapScale] == 9
-					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 9))
-				{
-					posX = newPosX;
-					pacMove = textures.get(direction);
-				}
-
-				break;
-				
-			case 1: // RIGHT
-				newPosY = posY + speed;	    		
-	    		if((newPosY + mapScale - speed) / mapScale < matrix[0].length 
-					&& (matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
-					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0) ||
-	    			(matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 9
-					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 9))
-	    		{
-					posY = newPosY;
-					pacMove = textures.get(direction);
-	    		}
-
-				break;
-				
-			case 2: // DOWN
-				newPosX = posX + speed;	    		
-				if((newPosX + mapScale - speed) / mapScale < matrix.length 
-						&& (matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
-						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0) ||
-						(matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 9
-						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 9))
-				{
-						posX = newPosX;
-						pacMove = textures.get(direction);
-				}
-				break;
-				
-			case 3: // LEFT
-				newPosY = posY - speed;				
-	    		if(newPosY >= 0 
-					&& (matrix[posX / mapScale][newPosY / mapScale] == 0
-					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0) ||
-					(matrix[posX / mapScale][newPosY / mapScale] == 9
-					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 9))
-	    		{
-					posY = newPosY;
-					pacMove = textures.get(direction);
-	    		}
-	    		break;	
-				
-		}
-	}
-	
-	
-	public  void  lowIQ() 
+	@Override
+	public void algorithm() 
 	{		
 		int newPosX;
     	int newPosY;
@@ -148,7 +37,6 @@ public class Enemy {
 					)
 				{
 					posX = newPosX;
-					pacMove = textures.get(direction);
 				}
 				else
 					direction = (int)(Math.random() * (4-0));				
@@ -162,7 +50,6 @@ public class Enemy {
 					)
 	    		{
 					posY = newPosY;
-					pacMove = textures.get(direction);
 	    		}
 	    		else
 	    			direction = (int)(Math.random() * (4-0));
@@ -176,7 +63,6 @@ public class Enemy {
 						) 
 				{
 						posX = newPosX;
-						pacMove = textures.get(direction);
 				}
 	    		else
 	    			direction = (int)(Math.random() * (4-0));
@@ -190,7 +76,6 @@ public class Enemy {
 					) 
 	    		{
 					posY = newPosY;
-					pacMove = textures.get(direction);
 	    		}
 	    		else
 	    			direction = (int)(Math.random() * (4-0));
@@ -198,35 +83,37 @@ public class Enemy {
 		}
 	}
 
-	
-	public void respawn()
-	{
-		posX = defaultPosX;
-		posY = defaultPosY;
-		brain.clearStructs();
-	}
-	
 	/**
-	 * render the enemy sprite
-	 * @param g
+	 * Call the respawn() method
 	 */
-	public void render(Graphics g) 
-	{	
-		g.drawTexture(pacMove, posY, posX, mapScale, mapScale);
-	}
-	
-	public int getPosX()
+	@Override
+	public void reset()
 	{
-		return posX;
+		respawn();
 	}
-	
-	public int getPosY()
+
+	/**
+	 * Load the enemy sprites to render the animations
+	 */
+	@Override
+	protected void loadAnimation() 
 	{
-		return posY;
-	}
-	
-	public int getSpeed()
-	{
-		return speed;
+		enemySprite = new Texture("enemies/enemy/enemyDown.png");
+		
+		animationUp = new ArrayList<Texture>();		
+		animationUp.add(new Texture("enemies/enemy/enemyUp.png"));
+		animationUp.add(new Texture("enemies/enemy/enemyUpGrey.png"));
+		
+		animationRight = new ArrayList<Texture>();		
+		animationRight.add(new Texture("enemies/enemy/enemyRight.png"));
+		animationRight.add(new Texture("enemies/enemy/enemyRightGrey.png"));
+		
+		animationDown = new ArrayList<Texture>();		
+		animationDown.add(new Texture("enemies/enemy/enemyDown.png"));
+		animationDown.add(new Texture("enemies/enemy/enemyDownGrey.png"));	
+		
+		animationLeft = new ArrayList<Texture>();		
+		animationLeft.add(new Texture("enemies/enemy/enemyLeft.png"));
+		animationLeft.add(new Texture("enemies/enemy/enemyLeftGrey.png"));
 	}		
 }
