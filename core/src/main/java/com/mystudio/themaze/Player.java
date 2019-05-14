@@ -419,11 +419,15 @@ public class Player
 	 * Add an item to the player bag
 	 * @param item : item instance
 	 */
-	public void addItem(Item item) {
+	public void addItem(Item item) 
+	{
 		bag.add(item);
 		item.setPosX(0);
 		item.setPosY(itemPos*mapScale);
 		itemPos++;
+		
+		if(bag.size()==3)
+			eventListener.setDoorOpenSoundON(true);
 	}
 	
 	/**
@@ -438,6 +442,9 @@ public class Player
 			item.animation(posX,  posY, 5, 8, direction);			
 			bag.remove(itemPos-1);
 			itemPos--;
+			
+			if(bag.size()==2)
+				eventListener.setDoorClosedSoundON(true);
 		}
 	}
 	
