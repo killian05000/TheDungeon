@@ -50,7 +50,6 @@ public class mapTranslator
 				v[1] = (pixel >> 8) & 0xff;
 				v[2] = pixel & 0xff;
 				
-				//System.out.println("["+x+","+y+"] : "+"("+v[0]+","+v[1]+","+v[2]+")");
 				buildMatrix(v,xM,yM);
 				yM++;
 			}
@@ -66,7 +65,7 @@ public class mapTranslator
 	 * @param x : axis x of the matrix
 	 * @param y : axis y of the matrix
 	 */
-	public void buildMatrix(int[] p, int x, int y) // (x = line,y = column)
+	private void buildMatrix(int[] p, int x, int y) // (x = line,y = column)
 	{
 		if(p[0]==198 && p[1]==198 && p[2]==198) // ALLEYS
 			matrix[x][y] = 0;
@@ -89,10 +88,8 @@ public class mapTranslator
 	/**
 	 * Display the game matrix
 	 */
-	public void displayMatrix()
+	private void displayMatrix()
 	{
-		//System.out.println("Height : "+matrix.length);
-		//System.out.println("Width : "+matrix[0].length);
 		for(int x=0; x<matrix.length; x+=1)
 		{
 			for(int y=0; y<matrix[0].length; y+=1)

@@ -3,17 +3,20 @@ package com.mystudio.themaze;
 import java.util.ArrayList;
 
 public class Collision {
-	Player player;
-	ArrayList<Item> items;
-	ArrayList<Enemy> enemies;
-	int mapScale;
-	EventListener eventListener;
+	
+	private ArrayList<Item> items;
+	private ArrayList<Enemy> enemies;
+	private int mapScale;
+	private Player player;	
+	private EventListener eventListener;
 	
 	/**
 	 * 
-	 * @param _items : maze items
-	 * @param _player : player instance
-	 * @param scale : tile size
+	 * @param _items :
+	 * @param _player
+	 * @param _enemies
+	 * @param scale
+	 * @param _eventListener
 	 */
 	public Collision(ArrayList<Item> _items, Player _player, ArrayList<Enemy> _enemies, int scale, EventListener _eventListener) 
 	{

@@ -9,53 +9,45 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class MusicHandler {
-	ArrayList<Clip> sounds;
+	private ArrayList<Clip> sounds;
 	
+	/**
+	 * Constructor loading the sounds
+	 */
 	public MusicHandler() {
 		try 
 		{
-			System.out.println("1");
-
 			Clip backgroundMusic = AudioSystem.getClip();
 			backgroundMusic.open(AudioSystem.getAudioInputStream(new File("../assets/music/Pim Poy.wav")));
-			
-			System.out.println("2");
 
-			
 			Clip gameOver = AudioSystem.getClip();
 			gameOver.open(AudioSystem.getAudioInputStream(new File("../assets/music/Game Over.wav")));
-			
-			System.out.println("3");
-
 			
 			Clip win = AudioSystem.getClip();
 			win.open(AudioSystem.getAudioInputStream(new File("../assets/music/Win.wav")));
 			
-			System.out.println("4");
-			
 			Clip getItem = AudioSystem.getClip();
 			getItem.open(AudioSystem.getAudioInputStream(new File("../assets/music/getItem.wav")));
-			
-			System.out.println("5");
-			
+
 			Clip throwItem = AudioSystem.getClip();
 			throwItem.open(AudioSystem.getAudioInputStream(new File("../assets/music/throwItem.wav")));
-			
-			System.out.println("6");			
-			
+
 			sounds = new ArrayList<Clip>();
 			sounds.add(backgroundMusic);
 			sounds.add(gameOver);
 			sounds.add(win);
 			sounds.add(getItem);
 			sounds.add(throwItem);
-			System.out.println("sounds DONE");
-		} catch (Exception e) 
+		} 
+		catch (Exception e) 
 		{
 			e.getStackTrace();
 		} 
 	}
 	
+	/**
+	 * Start the game music
+	 */
 	public void startGameMusic()
 	{
 		sounds.get(1).stop();
@@ -63,32 +55,59 @@ public class MusicHandler {
 		sounds.get(0).loop(LOOP_CONTINUOUSLY);
 	}
 	
+	/**
+	 * Stop the game music
+	 */
 	public void stopGameMusic()
 	{
 		sounds.get(0).stop();
 	}
 	
-	public void gameOver()
+	/**
+	 * Game over sound
+	 */
+	public void gameOverSound()
 	{
 		sounds.get(0).stop();
 		sounds.get(1).start();
 	}
 	
-	public void gameWin()
+	/**
+	 * Win sound
+	 */
+	public void gameWinSound()
 	{
 		sounds.get(0).stop();
 		sounds.get(2).start();
 	}
 	
-	public void getItem()
+	/**
+	 * Pick up item sound
+	 */
+	public void pickItemSound()
 	{
 		sounds.get(3).setFramePosition(0);
 		sounds.get(3).start();		
 	}
 	
-	public void throwItem()
+	/**
+	 * Throw item sound
+	 */
+	public void throwItemSound()
 	{
 		sounds.get(4).setFramePosition(0);
 		sounds.get(4).start();
+	}
+	
+	/**
+	 * Reset all the sounds frame position and pause them
+	 */
+	public void resetSounds()
+	{
+		for(int i=0; i<sounds.size(); i++)
+		{
+			sounds.get(i).stop();
+			sounds.get(i).setFramePosition(0);
+		}
 	}
 }

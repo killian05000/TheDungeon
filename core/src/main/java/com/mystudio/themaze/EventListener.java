@@ -9,6 +9,9 @@ public class EventListener
 	private boolean throwingObjectSoundON;
 	private MusicHandler music;
 
+	/**
+	 * Constructor puts all sound events to false
+	 */
 	public EventListener()
 	{
 		music = new MusicHandler();
@@ -19,49 +22,49 @@ public class EventListener
 		throwingObjectSoundON=false;
 	}
 	
+	/**
+	 * Check if the sound events have changed and play sounds accordingly
+	 */
 	public void updatePlaylist()
 	{
 		if(gameMusicON)
 		{
 			music.startGameMusic();
-			System.out.println("gameMusicOn");
 			gameMusicON=false;
 		}
 		
 		if(gameOverSoundON)
 		{
-			System.out.println("gameOverSoundON");
-			music.gameOver();
+			music.gameOverSound();
 			gameOverSoundON=false;
 			gameMusicON=false;
 		}
 		else if(victorySoundON)
 		{
-			System.out.println("victorySoundON");
-			music.gameWin();
+			music.gameWinSound();
 			victorySoundON=false;
 			gameMusicON=false;
 		}
 		
 		if(pickingObjectSoundON)
 		{
-			System.out.println("pickItemSoundON");
-			music.getItem();
+			music.pickItemSound();
 			pickingObjectSoundON=false;
 		}
 		
 		if(throwingObjectSoundON)
 		{
-			System.out.println("throwItemSoundON");
-			music.throwItem();
+			music.throwItemSound();
 			throwingObjectSoundON=false;
 		}
 	}
 	
+	/**
+	 * Reset the sounds frame position and sets all sound events to false except the game music
+	 */
 	public void resetPlaylist()
 	{
-		music.stopGameMusic();
-		music = new MusicHandler();
+		music.resetSounds();
 		gameMusicON=true;
 		gameOverSoundON=false;
 		victorySoundON=false;
