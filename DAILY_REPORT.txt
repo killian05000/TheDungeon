@@ -76,4 +76,15 @@ Mercredi 08/05:
 -pièges + nouveaux spawn
 -restart function
 
+Jeudi 09/05:
+-implémentation de l'algo
+
+Vendredi 10/05:
+-implémentation de l'algo
+
+Lundi 13/05:
+-refactoring
+
+Mardi 14/05:
+-rdv avec le prof et brainstorming
 
