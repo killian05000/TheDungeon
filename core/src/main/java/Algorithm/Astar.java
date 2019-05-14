@@ -53,7 +53,7 @@ public class Astar
 		{
 			for(int j = 0; j < matrixCell[i].length; j++) 
 			{
-				if(matrix[i][j] == 0 || matrix[i][j] == 2 || matrix[i][j] == 3 || matrix[i][j] == 9)
+				if(matrix[i][j] == 0 || matrix[i][j] == 2 || matrix[i][j] == 3 || matrix[i][j] == 8 || matrix[i][j] == 9)
 					matrixCell[i][j] = new Cell(i, j);
 			}
 		}
