@@ -31,6 +31,12 @@ public class MusicHandler {
 
 			Clip throwItem = AudioSystem.getClip();
 			throwItem.open(AudioSystem.getAudioInputStream(new File("../assets/music/throwItem.wav")));
+			
+			Clip doorOpen = AudioSystem.getClip();
+			doorOpen.open(AudioSystem.getAudioInputStream(new File("../assets/music/doorOpen.wav")));
+			
+			Clip doorClosed = AudioSystem.getClip();
+			doorClosed.open(AudioSystem.getAudioInputStream(new File("../assets/music/doorClosed.wav")));
 
 			sounds = new ArrayList<Clip>();
 			sounds.add(backgroundMusic);
@@ -38,6 +44,8 @@ public class MusicHandler {
 			sounds.add(win);
 			sounds.add(getItem);
 			sounds.add(throwItem);
+			sounds.add(doorOpen);
+			sounds.add(doorClosed);
 		} 
 		catch (Exception e) 
 		{
@@ -97,6 +105,18 @@ public class MusicHandler {
 	{
 		sounds.get(4).setFramePosition(0);
 		sounds.get(4).start();
+	}
+	
+	public void doorOpenSound()
+	{
+		sounds.get(5).setFramePosition(0);
+		sounds.get(5).start();
+	}
+	
+	public void doorClosedSound()
+	{
+		sounds.get(6).setFramePosition(0);
+		sounds.get(6).start();
 	}
 	
 	/**
