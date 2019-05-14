@@ -77,6 +77,7 @@ public class MusicHandler {
 	public void gameOverSound()
 	{
 		sounds.get(0).stop();
+		sounds.get(1).setFramePosition(0);
 		sounds.get(1).start();
 	}
 	
@@ -86,6 +87,7 @@ public class MusicHandler {
 	public void gameWinSound()
 	{
 		sounds.get(0).stop();
+		sounds.get(2).setFramePosition(0);
 		sounds.get(2).start();
 	}
 	
