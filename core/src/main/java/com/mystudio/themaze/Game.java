@@ -15,33 +15,20 @@ public class Game extends BasicGame
 	private Player player;
 	private Collision collision;
 	private ArrayList<Enemy> enemies;
-	private EventListener eventListener;
 
 
 	@Override
 	public void initialise() 
 	{
-	mapTranslator map = new mapTranslator("MapSkeleton.png");
-	map.translate();
+		mapTranslator map = new mapTranslator("MapSkeleton.png");
+		map.translate();
 		
     	maze = new Maze(map);
-    	eventListener = new EventListener();
     	
-    	player = new Player(maze.getPlayerSpawnX(), maze.getPlayerSpawnY(), maze, eventListener);
-    	enemies = new ArrayList<Enemy>();
-    	enemies.add(new SmartEnemy(maze.getEnemySpawnX(0), maze.getEnemySpawnY(0), maze, player, 4));
-    	enemies.add(new RandomEnemy(maze.getEnemySpawnX(1), maze.getEnemySpawnY(1), maze, 2));
-    	enemies.add(new RandomEnemy(maze.getEnemySpawnX(2), maze.getEnemySpawnY(2), maze, 2));
-//    	maze.addItem(new Item(23, 27, maze.getMapScale(), "item/key.png", maze));
-//    	maze.addItem(new Item(23, 28, maze.getMapScale(), "item/sword.png", maze));
-//    	maze.addItem(new Item(23, 29, maze.getMapScale(), "item/potion.png", maze));
-    	
-    	maze.addItem(new Item(6, 0, maze.getMapScale(), "item/key.png", maze));
-    	maze.addItem(new Item(6, 31, maze.getMapScale(), "item/sword.png", maze));
-    	maze.addItem(new Item(21, 3, maze.getMapScale(), "item/potion.png", maze));
+    	player = maze.getPlayer();
+    	enemies = maze.getEnemies();
 
-    	
-    	collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale(), eventListener);
+    	collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale(), maze.getEventListener());
     }
     
     @Override
@@ -56,7 +43,7 @@ public class Game extends BasicGame
 	    	collision.verifyEnemy();
     	}
     	
-    	eventListener.updatePlaylist();
+    	maze.getEventListener().updatePlaylist();
     	keyPressed();
     }
     
@@ -90,7 +77,7 @@ public class Game extends BasicGame
 			for(int j=0; j<maze.getItems().size(); j++)
 				maze.getItems().get(j).respawn();
 			player.restart();
-			eventListener.resetPlaylist();
+			maze.getEventListener().resetPlaylist();
 		}
     }
 }
