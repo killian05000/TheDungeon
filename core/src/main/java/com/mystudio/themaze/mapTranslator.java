@@ -73,14 +73,18 @@ public class mapTranslator
 			matrix[x][y] = 1;
 		else if(p[0]==103 && p[1]==175 && p[2]==233) // PLAYER SPAWN
 			matrix[x][y] = 2;
-		else if(p[0]==174 && p[1]==64 && p[2]==64) // ENEMY SPAWN
+		else if(p[0]==174 && p[1]==64 && p[2]==64) // RANDOM ENEMY SPAWN
 			matrix[x][y] = 3;
 		else if(p[0]==111 && p[1]==19 && p[2]==17) // TRAPS
 			matrix[x][y] = 4;
 		else if(p[0]==95 && p[1]==76 && p[2]==54) // EXIT DOOR
 			matrix[x][y] = 5;
 		else if(p[0]==158 && p[1]==233 && p[2]==135) // EXIT
-			matrix[x][y] = 6;		
+			matrix[x][y] = 6;
+		else if(p[0]==46 && p[1]==68 && p[2]==117) // OBJECTS SPAWN
+			matrix[x][y] = 7;
+		else if(p[0]==217 && p[1]==211 && p[2]==109) // SMART ENEMY
+			matrix[x][y] = 8;
 		else if(p[0]==163 && p[1]==104 && p[2]==162) // TELEPORTER
 			matrix[x][y] = 9;		
 	}
