@@ -81,10 +81,10 @@ public class Maze
 		{
 			for (int j=0; j<matrix[0].length; j++) 
 			{
-//				if(matrix[i][j]==3) 
-//					enemies.add(new RandomEnemy(i,j,this,2));
-//				else if(matrix[i][j]==8) 
-//					enemies.add(new SmartEnemy(i,j,this, player, 4));
+				if(matrix[i][j]==3) 
+					enemies.add(new RandomEnemy(i,j,this,2));
+				else if(matrix[i][j]==8) 
+					enemies.add(new SmartEnemy(i,j,this, player, 4));
 			}	
 		}		
 	}
