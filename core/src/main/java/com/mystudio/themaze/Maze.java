@@ -41,12 +41,12 @@ public class Maze
 		items = new ArrayList<Item>();
 		
 		maps = new ArrayList<Texture>();
-		maps.add(new Texture("map/Map.png"));
-		maps.add(new Texture("map/DoorClosed.png"));
-		maps.add(new Texture("map/DoorOpen.png"));
-		maps.add(new Texture("map/MapSecondLayer.png"));
-		maps.add(new Texture("map/GameOver.png"));
-		maps.add(new Texture("map/Victory.png"));
+		maps.add(new Texture("map/Map.png")); // 0
+		maps.add(new Texture("map/DoorClosed.png")); // 1
+		maps.add(new Texture("map/DoorOpen.png")); // 2
+		maps.add(new Texture("map/MapSecondLayer.png")); // 3
+		maps.add(new Texture("map/GameOver.png")); // 4
+		maps.add(new Texture("map/Victory.png")); // 5
 
 		
 		mapScale = map.getTileSize();
@@ -226,13 +226,13 @@ public class Maze
 	
 	public void displayUserMapSecondLayer(Graphics g, Player player)
 	{
-		g.drawTexture(maps.get(3), 0, 0, maps.get(2).getWidth(), maps.get(2).getHeight());
+		g.drawTexture(maps.get(3), 0, 0, maps.get(3).getWidth(), maps.get(3).getHeight());
 		
 		if(!player.getAlive())
-			g.drawTexture(maps.get(4), 0, 0, maps.get(3).getWidth(), maps.get(3).getHeight());
+			g.drawTexture(maps.get(4), 0, 0, maps.get(4).getWidth(), maps.get(4).getHeight());
 		
 		else if (player.getEscape())
-			g.drawTexture(maps.get(5), 0, 0, maps.get(4).getWidth(), maps.get(4).getHeight());
+			g.drawTexture(maps.get(5), 0, 0, maps.get(5).getWidth(), maps.get(5).getHeight());
 	}
 	
 	/**
