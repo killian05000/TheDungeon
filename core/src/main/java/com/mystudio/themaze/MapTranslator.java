@@ -13,11 +13,11 @@ public class MapTranslator
 	/**
 	 * @param path : skeleton image file path
 	 */
-	public MapTranslator(String path)
+	public MapTranslator(String fileName)
 	{
 		try
 		{
-			map = ImageIO.read(getClass().getResource("/map/"+path));
+			map = ImageIO.read(getClass().getResource("/map/"+fileName));
 		}
 		catch(IOException e)
 		{
