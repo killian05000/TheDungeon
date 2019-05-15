@@ -36,6 +36,9 @@ public class MusicHandler {
 			
 			Clip doorClosed = AudioSystem.getClip();
 			doorClosed.open(AudioSystem.getAudioInputStream(getClass().getResource("/music/doorClosed.wav")));
+			
+			Clip teleporter = AudioSystem.getClip();
+			teleporter.open(AudioSystem.getAudioInputStream(getClass().getResource("/music/Telep.wav")));
 
 			sounds = new ArrayList<Clip>();
 			sounds.add(backgroundMusic);
@@ -45,6 +48,7 @@ public class MusicHandler {
 			sounds.add(throwItem);
 			sounds.add(doorOpen);
 			sounds.add(doorClosed);
+			sounds.add(teleporter);
 		} 
 		catch (Exception e) 
 		{
@@ -118,6 +122,12 @@ public class MusicHandler {
 	{
 		sounds.get(6).setFramePosition(0);
 		sounds.get(6).start();
+	}
+	
+	public void teleporterSound()
+	{
+		sounds.get(7).setFramePosition(0);
+		sounds.get(7).start();
 	}
 	
 	/**

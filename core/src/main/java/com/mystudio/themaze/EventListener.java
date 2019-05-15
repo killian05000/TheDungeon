@@ -7,6 +7,7 @@ public class EventListener
 	private boolean victorySoundON;
 	private boolean pickingObjectSoundON;
 	private boolean throwingObjectSoundON;
+	private boolean teleporterSoundON;
 	private boolean doorOpenON;
 	private boolean doorClosedON;
 	private MusicHandler music;
@@ -22,6 +23,7 @@ public class EventListener
 		victorySoundON=false;
 		pickingObjectSoundON=false;
 		throwingObjectSoundON=false;
+		teleporterSoundON=false;
 		doorOpenON=false;
 		doorOpenON=false;
 	}
@@ -60,6 +62,12 @@ public class EventListener
 		{
 			music.throwItemSound();
 			throwingObjectSoundON=false;
+		}
+		
+		if(teleporterSoundON)
+		{
+			music.teleporterSound();
+			teleporterSoundON=false;
 		}
 		
 		if(doorOpenON)
@@ -120,6 +128,11 @@ public class EventListener
 	public void setDoorClosedSoundON(boolean b)
 	{
 		doorClosedON = b;
+	}
+	
+	public void setTeleporterSoundON(boolean b)
+	{
+		teleporterSoundON = b;
 	}
 	
 	public boolean getGameMusicON()
