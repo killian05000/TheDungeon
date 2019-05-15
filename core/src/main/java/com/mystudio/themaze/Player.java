@@ -70,14 +70,39 @@ public class Player
 		playerSprite = defaultPlayerSprite;
 		
 		bag = new ArrayList<Item>();
+//		animationLeft = new ArrayList<Texture>();		
+//		animationLeft.add(new Texture("player/badpacLeft.png"));
+//		animationLeft.add(new Texture("player/badpacLeftPink.png"));
+		
 		animationLeft = new ArrayList<Texture>();		
-		animationLeft.add(new Texture("player/badpacLeft.png"));
-		animationLeft.add(new Texture("player/badpacLeftPink.png"));
+		animationLeft.add(new Texture("player/runLeft/0.png"));
+		animationLeft.add(new Texture("player/runLeft/1.png"));
+		animationLeft.add(new Texture("player/runLeft/2.png"));
+		animationLeft.add(new Texture("player/runLeft/3.png"));
+		animationLeft.add(new Texture("player/runLeft/4.png"));
+		animationLeft.add(new Texture("player/runLeft/5.png"));
+		animationLeft.add(new Texture("player/runLeft/6.png"));
+		animationLeft.add(new Texture("player/runLeft/7.png"));
+		animationLeft.add(new Texture("player/runLeft/8.png"));
+		animationLeft.add(new Texture("player/runLeft/9.png"));
+		
+//		animationRight = new ArrayList<Texture>();		
+//		animationRight.add(new Texture("player/badpacRight.png"));
+//		animationRight.add(new Texture("player/badpacRightYellow.png"));
 		
 		animationRight = new ArrayList<Texture>();		
-		animationRight.add(new Texture("player/badpacRight.png"));
-		animationRight.add(new Texture("player/badpacRightYellow.png"));
+		animationRight.add(new Texture("player/runRight/0.png"));
+		animationRight.add(new Texture("player/runRight/1.png"));
+		animationRight.add(new Texture("player/runRight/2.png"));
+		animationRight.add(new Texture("player/runRight/3.png"));
+		animationRight.add(new Texture("player/runRight/4.png"));
+		animationRight.add(new Texture("player/runRight/5.png"));
+		animationRight.add(new Texture("player/runRight/6.png"));
+		animationRight.add(new Texture("player/runRight/7.png"));
+		animationRight.add(new Texture("player/runRight/8.png"));
+		animationRight.add(new Texture("player/runRight/9.png"));
 		
+		/*
 		animationUp = new ArrayList<Texture>();		
 		animationUp.add(new Texture("player/badpacUp.png"));
 		animationUp.add(new Texture("player/badpacUpBlue.png"));
@@ -85,6 +110,7 @@ public class Player
 		animationDown = new ArrayList<Texture>();		
 		animationDown.add(new Texture("player/badpacDown.png"));
 		animationDown.add(new Texture("player/badpacDownGreen.png"));
+		*/
 	}
 	
 	
@@ -315,6 +341,7 @@ public class Player
 		
 		if(corner1 == 9 && corner2 == 9)
 		{
+			eventListener.setTeleporterSoundON(true);
 			int[] newTabPos = null;
 			if(dir == 0)
 			{
@@ -464,26 +491,61 @@ public class Player
 	 */
 	private void updateAnimation()
 	{
-		if(previousDir != direction)
+		if(previousDir != direction && direction !=0 && direction != 2)
 		{
 			animCounter=0;
 			frameCounter=0;
 		}
 		
-		if(direction == 0)
+//		if(direction == 0)
+//		{
+//			animate(animationUp);
+//			previousDir = 0;
+//		}
+//		else if(direction == 1)
+//		{
+//			animate(animationRight);
+//			previousDir = 1;
+//		}
+//		else if(direction == 2)
+//		{
+//			animate(animationDown);
+//			previousDir = 2;
+//		}
+//		else if(direction == 3)	
+//		{
+//			animate(animationLeft);
+//			previousDir = 3;
+//		}
+		
+		if(direction == 0 && previousDir == 3)
 		{
-			animate(animationUp);
-			previousDir = 0;
+			animate(animationLeft);
+			previousDir = 3;
+			System.out.println("haut-gauche");
+		}
+		else if(direction == 0 && previousDir == 1)
+		{
+			animate(animationRight);
+			previousDir = 1;
+			System.out.println("haut-droit");
 		}
 		else if(direction == 1)
 		{
 			animate(animationRight);
 			previousDir = 1;
 		}
-		else if(direction == 2)
+		else if(direction == 2 && previousDir == 3)
 		{
-			animate(animationDown);
-			previousDir = 2;
+			animate(animationLeft);
+			previousDir = 3;
+			System.out.println("bas-gauche");
+		}
+		else if(direction == 2 && previousDir == 1)
+		{
+			animate(animationRight);
+			previousDir = 1;
+			System.out.println("bas-droit");
 		}
 		else if(direction == 3)	
 		{

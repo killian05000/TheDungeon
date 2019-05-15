@@ -63,26 +63,36 @@ public abstract class Enemy
 	 */
 	private void updateAnimation()
 	{
-		if(previousDir != direction)
+		if(previousDir != direction && direction !=0 && direction != 2)
 		{
 			animCounter=0;
 			frameCounter=0;
 		}
 		
-		if(direction == 0)
+		if(direction == 0 && previousDir == 3)
 		{
-			animate(animationUp);
-			previousDir = 0;
+			animate(animationLeft);
+			previousDir = 3;
+		}
+		else if(direction == 0 && previousDir == 1)
+		{
+			animate(animationRight);
+			previousDir = 1;
 		}
 		else if(direction == 1)
 		{
 			animate(animationRight);
 			previousDir = 1;
 		}
-		else if(direction == 2)
+		else if(direction == 2 && previousDir == 3)
 		{
-			animate(animationDown);
-			previousDir = 2;
+			animate(animationLeft);
+			previousDir = 3;
+		}
+		else if(direction == 2 && previousDir == 1)
+		{
+			animate(animationRight);
+			previousDir = 1;
 		}
 		else if(direction == 3)	
 		{
