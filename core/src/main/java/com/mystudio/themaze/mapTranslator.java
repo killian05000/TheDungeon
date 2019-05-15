@@ -19,7 +19,7 @@ public class mapTranslator
 	{
 		try
 		{
-			map = ImageIO.read(new File("../assets/map/"+path));
+			map = ImageIO.read(getClass().getResource("/map/"+path));
 		}
 		catch(IOException e)
 		{

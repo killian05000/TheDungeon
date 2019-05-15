@@ -2,7 +2,6 @@ package com.mystudio.themaze;
 
 import static javax.sound.sampled.Clip.LOOP_CONTINUOUSLY;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioSystem;
@@ -18,25 +17,25 @@ public class MusicHandler {
 		try 
 		{
 			Clip backgroundMusic = AudioSystem.getClip();
-			backgroundMusic.open(AudioSystem.getAudioInputStream(new File("../assets/music/Pim Poy.wav")));
+			backgroundMusic.open(AudioSystem.getAudioInputStream(getClass().getResource("/music/Pim Poy.wav")));
 
 			Clip gameOver = AudioSystem.getClip();
-			gameOver.open(AudioSystem.getAudioInputStream(new File("../assets/music/Game Over.wav")));
+			gameOver.open(AudioSystem.getAudioInputStream(getClass().getResource("/music/Game Over.wav")));
 			
 			Clip win = AudioSystem.getClip();
-			win.open(AudioSystem.getAudioInputStream(new File("../assets/music/Win.wav")));
+			win.open(AudioSystem.getAudioInputStream(getClass().getResource("/music/Win.wav")));
 			
 			Clip getItem = AudioSystem.getClip();
-			getItem.open(AudioSystem.getAudioInputStream(new File("../assets/music/getItem.wav")));
+			getItem.open(AudioSystem.getAudioInputStream(getClass().getResource("/music/getItem.wav")));
 
 			Clip throwItem = AudioSystem.getClip();
-			throwItem.open(AudioSystem.getAudioInputStream(new File("../assets/music/throwItem.wav")));
+			throwItem.open(AudioSystem.getAudioInputStream(getClass().getResource("/music/throwItem.wav")));
 			
 			Clip doorOpen = AudioSystem.getClip();
-			doorOpen.open(AudioSystem.getAudioInputStream(new File("../assets/music/doorOpen.wav")));
+			doorOpen.open(AudioSystem.getAudioInputStream(getClass().getResource("/music/doorOpen.wav")));
 			
 			Clip doorClosed = AudioSystem.getClip();
-			doorClosed.open(AudioSystem.getAudioInputStream(new File("../assets/music/doorClosed.wav")));
+			doorClosed.open(AudioSystem.getAudioInputStream(getClass().getResource("/music/doorClosed.wav")));
 
 			sounds = new ArrayList<Clip>();
 			sounds.add(backgroundMusic);
