@@ -1,12 +1,10 @@
 package com.mystudio.themaze;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
-public class mapTranslator 
+public class MapTranslator 
 {
 	private BufferedImage map;
 	private int tileSize = 32;
@@ -15,7 +13,7 @@ public class mapTranslator
 	/**
 	 * @param path : skeleton image file path
 	 */
-	public mapTranslator(String path)
+	public MapTranslator(String path)
 	{
 		try
 		{

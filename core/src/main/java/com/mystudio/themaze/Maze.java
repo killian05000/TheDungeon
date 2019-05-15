@@ -28,7 +28,7 @@ public class Maze
 	 * @param map : the mapTranslator object containing the game matrix
 	 * @param player : player instance
 	 */
-	public Maze(mapTranslator map)
+	public Maze(MapTranslator map)
 	{
 		matrix = new int[map.getMatrix().length][map.getMatrix()[0].length];
 		matrix = map.getMatrix();
