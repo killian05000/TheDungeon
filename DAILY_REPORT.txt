@@ -86,5 +86,14 @@ Lundi 13/05:
 -refactoring
 
 Mardi 14/05:
--rdv avec le prof et brainstorming
+-rdv avec le prof
+-brainstorming
+-commencer a faire des modifs sur le code
+-map porte
+
+Mercredi 15/05 :
+-Junit test tentative
+-nouveaux sprites enemy/player
+-son de la porte et téléporteur
+
 
