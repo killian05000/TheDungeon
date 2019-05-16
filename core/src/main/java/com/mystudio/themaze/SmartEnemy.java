@@ -118,16 +118,16 @@ public class SmartEnemy extends Enemy
 //		animationRight.add(new Texture("enemies/smartEnemy/smartEnemyRightGrey.png"));
 		
 		animationRight = new ArrayList<Texture>();		
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/n0.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/n1.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/n2.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/n3.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/n4.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/n5.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/n6.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/n7.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/n8.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/n9.png"));
+		animationRight.add(new Texture("enemies/smartEnemy/RunRight/0.png"));
+		animationRight.add(new Texture("enemies/smartEnemy/RunRight/1.png"));
+		animationRight.add(new Texture("enemies/smartEnemy/RunRight/2.png"));
+		animationRight.add(new Texture("enemies/smartEnemy/RunRight/3.png"));
+		animationRight.add(new Texture("enemies/smartEnemy/RunRight/4.png"));
+		animationRight.add(new Texture("enemies/smartEnemy/RunRight/5.png"));
+		animationRight.add(new Texture("enemies/smartEnemy/RunRight/6.png"));
+		animationRight.add(new Texture("enemies/smartEnemy/RunRight/7.png"));
+		animationRight.add(new Texture("enemies/smartEnemy/RunRight/8.png"));
+		animationRight.add(new Texture("enemies/smartEnemy/RunRight/9.png"));
 		
 		/*
 		animationDown = new ArrayList<Texture>();		
@@ -140,15 +140,15 @@ public class SmartEnemy extends Enemy
 //		animationLeft.add(new Texture("enemies/smartEnemy/smartEnemyLeftGrey.png"));
 		
 		animationLeft = new ArrayList<Texture>();		
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/n0.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/n1.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/n2.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/n3.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/n4.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/n5.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/n6.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/n7.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/n8.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/n9.png"));
+		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/0.png"));
+		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/1.png"));
+		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/2.png"));
+		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/3.png"));
+		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/4.png"));
+		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/5.png"));
+		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/6.png"));
+		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/7.png"));
+		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/8.png"));
+		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/9.png"));
 	}
 }

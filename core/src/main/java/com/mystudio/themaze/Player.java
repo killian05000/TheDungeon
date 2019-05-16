@@ -66,7 +66,7 @@ public class Player
 		alive=true;
 		escape=false;	
 				
-		defaultPlayerSprite = new Texture("player/badpacLeft.png");
+		defaultPlayerSprite = new Texture("player/runLeft/0.png");
 		playerSprite = defaultPlayerSprite;
 		
 		bag = new ArrayList<Item>();
@@ -560,7 +560,7 @@ public class Player
 	 */
 	private void animate(ArrayList<Texture> anim)
 	{
-		if(frameCounter==animCounter*10)
+		if(frameCounter==animCounter*5)
 		{
 			if(animCounter == anim.size())
 			{

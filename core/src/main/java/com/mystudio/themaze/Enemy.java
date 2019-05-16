@@ -107,7 +107,7 @@ public abstract class Enemy
 	 */
 	private void animate(ArrayList<Texture> anim)
 	{
-		if(frameCounter==animCounter*10)
+		if(frameCounter==animCounter*5)
 		{
 			if(animCounter == anim.size())
 			{
