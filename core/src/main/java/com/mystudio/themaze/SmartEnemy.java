@@ -105,7 +105,7 @@ public class SmartEnemy extends Enemy
 	@Override
 	public void loadAnimation()
 	{
-		enemySprite = new Texture("enemies/smartEnemy/RunLeft/n0.png");
+		enemySprite = new Texture("enemies/smartEnemy/RunLeft/0.png");
 		
 		/*
 		animationUp = new ArrayList<Texture>();		

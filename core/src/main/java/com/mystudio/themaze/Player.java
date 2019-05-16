@@ -490,11 +490,15 @@ public class Player
 	 * Update player's animation according to its direction
 	 */
 	private void updateAnimation()
-	{
-		if(previousDir != direction && direction !=0 && direction != 2)
+	{		
+		System.out.println("Direction : "+ direction);
+		System.out.println("Pdirection : "+ previousDir);
+		
+		if(previousDir != direction && (direction != 0 && direction != 2))
 		{
 			animCounter=0;
 			frameCounter=0;
+			System.out.println("RESET");
 		}
 		
 //		if(direction == 0)
@@ -518,17 +522,16 @@ public class Player
 //			previousDir = 3;
 //		}
 		
+		
 		if(direction == 0 && previousDir == 3)
 		{
 			animate(animationLeft);
 			previousDir = 3;
-			System.out.println("haut-gauche");
 		}
 		else if(direction == 0 && previousDir == 1)
 		{
 			animate(animationRight);
 			previousDir = 1;
-			System.out.println("haut-droit");
 		}
 		else if(direction == 1)
 		{
@@ -539,13 +542,11 @@ public class Player
 		{
 			animate(animationLeft);
 			previousDir = 3;
-			System.out.println("bas-gauche");
 		}
 		else if(direction == 2 && previousDir == 1)
 		{
 			animate(animationRight);
 			previousDir = 1;
-			System.out.println("bas-droit");
 		}
 		else if(direction == 3)	
 		{
