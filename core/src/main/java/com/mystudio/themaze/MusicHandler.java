@@ -7,13 +7,15 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-public class MusicHandler {
+public class MusicHandler 
+{
 	private ArrayList<Clip> sounds;
 	
 	/**
 	 * Constructor loading the sounds
 	 */
-	public MusicHandler() {
+	public MusicHandler() 
+	{
 		try 
 		{
 			Clip backgroundMusic = AudioSystem.getClip();
@@ -135,7 +137,7 @@ public class MusicHandler {
 	 */
 	public void resetSounds()
 	{
-		for(int i=0; i<sounds.size(); i++)
+		for(int i=0; i < sounds.size(); i++)
 		{
 			sounds.get(i).stop();
 			sounds.get(i).setFramePosition(0);

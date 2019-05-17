@@ -15,7 +15,7 @@ public class RandomEnemy extends Enemy
 	 */
 	public RandomEnemy(int x, int y, Maze maze, int speed)
 	{
-		super(x, y, maze,speed);
+		super(x, y, maze, speed);
 	}
 	
 	/**
@@ -31,54 +31,50 @@ public class RandomEnemy extends Enemy
     	{
 			case 0: // UP
 				newPosX = posX - speed;				
-				if(newPosX >=0 
+				if(newPosX >= 0 
 					&& matrix[newPosX / mapScale][posY / mapScale] == 0
-					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0
-					)
+					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0)
 				{
 					posX = newPosX;
 				}
 				else
-					direction = (int)(Math.random() * (4-0));				
+					direction = (int)(Math.random() * (4 - 0));				
 				break;
 				
 			case 1: // RIGHT
 				newPosY = posY + speed;	    		
 	    		if((newPosY + mapScale - speed) / mapScale < matrix[0].length 
 					&& matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
-					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
-					)
+					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0)
 	    		{
 					posY = newPosY;
 	    		}
 	    		else
-	    			direction = (int)(Math.random() * (4-0));
+	    			direction = (int)(Math.random() * (4 - 0));
 				break;
 				
 			case 2: // DOWN
 				newPosX = posX + speed;	    		
 				if((newPosX + mapScale - speed) / mapScale < matrix.length 
 						&& matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
-						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0
-						) 
+						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0) 
 				{
 						posX = newPosX;
 				}
 	    		else
-	    			direction = (int)(Math.random() * (4-0));
+	    			direction = (int)(Math.random() * (4 - 0));
 				break;
 				
 			case 3: // LEFT
 				newPosY = posY - speed;				
 	    		if(newPosY >= 0 
 					&& matrix[posX / mapScale][newPosY / mapScale] == 0
-					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0
-					) 
+					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0) 
 	    		{
 					posY = newPosY;
 	    		}
 	    		else
-	    			direction = (int)(Math.random() * (4-0));
+	    			direction = (int)(Math.random() * (4 - 0));
 	    		break;		
 		}
 	}

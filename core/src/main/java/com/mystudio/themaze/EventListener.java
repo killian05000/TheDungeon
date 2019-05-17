@@ -15,147 +15,148 @@ public class EventListener
 	/**
 	 * Constructor puts all sound events to false
 	 */
-	public EventListener()
+	public EventListener() 
 	{
 		music = new MusicHandler();
-		gameMusicON=true;
-		gameOverSoundON=false;
-		victorySoundON=false;
-		pickingObjectSoundON=false;
-		throwingObjectSoundON=false;
-		teleporterSoundON=false;
-		doorOpenON=false;
-		doorOpenON=false;
+		gameMusicON = true;
+		gameOverSoundON = false;
+		victorySoundON = false;
+		pickingObjectSoundON = false;
+		throwingObjectSoundON = false;
+		teleporterSoundON = false;
+		doorOpenON = false;
+		doorOpenON = false;
 	}
-	
+
 	/**
 	 * Check if the sound events have changed and play sounds accordingly
 	 */
-	public void updatePlaylist()
+	public void updatePlaylist() 
 	{
-		if(gameMusicON)
+		if (gameMusicON) 
 		{
 			music.startGameMusic();
-			gameMusicON=false;
+			gameMusicON = false;
 		}
-		
-		if(gameOverSoundON)
+
+		if (gameOverSoundON) 
 		{
 			music.gameOverSound();
-			gameOverSoundON=false;
-			gameMusicON=false;
-		}
-		else if(victorySoundON)
+			gameOverSoundON = false;
+			gameMusicON = false;
+		} 
+		else if (victorySoundON) 
 		{
 			music.gameWinSound();
-			victorySoundON=false;
-			gameMusicON=false;
+			victorySoundON = false;
+			gameMusicON = false;
 		}
-		
-		if(pickingObjectSoundON)
+
+		if (pickingObjectSoundON) 
 		{
 			music.pickItemSound();
-			pickingObjectSoundON=false;
+			pickingObjectSoundON = false;
 		}
-		
-		if(throwingObjectSoundON)
+
+		if (throwingObjectSoundON) 
 		{
 			music.throwItemSound();
-			throwingObjectSoundON=false;
+			throwingObjectSoundON = false;
 		}
-		
-		if(teleporterSoundON)
+
+		if (teleporterSoundON) 
 		{
 			music.teleporterSound();
-			teleporterSoundON=false;
+			teleporterSoundON = false;
 		}
-		
-		if(doorOpenON)
+
+		if (doorOpenON) 
 		{
 			music.doorOpenSound();
-			doorOpenON=false;
+			doorOpenON = false;
 		}
-		
-		if(doorClosedON)
+
+		if (doorClosedON) 
 		{
 			music.doorClosedSound();
-			doorClosedON=false;
+			doorClosedON = false;
 		}
 	}
-	
+
 	/**
-	 * Reset the sounds frame position and sets all sound events to false except the game music
+	 * Reset the sounds frame position and sets all sound events to false except the
+	 * game music
 	 */
-	public void resetPlaylist()
+	public void resetPlaylist() 
 	{
 		music.resetSounds();
-		gameMusicON=true;
-		gameOverSoundON=false;
-		victorySoundON=false;
-		pickingObjectSoundON=false;
+		gameMusicON = true;
+		gameOverSoundON = false;
+		victorySoundON = false;
+		pickingObjectSoundON = false;
 	}
-	
-	public void setGameMusicON(boolean b)
+
+	public void setGameMusicON(boolean b) 
 	{
-		gameMusicON=b;
+		gameMusicON = b;
 	}
-	
-	public void setGameOverSoundON(boolean b)
+
+	public void setGameOverSoundON(boolean b) 
 	{
-		gameOverSoundON=b;
+		gameOverSoundON = b;
 	}
-	
-	public void setVictorySoundON(boolean b)
+
+	public void setVictorySoundON(boolean b) 
 	{
-		victorySoundON=b;
+		victorySoundON = b;
 	}
-	
-	public void setPickingObjectSoundON(boolean b)
+
+	public void setPickingObjectSoundON(boolean b) 
 	{
 		pickingObjectSoundON = b;
 	}
-	
-	public void setThrowingObjectSoundON(boolean b)
+
+	public void setThrowingObjectSoundON(boolean b) 
 	{
 		throwingObjectSoundON = b;
 	}
-	
-	public void setDoorOpenSoundON(boolean b)
+
+	public void setDoorOpenSoundON(boolean b) 
 	{
 		doorOpenON = b;
 	}
-	
-	public void setDoorClosedSoundON(boolean b)
+
+	public void setDoorClosedSoundON(boolean b) 
 	{
 		doorClosedON = b;
 	}
-	
-	public void setTeleporterSoundON(boolean b)
+
+	public void setTeleporterSoundON(boolean b) 
 	{
 		teleporterSoundON = b;
 	}
-	
-	public boolean getGameMusicON()
+
+	public boolean getGameMusicON() 
 	{
 		return gameMusicON;
 	}
-	
-	public boolean getGameOverSoundON()
+
+	public boolean getGameOverSoundON() 
 	{
 		return gameOverSoundON;
 	}
-	
-	public boolean getVictorySoundON()
+
+	public boolean getVictorySoundON() 
 	{
 		return victorySoundON;
 	}
-	
-	public boolean getPickingObjectSoundON()
+
+	public boolean getPickingObjectSoundON() 
 	{
 		return pickingObjectSoundON;
 	}
-	
-	public boolean getThrowingObjectSoundON()
+
+	public boolean getThrowingObjectSoundON() 
 	{
 		return throwingObjectSoundON;
 	}

@@ -16,8 +16,8 @@ public class Player
 	private int speed = 4;
 	private int defaultPosX;
 	private int defaultPosY;
-	private int direction=-1;	
-	private int nextDirection=-1;
+	private int direction = -1;	
+	private int nextDirection = -1;
 
 	// States
 	private boolean alive;
@@ -51,20 +51,20 @@ public class Player
 	 * @param _maze : maze instance
 	 * @param _eventListener : event listener instance
 	 */	
-	public Player(int x, int y, Maze _maze, EventListener _eventListener) 
+	public Player(int x, int y, Maze maze, EventListener eventListener) 
 	{
-		maze = _maze;
+		this.maze = maze;
 		mapScale = maze.getMapScale();
 		matrix = maze.getMatrix();
-		eventListener = _eventListener;
+		this.eventListener = eventListener;
 		
 		defaultPosX = x*mapScale;
 		defaultPosY = y*mapScale;
 		posX = defaultPosX;
 		posY = defaultPosY;		
 				
-		alive=true;
-		escape=false;	
+		alive = true;
+		escape = false;	
 				
 		defaultPlayerSprite = new Texture("player/runLeft/0.png");
 		playerSprite = defaultPlayerSprite;
@@ -301,17 +301,17 @@ public class Player
 			else if(corner1 == 4 || corner2 == 4)
 			{
 				posX = newPos;
-				alive=false;
+				alive = false;
 				eventListener.setGameOverSoundON(true);
 			}
-			else if(corner1 == 5 && corner2 == 5 && bag.size()==3)
+			else if(corner1 == 5 && corner2 == 5 && bag.size() == 3)
 			{
 				posX = newPos;
 			}
 			else if(corner1 == 6 && corner2 == 6)
 			{
 				posX = newPos;
-	    		escape=true;
+	    		escape = true;
 	    		eventListener.setVictorySoundON(true);
 			}
 		}
@@ -324,17 +324,17 @@ public class Player
 			else if(corner1 == 4 || corner2 == 4)
 			{
 				posY = newPos;
-				alive=false;
+				alive = false;
 				eventListener.setGameOverSoundON(true);
 			}
-			else if(corner1 == 5 && corner2 == 5 && bag.size()==3)
+			else if(corner1 == 5 && corner2 == 5 && bag.size() == 3)
 			{
 				posY = newPos;
 			}
 			else if(corner1 == 6 && corner2 == 6)
 			{
 				posY = newPos;
-	    		escape=true;
+	    		escape = true;
 	    		eventListener.setVictorySoundON(true);
 			}
 		}
@@ -346,26 +346,26 @@ public class Player
 			if(dir == 0)
 			{
 				newTabPos = maze.teleportPlayer(newPos  / mapScale, posY / mapScale);
-				posX = newTabPos[0]*mapScale;
-				posY = newTabPos[1]*mapScale;
+				posX = newTabPos[0] * mapScale;
+				posY = newTabPos[1] * mapScale;
 			}
 			else if(dir == 1)
 			{
 				newTabPos = maze.teleportPlayer(posX / mapScale, (newPos+mapScale) / mapScale);
-				posX = newTabPos[0]*mapScale;
-				posY = newTabPos[1]*mapScale;
+				posX = newTabPos[0] * mapScale;
+				posY = newTabPos[1] * mapScale;
 			}
 			else if(dir == 2)
 			{
 				newTabPos = maze.teleportPlayer((newPos+mapScale) / mapScale, posY / mapScale);
-				posX = newTabPos[0]*mapScale;
-				posY = newTabPos[1]*mapScale;
+				posX = newTabPos[0] * mapScale;
+				posY = newTabPos[1] * mapScale;
 			}
 			else if(dir == 3)
 			{
 				newTabPos = maze.teleportPlayer(posX / mapScale, newPos / mapScale);
-				posX = newTabPos[0]*mapScale;
-				posY = newTabPos[1]*mapScale;
+				posX = newTabPos[0] * mapScale;
+				posY = newTabPos[1] * mapScale;
 			}
 		}
 	}
@@ -381,28 +381,28 @@ public class Player
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = dir;
-			nextDirection=-1;
+			nextDirection = -1;
 			
 		}
 		else if(corner1 == 4 && corner2 == 4)
 		{
 			direction = dir;
-			nextDirection=-1;
+			nextDirection = -1;
 		}
 		else if(corner1 == 5 && corner2 == 5)
 		{
 			direction = dir;
-			nextDirection=-1;
+			nextDirection = -1;
 		}
 		else if(corner1 == 6 && corner2 == 6)
 		{
 			direction = dir;
-			nextDirection=-1;
+			nextDirection = -1;
 		}
 		else if(corner1 == 9 && corner2 == 9)
 		{
 			direction = dir;
-			nextDirection=-1;
+			nextDirection = -1;
 		}
 		else
 			nextDirection = dir;
@@ -418,27 +418,27 @@ public class Player
 		if(corner1 == 0 && corner2 == 0)
 		{
 			direction = nextDirection;
-			nextDirection=-1;
+			nextDirection = -1;
 		}
 		if(corner1 == 4 && corner2 == 4)
 		{
 			direction = nextDirection;
-			nextDirection=-1;
+			nextDirection = -1;
 		}
 		else if(corner1 == 5 && corner2 == 5)
 		{
 			direction = nextDirection;
-			nextDirection=-1;
+			nextDirection = -1;
 		}
 		else if(corner1 == 6 && corner2 == 6)
 		{
 			direction = nextDirection;
-			nextDirection=-1;
+			nextDirection = -1;
 		}
 		else if(corner1 == 9 && corner2 == 9)
 		{
 			direction = nextDirection;
-			nextDirection=-1; 
+			nextDirection = -1; 
 		}			
 	}
 	
@@ -453,7 +453,7 @@ public class Player
 		item.setPosY(itemPos*mapScale);
 		itemPos++;
 		
-		if(bag.size()==3)
+		if(bag.size() == 3)
 			eventListener.setDoorOpenSoundON(true);
 	}
 	
@@ -462,15 +462,15 @@ public class Player
 	 */
 	public void throwItem()
 	{
-		if(itemPos>0)
+		if(itemPos > 0)
 		{
-			Item item = bag.get(itemPos-1);			
+			Item item = bag.get(itemPos - 1);			
 			eventListener.setThrowingObjectSoundON(true);
 			item.animation(posX,  posY, 5, 8, direction);			
-			bag.remove(itemPos-1);
+			bag.remove(itemPos - 1);
 			itemPos--;
 			
-			if(bag.size()==2)
+			if(bag.size() == 2)
 				eventListener.setDoorClosedSoundON(true);
 		}
 	}
@@ -491,13 +491,13 @@ public class Player
 	 */
 	private void updateAnimation()
 	{		
-		System.out.println("Direction : "+ direction);
-		System.out.println("Pdirection : "+ previousDir);
+		System.out.println("Direction : " + direction);
+		System.out.println("Pdirection : " + previousDir);
 		
 		if(previousDir != direction && (direction != 0 && direction != 2))
 		{
-			animCounter=0;
-			frameCounter=0;
+			animCounter = 0;
+			frameCounter = 0;
 			System.out.println("RESET");
 		}
 		
@@ -561,12 +561,12 @@ public class Player
 	 */
 	private void animate(ArrayList<Texture> anim)
 	{
-		if(frameCounter==animCounter*5)
+		if(frameCounter == animCounter*5)
 		{
 			if(animCounter == anim.size())
 			{
-				animCounter=0;
-				frameCounter=0;
+				animCounter = 0;
+				frameCounter = 0;
 			}
 			playerSprite = anim.get(animCounter);
 			animCounter++;
@@ -620,9 +620,9 @@ public class Player
 		return alive;
 	}
 	
-	public void setAlive(boolean _alive)
+	public void setAlive(boolean alive)
 	{
-		alive = _alive;
+		this.alive = alive;
 	}
 	
 	public boolean getEscape()

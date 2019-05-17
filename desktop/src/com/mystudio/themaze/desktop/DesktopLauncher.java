@@ -15,6 +15,7 @@ public class DesktopLauncher {
 		cfg.width = 1024;
 		cfg.height = 768;
 		cfg.vSyncEnabled = true;
+		
 		new DesktopMini2DxGame(new Game(), cfg);
 	}
 }

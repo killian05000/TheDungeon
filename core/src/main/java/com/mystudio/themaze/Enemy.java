@@ -35,16 +35,16 @@ public abstract class Enemy
 	 * @param _maze : maze instance
 	 * @param _speed : enemy speed
 	 */
-	public Enemy(int x, int y, Maze maze, int _speed)
+	public Enemy(int x, int y, Maze maze, int speed)
 	{
 		mapScale = maze.getMapScale();
 		matrix = maze.getMatrix();	
 		
-		defaultPosX = x*mapScale;
-		defaultPosY = y*mapScale;
+		defaultPosX = x * mapScale;
+		defaultPosY = y * mapScale;
 		posX = defaultPosX;
 		posY = defaultPosY;
-		speed = _speed;
+		this.speed = speed;
 		
 		loadAnimation();
 	}
@@ -107,12 +107,12 @@ public abstract class Enemy
 	 */
 	private void animate(ArrayList<Texture> anim)
 	{
-		if(frameCounter==animCounter*5)
+		if(frameCounter == animCounter*5)
 		{
 			if(animCounter == anim.size())
 			{
-				animCounter=0;
-				frameCounter=0;
+				animCounter = 0;
+				frameCounter = 0;
 			}
 			enemySprite = anim.get(animCounter);
 			animCounter++;

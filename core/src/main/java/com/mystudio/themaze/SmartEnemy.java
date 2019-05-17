@@ -17,11 +17,11 @@ public class SmartEnemy extends Enemy
 	 * @param _target : target of the enemy
 	 * @param speed : enemy speed
 	 */
-	public SmartEnemy(int x, int y, Maze maze, Player _target, int speed) 
+	public SmartEnemy(int x, int y, Maze maze, Player target, int speed) 
 	{
 		super(x, y, maze, speed);
 		
-		target = _target;
+		this.target = target;
 		brain = new Astar(matrix, mapScale);
 	}
 
@@ -39,10 +39,10 @@ public class SmartEnemy extends Enemy
     	{
 			case 0: // UP
 				newPosX = posX - speed;				
-				if(newPosX >=0 
+				if(newPosX >= 0 
 					&& (matrix[newPosX / mapScale][posY / mapScale] == 0
-					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0) ||
-					(matrix[newPosX / mapScale][posY / mapScale] == 9
+					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0) 
+					|| (matrix[newPosX / mapScale][posY / mapScale] == 9
 					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 9))
 				{
 					posX = newPosX;
@@ -54,8 +54,8 @@ public class SmartEnemy extends Enemy
 				newPosY = posY + speed;	    		
 	    		if((newPosY + mapScale - speed) / mapScale < matrix[0].length 
 					&& (matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
-					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0) ||
-	    			(matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 9
+					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0) 
+					|| (matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 9
 					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 9))
 	    		{
 					posY = newPosY;
@@ -67,8 +67,8 @@ public class SmartEnemy extends Enemy
 				newPosX = posX + speed;	    		
 				if((newPosX + mapScale - speed) / mapScale < matrix.length 
 						&& (matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
-						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0) ||
-						(matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 9
+						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0) 
+						|| (matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 9
 						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 9))
 				{
 						posX = newPosX;
@@ -79,8 +79,8 @@ public class SmartEnemy extends Enemy
 				newPosY = posY - speed;				
 	    		if(newPosY >= 0 
 					&& (matrix[posX / mapScale][newPosY / mapScale] == 0
-					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0) ||
-					(matrix[posX / mapScale][newPosY / mapScale] == 9
+					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0) 
+					|| (matrix[posX / mapScale][newPosY / mapScale] == 9
 					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 9))
 	    		{
 					posY = newPosY;
