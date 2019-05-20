@@ -24,7 +24,7 @@ public class Player
 	private boolean escape;
 	
 	// Sound event and map stuff
-	private EventListener eventListener;
+	private MusicPlayer eventListener;
 	private int mapScale;	
 	int[][] matrix;
 	Maze maze;
@@ -51,7 +51,7 @@ public class Player
 	 * @param _maze : maze instance
 	 * @param _eventListener : event listener instance
 	 */	
-	public Player(int x, int y, Maze maze, EventListener eventListener) 
+	public Player(int x, int y, Maze maze, MusicPlayer eventListener) 
 	{
 		this.maze = maze;
 		mapScale = maze.getMapScale();

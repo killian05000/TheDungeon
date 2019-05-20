@@ -1,6 +1,6 @@
 package com.mystudio.themaze;
 
-public class EventListener 
+public class MusicPlayer 
 {
 	private boolean gameMusicON;
 	private boolean gameOverSoundON;
@@ -15,7 +15,7 @@ public class EventListener
 	/**
 	 * Constructor puts all sound events to false
 	 */
-	public EventListener() 
+	public MusicPlayer() 
 	{
 		music = new MusicHandler();
 		gameMusicON = true;

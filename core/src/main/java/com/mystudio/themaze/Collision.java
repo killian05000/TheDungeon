@@ -9,7 +9,7 @@ public class Collision
 	private ArrayList<Enemy> enemies;
 	private int mapScale;
 	private Player player;
-	private EventListener eventListener;
+	private MusicPlayer eventListener;
 
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class Collision
 	 * @param scale
 	 * @param _eventListener
 	 */
-	public Collision(ArrayList<Item> items, Player player, ArrayList<Enemy> enemies, int scale,EventListener eventListener) 
+	public Collision(ArrayList<Item> items, Player player, ArrayList<Enemy> enemies, int scale,MusicPlayer eventListener) 
 	{
 		this.player = player;
 		this.items = items;
