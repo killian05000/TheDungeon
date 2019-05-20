@@ -12,7 +12,7 @@ public class Maze
 	private int mapScale;
 	private int[][] matrix;
 	private ArrayList<Texture> maps;
-	private EventListener eventListener;
+	private MusicPlayer eventListener;
 
 	private Player player;
 	private ArrayList<Item> items;
@@ -32,7 +32,7 @@ public class Maze
 		this.matrix = new int[matrix.length][matrix[0].length];
 		this.matrix = matrix;
 
-		eventListener = new EventListener();
+		eventListener = new MusicPlayer();
 
 		enemies = new ArrayList<Enemy>();
 
@@ -226,13 +226,13 @@ public class Maze
 
 	public void displayUserMapSecondLayer(Graphics g, Player player) 
 	{
-		g.drawTexture(maps.get(3), 0, 0, maps.get(2).getWidth(), maps.get(2).getHeight());
+		g.drawTexture(maps.get(3), 0, 0, maps.get(3).getWidth(), maps.get(3).getHeight());
 
 		if (!player.getAlive())
-			g.drawTexture(maps.get(4), 0, 0, maps.get(3).getWidth(), maps.get(3).getHeight());
+			g.drawTexture(maps.get(4), 0, 0, maps.get(4).getWidth(), maps.get(4).getHeight());
 
 		else if (player.getEscape())
-			g.drawTexture(maps.get(5), 0, 0, maps.get(4).getWidth(), maps.get(4).getHeight());
+			g.drawTexture(maps.get(5), 0, 0, maps.get(5).getWidth(), maps.get(5).getHeight());
 	}
 
 	/**
@@ -286,7 +286,7 @@ public class Maze
 		return enemies;
 	}
 
-	public EventListener getEventListener() 
+	public MusicPlayer getEventListener() 
 	{
 		return eventListener;
 	}
