@@ -4,11 +4,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public abstract class MapTranslator 
+public final class MapTranslator 
 {
 	private static BufferedImage map;
 	private static int tileSize = 32;
 	private static int[][] matrix;
+	
+	private MapTranslator()
+	{}
 
 	/**
 	 * Go through the image skeleton and get each of its tile's RGB value
