@@ -15,6 +15,7 @@ import menu.MenuMethode1;
 public class Game extends BasicGame 
 {
 	public static final String GAME_IDENTIFIER = "com.mystudio.themaze";
+	private EventHandler eventHandler;
 	private Maze maze;
 	private Player player;
 	private Collision collision;
@@ -26,6 +27,7 @@ public class Game extends BasicGame
 	@Override
 	public void initialise() 
 	{
+		eventHandler = new EventHandler(this);
 		//MapTranslator map = new MapTranslator();
 		maze = MapTranslator.translate("/map/MapSkeleton.png");
 
@@ -41,6 +43,7 @@ public class Game extends BasicGame
 	@Override
 	public void update(float delta) 
 	{
+		eventHandler.checkUserInputs();
 		if (player.getAlive() && !player.getEscape() && !menu.getMenuON()) 
 		{
 			player.update();
@@ -54,7 +57,6 @@ public class Game extends BasicGame
 			menu.update();
 
 		maze.getEventListener().updatePlaylist();
-		keyPressed();
 	}
 
 	@Override
@@ -85,15 +87,10 @@ public class Game extends BasicGame
 			menu.render();		
 	}
 
-	public void keyPressed() 
+	public void callMenu() 
 	{
-		if (Gdx.input.isKeyJustPressed(Keys.R)) 
-			resetGame();
-		if (Gdx.input.isKeyJustPressed(Keys.M)) 
-		{
-			resetGame();
-			menu.call();
-		}
+		resetGame();
+		menu.call();
 	}
 	
 	public void resetGame()
