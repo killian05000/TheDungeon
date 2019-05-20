@@ -491,9 +491,6 @@ public class Player
 	 */
 	private void updateAnimation()
 	{		
-		System.out.println("Direction : " + direction);
-		System.out.println("Pdirection : " + previousDir);
-		
 		if(previousDir != direction && (direction != 0 && direction != 2))
 		{
 			animCounter = 0;
