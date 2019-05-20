@@ -10,61 +10,75 @@ public class Button
 {
 	private int x;
 	private int y;
-	private int height;
-	private int width;
 	private String text;
 	private BitmapFont font;
-	private Sprite sprite;
+	private Sprite buttonSprite;
+	private Sprite buttonClickedSprite;
+	private Sprite buttonUnclickedSprite;
 	private boolean isClicked;
+	private boolean isHovered;
 	
-	public Button(int x, int y, int height, int width, String text)
+	public Button(int x, int y, String filePath)
 	{
 		this.x = x;
 		this.y = y;
-		this.height = height;
-		this.width = width;
-		this.text = text;
 		font = new BitmapFont();
         font.setColor(Color.DARK_GRAY);
         
-		sprite = new Sprite(new Texture("button/button2.png"), width, height);
-		sprite.setPosition(x,y);
+        buttonClickedSprite = new Sprite(new Texture(filePath+"Clicked.png"));
+		buttonUnclickedSprite = new Sprite(new Texture(filePath+".png"));
+		buttonSprite = new Sprite(buttonUnclickedSprite);
+		buttonSprite.setPosition(x,y);
 	}
 	
 	public void checkClick(int x, int y)
 	{
+		/*
 		System.out.println("x : "+x);
 		System.out.println("y : "+y);
 		
 		System.out.println("button x : "+this.x);
 		System.out.println("button y : "+this.y);
-		System.out.println("button x + widthy : "+(this.x+this.width));
-		System.out.println("button y + height : "+(this.y+this.height));
+		System.out.println("button x + widthy : "+(this.x+this.buttonSprite.getWidth()));
+		System.out.println("button y + height : "+(this.y+this.buttonSprite.getHeight()));*/
 		
-		if((x > this.x && x < this.x+this.width) && (y > this.y && y < this.y+this.height))
+		
+		if((x > this.x && x < this.x+this.buttonSprite.getWidth()) && (y > this.y && y < this.y+this.buttonSprite.getHeight()))
 		{
+			
+
+			if(!isHovered)
+			{
+				System.out.println("DESSUS");
+				buttonSprite.set(buttonClickedSprite);
+				buttonSprite.setPosition(this.x,this.y);
+				isHovered = !isHovered;
+			}
+			
+			
 			if(Gdx.input.isTouched())
 			{
 				isClicked=!isClicked;
-	
-				if(isClicked)
-				{
-					sprite.set(new Sprite(new Texture("button/button2.png"), width, height));
-					sprite.setPosition(this.x,this.y);
-				}
-				else
-				{
-					sprite.set(new Sprite(new Texture("button/button.png"), width, height));
-					sprite.setPosition(this.x,this.y);;
-				}
 			}
 		}
-		System.out.println(isClicked);
+		else
+		{
+			
+			if(isHovered)
+			{
+				System.out.println("PAS DESSUS");
+				buttonSprite.set(buttonUnclickedSprite);
+				buttonSprite.setPosition(this.x,this.y);;
+				isHovered = !isHovered;
+			}
+		}
+		
+		//System.out.println(isHovered);
 	}
 	
 	public Sprite getSprite()
 	{
-		return sprite;
+		return buttonSprite;
 	}
 	
 	public BitmapFont getFont()
@@ -85,16 +99,6 @@ public class Button
 	public float getY() 
 	{
 		return y;
-	}
-
-	public int getWidth() 
-	{
-		return width;
-	}
-
-	public int getHeight() 
-	{
-		return height;
 	}
 	
 	public boolean getIsClicked()
