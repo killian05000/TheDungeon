@@ -27,10 +27,10 @@ public class Maze
 	 * @param map    : the mapTranslator object containing the game matrix
 	 * @param player : player instance
 	 */
-	public Maze(MapTranslator map) 
+	public Maze(int[][] matrix, int tileSize) 
 	{
-		matrix = new int[map.getMatrix().length][map.getMatrix()[0].length];
-		matrix = map.getMatrix();
+		this.matrix = new int[matrix.length][matrix[0].length];
+		this.matrix = matrix;
 
 		eventListener = new EventListener();
 
@@ -47,7 +47,7 @@ public class Maze
 		maps.add(new Texture("map/GameOver.png"));
 		maps.add(new Texture("map/Victory.png"));
 
-		mapScale = map.getTileSize();
+		mapScale = tileSize;
 		initialiseDefaultPlayerPosition();
 		initialiseDefaultEnemiesPosition();
 		initialiseDefaultItemsPosition();

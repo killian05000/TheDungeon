@@ -4,20 +4,20 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class MapTranslator 
+public abstract class MapTranslator 
 {
-	private BufferedImage map;
-	private int tileSize = 32;
-	private int[][] matrix;
+	private static BufferedImage map;
+	private static int tileSize = 32;
+	private static int[][] matrix;
 
 	/**
-	 * @param path : skeleton image file path
+	 * Go through the image skeleton and get each of its tile's RGB value
 	 */
-	public MapTranslator(String filePath) 
+	public static Maze translate(String filePath) 
 	{
 		try 
 		{
-			map = ImageIO.read(getClass().getResource(filePath));
+			map = ImageIO.read(MapTranslator.class.getResource(filePath));
 		} catch (IOException e) 
 		{
 			System.err.println("Error during the skeleton map translation");
@@ -25,13 +25,7 @@ public class MapTranslator
 		}
 
 		matrix = new int[map.getHeight() / tileSize][map.getWidth() / tileSize];
-	}
-
-	/**
-	 * Go through the image skeleton and get each of its tile's RGB value
-	 */
-	public void translate() 
-	{
+		
 		int xM = 0; // Matrix x
 		int yM = 0; // Matrix y
 
@@ -54,6 +48,9 @@ public class MapTranslator
 			xM++;
 		}
 		// displayMatrix();
+		
+		Maze maze = new Maze(matrix, tileSize);
+		return maze;
 	}
 
 	/**
@@ -63,7 +60,7 @@ public class MapTranslator
 	 * @param x : axis x of the matrix
 	 * @param y : axis y of the matrix
 	 */
-	private void buildMatrix(int[] p, int x, int y) // (x = line,y = column)
+	private static void buildMatrix(int[] p, int x, int y) // (x = line,y = column)
 	{
 		if (p[0] == 198 && p[1] == 198 && p[2] == 198) // ALLEYS
 			matrix[x][y] = 0;

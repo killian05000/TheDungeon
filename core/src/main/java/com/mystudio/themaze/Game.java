@@ -26,10 +26,8 @@ public class Game extends BasicGame
 	@Override
 	public void initialise() 
 	{
-		MapTranslator map = new MapTranslator("/map/MapSkeleton.png");
-		map.translate();
-
-		maze = new Maze(map);
+		//MapTranslator map = new MapTranslator();
+		maze = MapTranslator.translate("/map/MapSkeleton.png");
 
 		player = maze.getPlayer();
 		enemies = maze.getEnemies();
