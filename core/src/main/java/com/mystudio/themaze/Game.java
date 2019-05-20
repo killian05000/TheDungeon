@@ -44,7 +44,7 @@ public class Game extends BasicGame
 	public void update(float delta) 
 	{
 		eventHandler.checkUserInputs();
-		if (player.getAlive() && !player.getEscape() && !menu.getMenuON()) 
+		if (player.getAlive() && !player.getEscape() && !menu.getMenuState()) 
 		{
 			player.update();
 			for (int i = 0; i < enemies.size(); i++)
@@ -68,7 +68,7 @@ public class Game extends BasicGame
 	@Override
 	public void render(Graphics g)
 	{
-		if(!menu.getMenuON())
+		if(!menu.getMenuState())
 		{
 		// maze.PaintMaze(g);
 
