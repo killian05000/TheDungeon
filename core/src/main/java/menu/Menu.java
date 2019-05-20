@@ -5,29 +5,45 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Menu 
 {
-	private ArrayList<Button> buttons;
+	private ArrayList<Button> menuButtons;
+	private ArrayList<Button> helpButtons;
 	private SpriteBatch batch;
 	private boolean menuON;
 	private boolean displayHelpON;
+	private boolean menuState;
 	private BitmapFont font;
 	private String rules;
+	private Sprite menuSprite;
+	private Sprite helpSprite;
 	
 	public void create ()
 	{
+		menuSprite = new Sprite(new Texture("menu/backgroundSprite.png"), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		menuSprite.setPosition(0,0);
+		helpSprite = new Sprite(new Texture("menu/helpSprite.png"), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		helpSprite.setPosition(0,0);
+		
 		batch = new SpriteBatch();
-		buttons = new ArrayList<Button>();
-		buttons.add(new Button(400,600,50,250, "play"));
-		buttons.add(new Button(400,400,50,250, "help"));
-		buttons.add(new Button(400,200,50,250, "credits"));
+		menuButtons = new ArrayList<Button>();
+		menuButtons.add(new Button(400,250, "menu/playButton"));
+		menuButtons.add(new Button(400,150, "menu/helpButton"));
+		menuButtons.add(new Button(400,50, "menu/quitButton"));
+		
+		helpButtons = new ArrayList<Button>();
+		helpButtons.add(new Button(50,350, "menu/escapeButton"));
+		
 		font = new BitmapFont();
-        font.setColor(Color.WHITE);
+        font.setColor(Color.BLACK);
         displayHelpON=false;
 		menuON=true;
+		menuState=true;
 		
 		rules = "The player needs to collect 3 objects to open the donjon's door \n"
 				+ "There is three gards garding this level, two minions pretty dumb,\n"
@@ -44,27 +60,52 @@ public class Menu
 	
 	public void update()
 	{
-		if(buttons.get(0).getIsClicked())
+		if(menuButtons.get(0).getIsClicked())
+		{
+			menuState=false;
+			resetClicks();
+		}
+		else if(menuButtons.get(1).getIsClicked())
+		{
 			menuON=false;
-		if(buttons.get(1).getIsClicked())
 			displayHelpON=true;
+			resetClicks();
+		}
+		else if(menuButtons.get(2).getIsClicked())
+		{
+			resetClicks();
+			System.exit (1);
+		}
+		
+		if(displayHelpON)
+		{
+			if(helpButtons.get(0).getIsClicked())
+			{
+				menuON=true;
+				displayHelpON=false;
+				resetClicks();
+			}
+		}
 	}
 	
 	public void render()
 	{
 		batch.begin();
+
 		keyPressed();
-		if(!displayHelpON)
+		if(menuON)
 		{
-			for(int i=0; i<buttons.size(); i++)
-			{
-			buttons.get(i).getSprite().draw(batch);
-			buttons.get(i).getFont().draw(batch, buttons.get(i).getText(), buttons.get(i).getX()+buttons.get(i).getWidth()/2,
-											buttons.get(i).getY()+buttons.get(i).getHeight()/2);
-			}
+			menuSprite.draw(batch);
+			for(int i=0; i<menuButtons.size(); i++)
+				menuButtons.get(i).getSprite().draw(batch);
 		}
-		else
+		else if(displayHelpON)
+		{
+			helpSprite.draw(batch);
+			for(int i=0; i<menuButtons.size(); i++)
+				helpButtons.get(0).getSprite().draw(batch);
 			font.draw(batch, rules, 300, 500);
+		}
 			
 		batch.end();
 	}
@@ -74,33 +115,50 @@ public class Menu
 //		int screenW = Gdx.graphics.getWidth();
 //      int screenH = Gdx.graphics.getHeight();
 //      System.out.println(screenW+"/"+screenH);
-		for(int i=0; i<buttons.size(); i++)
+		for(int i=0; i<menuButtons.size(); i++)
 		{
-			buttons.get(i).checkClick(Gdx.input.getX() , Gdx.graphics.getHeight()-Gdx.input.getY());
+			menuButtons.get(i).checkClick(Gdx.input.getX() , Gdx.graphics.getHeight()-Gdx.input.getY());
 		}
 		
-		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
-			call();
+		for(int i=0; i<helpButtons.size(); i++)
+		{
+			helpButtons.get(i).checkClick(Gdx.input.getX() , Gdx.graphics.getHeight()-Gdx.input.getY());
+		}
+	}
+	
+	public void resetClicks()
+	{
+		for(int i=0; i<menuButtons.size(); i++)
+			menuButtons.get(i).setIsClicked(false);
+		
+		for(int i=0; i<helpButtons.size(); i++)
+			helpButtons.get(i).setIsClicked(false);
 	}
 	
 	public void call() 
 	{
-		for(int i=0; i<buttons.size(); i++)
+		for(int i=0; i<menuButtons.size(); i++)
 		{
-			buttons.get(i).setIsClicked(false);
+			menuButtons.get(i).setIsClicked(false);
 		}
 		displayHelpON=false;
 		menuON=true;
+		menuState=true;
 	}
 	
-	public ArrayList<Button> getButtons()
+	public ArrayList<Button> getmenuButtons()
 	{
-		return buttons;
+		return menuButtons;
 	}
 	
 	public boolean getMenuON()
 	{
 		return menuON;
+	}
+
+	public boolean getMenuState() 
+	{
+		return menuState;
 	}
 
 }
