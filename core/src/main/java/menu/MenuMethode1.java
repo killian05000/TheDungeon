@@ -1,4 +1,4 @@
-package com.mystudio.themaze;
+package menu;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
