@@ -18,13 +18,7 @@ public class GameScreen implements Screen
 	private Player player;
 	private Collision collision;
 	private ArrayList<Enemy> enemies;
-	private ScreenHandler screenHandler;
-	
-	public GameScreen(ScreenHandler screenHandler)
-	{
-		this.screenHandler = screenHandler;
-	}
-	
+
 	@Override
 	public void initialise() 
 	{
