@@ -28,7 +28,7 @@ public class Game extends BasicGame
 		screenHandler = new ScreenHandler();
 		screens = new ArrayList<Screen>();
 		screens.add(new Menu(screenHandler));
-		screens.add(new GameScreen(screenHandler));
+		screens.add(new GameScreen());
 		
 		for(int i = 0; i < screens.size(); i++)
 			screens.get(i).initialise();
