@@ -22,7 +22,7 @@ public class GameScreen implements Screen
 	@Override
 	public void initialise() 
 	{
-		maze = MapTranslator.translate("/map/MapSkeleton.png");
+		maze = MapTranslator.translate("/map/mapSkeleton.png");
 
 		player = maze.getPlayer();
 		
