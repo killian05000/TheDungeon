@@ -1,4 +1,4 @@
-package com.mystudio.themaze.desktop;
+package desktop;
 
 import org.mini2Dx.desktop.DesktopMini2DxConfig;
 
