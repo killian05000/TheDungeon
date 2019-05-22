@@ -1,4 +1,4 @@
-package menu;
+package screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -33,47 +33,26 @@ public class Button
 	
 	public void checkClick(int x, int y)
 	{
-		/*
-		System.out.println("x : "+x);
-		System.out.println("y : "+y);
-		
-		System.out.println("button x : "+this.x);
-		System.out.println("button y : "+this.y);
-		System.out.println("button x + widthy : "+(this.x+this.buttonSprite.getWidth()));
-		System.out.println("button y + height : "+(this.y+this.buttonSprite.getHeight()));*/
-		
-		
-		if((x > this.x && x < this.x+this.buttonSprite.getWidth()) && (y > this.y && y < this.y+this.buttonSprite.getHeight()))
+		if((x > this.x && x < this.x + this.buttonSprite.getWidth()) && (y > this.y && y < this.y + this.buttonSprite.getHeight()))
 		{
-			
-
 			if(!isHovered)
 			{
-				System.out.println("DESSUS");
 				buttonSprite.set(buttonClickedSprite);
 				buttonSprite.setPosition(this.x,this.y);
 				isHovered = !isHovered;
 			}
-			
-			
 			if(Gdx.input.isTouched())
-			{
 				isClicked=!isClicked;
-			}
 		}
 		else
 		{
-			
 			if(isHovered)
 			{
-				System.out.println("PAS DESSUS");
 				buttonSprite.set(buttonUnclickedSprite);
 				buttonSprite.setPosition(this.x,this.y);;
 				isHovered = !isHovered;
 			}
 		}
-		
-		//System.out.println(isHovered);
 	}
 	
 	public Sprite getSprite()

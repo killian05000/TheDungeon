@@ -1,4 +1,4 @@
-package com.mystudio.themaze;
+package music;
 
 public class MusicPlayer 
 {

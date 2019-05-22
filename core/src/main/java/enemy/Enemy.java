@@ -1,8 +1,12 @@
-package com.mystudio.themaze;
+package enemy;
 
 import java.util.ArrayList;
 import org.mini2Dx.core.graphics.Graphics;
 import com.badlogic.gdx.graphics.Texture;
+
+import enums.Direction;
+import game.Player;
+import maze.Maze;
 
 public abstract class Enemy 
 {
@@ -12,7 +16,7 @@ public abstract class Enemy
 	protected int speed;
 	protected int defaultPosX;
 	protected int defaultPosY;
-	protected int direction;
+	protected Direction direction = Direction.NONE;
 	
 	// Map stuff and player
 	protected int mapScale;	
@@ -20,9 +24,9 @@ public abstract class Enemy
 	protected Player target;
 	
 	// Animation 
-	private int previousDir=-1;
-	private int animCounter=0;
-	private int frameCounter=0;
+	private Direction previousDir = Direction.NONE;
+	private int animCounter = 0;
+	private int frameCounter = 0;
 	protected Texture enemySprite;
 	protected ArrayList<Texture> animationUp;
 	protected ArrayList<Texture> animationRight;
@@ -32,8 +36,8 @@ public abstract class Enemy
 	/**
 	 * @param x : default x enemy's position
 	 * @param y : default y enemy's position
-	 * @param _maze : maze instance
-	 * @param _speed : enemy speed
+	 * @param maze : maze instance
+	 * @param speed : enemy speed
 	 */
 	public Enemy(int x, int y, Maze maze, int speed)
 	{
@@ -45,59 +49,75 @@ public abstract class Enemy
 		posX = defaultPosX;
 		posY = defaultPosY;
 		this.speed = speed;
-		
-		loadAnimation();
 	}
 	
 	/**
 	 * Update movements and animations
 	 */
-	protected void update()
+	public void update()
 	{
 		algorithm();
 		updateAnimation();
 	}
 	
 	/**
+	 * Load the enemy sprites to render the animations
+	 */
+	protected void loadAnimation(String enemyType) 
+	{
+		enemySprite = new Texture("enemies/" + enemyType + "/runLeft/0.png");
+
+		animationRight = new ArrayList<Texture>();		
+		animationLeft = new ArrayList<Texture>();
+		
+		int animationSize = 10;
+		
+		for(int i = 0; i < animationSize; i++)
+		{
+			animationRight.add(new Texture("enemies/" + enemyType + "/runRight/" + i + ".png"));
+			animationLeft.add(new Texture("enemies/" + enemyType + "/runLeft/" + i + ".png"));
+		}
+	}
+	/**
 	 * Update enemy's animation according to its direction
 	 */
 	private void updateAnimation()
 	{
-		if(previousDir != direction && (direction != 0 && direction != 2))
+		if(previousDir.ordinal() != direction.ordinal() && (direction != Direction.UP) && direction != Direction.DOWN)
 		{
 			animCounter=0;
 			frameCounter=0;
 		}
 
-		if(direction == 0 && previousDir == 1)
+		if(direction == Direction.UP && previousDir == Direction.RIGHT)
 		{
 			animate(animationRight);
-			previousDir = 1;
+			previousDir = Direction.RIGHT;
 		}
-		else if(direction == 0 && previousDir == 3)
+		else if(direction == Direction.UP && previousDir == Direction.LEFT)
 		{
 			animate(animationLeft);
-			previousDir = 3;
+			previousDir = Direction.LEFT;
 		}
-		else if(direction == 1)
+		else if(direction == Direction.RIGHT)
 		{
 			animate(animationRight);
-			previousDir = 1;
+			previousDir = Direction.RIGHT;
 		}
-		else if(direction == 2 && previousDir == 1)
+		else if(direction == Direction.DOWN && previousDir == Direction.RIGHT)
 		{
 			animate(animationRight);
-			previousDir = 1;
+			previousDir = Direction.RIGHT;
 		}
-		else if(direction == 2 && previousDir == 3)
+		else if(direction == Direction.DOWN && previousDir == Direction.LEFT)
 		{
 			animate(animationLeft);
-			previousDir = 3;
+			previousDir = Direction.LEFT;
 		}
-		else if(direction == 3)	
+		else if(direction == Direction.LEFT)	
 		{
 			animate(animationLeft);
-			previousDir = 3;
+			previousDir = Direction.LEFT;
 		}
 	}
 	
@@ -107,7 +127,7 @@ public abstract class Enemy
 	 */
 	private void animate(ArrayList<Texture> anim)
 	{
-		if(frameCounter == animCounter*5)
+		if(frameCounter == animCounter * 5)
 		{
 			if(animCounter == anim.size())
 			{
@@ -123,7 +143,7 @@ public abstract class Enemy
 	/**
 	 * Set the enemy position to default
 	 */
-	protected void respawn()
+	public void respawn()
 	{
 		posX = defaultPosX;
 		posY = defaultPosY;	
@@ -154,6 +174,5 @@ public abstract class Enemy
 	}		
 	
 	abstract protected void algorithm();	
-	abstract protected void reset();
-	abstract protected void loadAnimation();
+	public abstract void reset();
 }

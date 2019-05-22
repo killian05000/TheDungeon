@@ -1,8 +1,9 @@
-package com.mystudio.themaze;
+package enemy;
 
-import java.util.ArrayList;
-import com.badlogic.gdx.graphics.Texture;
-import Algorithm.Astar;
+import algorithm.Astar;
+import enums.MapObject;
+import game.Player;
+import maze.Maze;
 
 public class SmartEnemy extends Enemy 
 {
@@ -23,6 +24,7 @@ public class SmartEnemy extends Enemy
 		
 		this.target = target;
 		brain = new Astar(matrix, mapScale);
+		loadAnimation("smartEnemy");
 	}
 
 	/**
@@ -37,55 +39,60 @@ public class SmartEnemy extends Enemy
 
     	switch(direction)
     	{
-			case 0: // UP
+			case UP:
 				newPosX = posX - speed;				
 				if(newPosX >= 0 
-					&& (matrix[newPosX / mapScale][posY / mapScale] == 0
-					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 0) 
-					|| (matrix[newPosX / mapScale][posY / mapScale] == 9
-					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == 9))
+					&& (matrix[newPosX / mapScale][posY / mapScale] == MapObject.ALLEY.ordinal()
+					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == MapObject.ALLEY.ordinal()) 
+					|| (matrix[newPosX / mapScale][posY / mapScale] == MapObject.TELEPORTER.ordinal()
+					&& matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale] == MapObject.TELEPORTER.ordinal()))
 				{
 					posX = newPosX;
 				}
 
 				break;
 				
-			case 1: // RIGHT
+			case RIGHT:
 				newPosY = posY + speed;	    		
 	    		if((newPosY + mapScale - speed) / mapScale < matrix[0].length 
-					&& (matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 0
-					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 0) 
-					|| (matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == 9
-					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == 9))
+					&& (matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == MapObject.ALLEY.ordinal()
+					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == MapObject.ALLEY.ordinal()) 
+					|| (matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale] == MapObject.TELEPORTER.ordinal()
+					&& matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale] == MapObject.TELEPORTER.ordinal()))
 	    		{
 					posY = newPosY;
 	    		}
 
 				break;
 				
-			case 2: // DOWN
+			case DOWN:
 				newPosX = posX + speed;	    		
 				if((newPosX + mapScale - speed) / mapScale < matrix.length 
-						&& (matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 0
-						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 0) 
-						|| (matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == 9
-						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == 9))
+						&& (matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == MapObject.ALLEY.ordinal()
+						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == MapObject.ALLEY.ordinal()) 
+						|| (matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale] == MapObject.TELEPORTER.ordinal()
+						&& matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale] == MapObject.TELEPORTER.ordinal()))
 				{
 						posX = newPosX;
 				}
 				break;
 				
-			case 3: // LEFT
+			case LEFT:
 				newPosY = posY - speed;				
 	    		if(newPosY >= 0 
-					&& (matrix[posX / mapScale][newPosY / mapScale] == 0
-					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 0) 
-					|| (matrix[posX / mapScale][newPosY / mapScale] == 9
-					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == 9))
+					&& (matrix[posX / mapScale][newPosY / mapScale] == MapObject.ALLEY.ordinal()
+					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == MapObject.ALLEY.ordinal()) 
+					|| (matrix[posX / mapScale][newPosY / mapScale] == MapObject.TELEPORTER.ordinal()
+					&& matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale] == MapObject.TELEPORTER.ordinal()))
 	    		{
 					posY = newPosY;
 				}
 	    		break;	
+	    		
+			case NONE:
+    		{
+    			// Do nothing
+    		}
 		}
 	}
 
@@ -97,58 +104,5 @@ public class SmartEnemy extends Enemy
 	{
 		respawn();
 		brain.clearStructs();
-	}
-	
-	/**
-	 * Load the enemy sprites to render the animations
-	 */
-	@Override
-	public void loadAnimation()
-	{
-		enemySprite = new Texture("enemies/smartEnemy/RunLeft/0.png");
-		
-		/*
-		animationUp = new ArrayList<Texture>();		
-		animationUp.add(new Texture("enemies/smartEnemy/smartEnemyUp.png"));
-		animationUp.add(new Texture("enemies/smartEnemy/smartEnemyUpGrey.png"));
-		*/
-		
-//		animationRight = new ArrayList<Texture>();		
-//		animationRight.add(new Texture("enemies/smartEnemy/smartEnemyRight.png"));
-//		animationRight.add(new Texture("enemies/smartEnemy/smartEnemyRightGrey.png"));
-		
-		animationRight = new ArrayList<Texture>();		
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/0.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/1.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/2.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/3.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/4.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/5.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/6.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/7.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/8.png"));
-		animationRight.add(new Texture("enemies/smartEnemy/RunRight/9.png"));
-		
-		/*
-		animationDown = new ArrayList<Texture>();		
-		animationDown.add(new Texture("enemies/smartEnemy/smartEnemyDown.png"));
-		animationDown.add(new Texture("enemies/smartEnemy/smartEnemyDownGrey.png"));
-		*/	
-		
-//		animationLeft = new ArrayList<Texture>();		
-//		animationLeft.add(new Texture("enemies/smartEnemy/smartEnemyLeft.png"));
-//		animationLeft.add(new Texture("enemies/smartEnemy/smartEnemyLeftGrey.png"));
-		
-		animationLeft = new ArrayList<Texture>();		
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/0.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/1.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/2.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/3.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/4.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/5.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/6.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/7.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/8.png"));
-		animationLeft.add(new Texture("enemies/smartEnemy/RunLeft/9.png"));
 	}
 }

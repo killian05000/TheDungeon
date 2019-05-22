@@ -1,4 +1,4 @@
-package com.mystudio.themaze;
+package maze;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,12 @@ import org.mini2Dx.core.graphics.Graphics;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+
+import enemy.Enemy;
+import enemy.RandomEnemy;
+import enemy.SmartEnemy;
+import game.Player;
+import music.MusicPlayer;
 
 public class Maze 
 {
@@ -49,7 +55,7 @@ public class Maze
 
 		mapScale = tileSize;
 		initialiseDefaultPlayerPosition();
-		initialiseDefaultEnemiesPosition();
+		//initialiseDefaultEnemiesPosition();
 		initialiseDefaultItemsPosition();
 		initialiseTeleporterPosition();
 		initialiseDoorPosition();
@@ -217,7 +223,7 @@ public class Maze
 	{
 		g.drawTexture(maps.get(0), 0, 0, maps.get(0).getWidth(), maps.get(0).getHeight());
 
-		if (player.getBag().size() != 3)
+		if (player.getBag().size() != player.getRequiredObjectNumber())
 			g.drawTexture(maps.get(1), doorY, doorX, maps.get(1).getWidth(), maps.get(1).getHeight());
 		else
 			g.drawTexture(maps.get(2), doorY, doorX, maps.get(2).getWidth(), maps.get(1).getHeight());

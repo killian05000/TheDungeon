@@ -1,6 +1,10 @@
-package Algorithm;
+package algorithm;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import enums.Direction;
+import enums.MapObject;
 
 public class Astar 
 {
@@ -8,8 +12,8 @@ public class Astar
 	private Cell[][] matrixCell;
 	private int mapScale;
 	
-	private List<Cell> openSet; 	// Cells that have been already explored
-	private List<Cell> closedSet; 	// Cells that are yet to be explored
+	private List<Cell> openSet; 
+	private List<Cell> closedSet;
 	
 	private Cell startCell;
 	private Cell endCell;
@@ -18,8 +22,10 @@ public class Astar
 	private int[] previousPlayerCoord;
 	private int[] playerCoord;
 	private int[] enemyCoord;
-	
-	int nextDirection;
+ 
+	private final ArrayList<Integer> walkableSpots;
+	private Direction direction = Direction.NONE;
+	private Direction nextDirection;
 	
 	/**
 	 * This constructor will create a cell for each available tiles and add its neighbors
@@ -40,6 +46,13 @@ public class Astar
 		closedSet = new LinkedList<Cell>();
 		path = new LinkedList<Cell>();
 		
+		walkableSpots = new ArrayList<Integer>();
+		walkableSpots.add(MapObject.ALLEY.ordinal());
+		walkableSpots.add(MapObject.PLAYER_SPAWN.ordinal());
+		walkableSpots.add(MapObject.RANDOM_ENEMY_SPAWN.ordinal());
+		walkableSpots.add(MapObject.SMART_ENEMY_SPAWN.ordinal());
+		walkableSpots.add(MapObject.TELEPORTER.ordinal());
+		
 		creatingCell();
 		addingNeighbors();
 	}
@@ -53,7 +66,7 @@ public class Astar
 		{
 			for(int j = 0; j < matrixCell[i].length; j++) 
 			{
-				if(matrix[i][j] == 0 || matrix[i][j] == 2 || matrix[i][j] == 3 || matrix[i][j] == 8 || matrix[i][j] == 9)
+				if(walkableSpots.contains(matrix[i][j])) 
 					matrixCell[i][j] = new Cell(i, j);
 			}
 		}
@@ -93,7 +106,7 @@ public class Astar
 	 * @param playerY : position Y of the player
 	 * @return the direction predicted
 	 */
-	public int updateDirection(int enemyX, int enemyY, int playerX, int playerY) 
+	public Direction updateDirection(int enemyX, int enemyY, int playerX, int playerY) 
 	{
 	    clearStructs();
 		
@@ -106,14 +119,14 @@ public class Astar
 	    previousPlayerCoord[0] = playerX;
 	    previousPlayerCoord[1] = playerY;
 		
-	    if(matrixCell[playerCoord[0]/mapScale][playerCoord[1]/mapScale] == null) 
+	    if(matrixCell[playerCoord[0] / mapScale][playerCoord[1] / mapScale] == null) 
 	    {
-		clearStructs();
-		matrixCell[playerCoord[0]/mapScale][playerCoord[1]/mapScale] = new Cell(playerCoord[0]/mapScale, playerCoord[1]/mapScale);
-		addingNeighbors();
+	    	clearStructs();
+	    	matrixCell[playerCoord[0] / mapScale][playerCoord[1] / mapScale] = new Cell(playerCoord[0] / mapScale, playerCoord[1] / mapScale);
+	    	addingNeighbors();
 	    }
 		
-	    int direction = algorithm(); 
+	    Direction direction = algorithm(); 
 	    return direction;
 	}
 	
@@ -121,9 +134,9 @@ public class Astar
 	 * Run the A star algorithm
 	 * @return the direction predicted
 	 */
-	private int algorithm() 
+	private Direction algorithm() 
 	{
-		startCell = matrixCell[enemyCoord[0] / mapScale][enemyCoord[1] / mapScale];
+		startCell = matrixCell[enemyCoord[0] / mapScale][enemyCoord[1] /mapScale];
 		endCell = matrixCell[playerCoord[0] / mapScale][playerCoord[1] / mapScale];
 		
 		openSet.add(startCell);
@@ -186,7 +199,7 @@ public class Astar
 			    break;
 		}
 		
-		int direction = findDirection();
+		Direction direction = findDirection();
 		return direction;
 	}
 	
@@ -194,9 +207,8 @@ public class Astar
 	 * Finds the direction and returns it
 	 * @return the direction predicted
 	 */
-	private int findDirection() 
-	{
-		int direction = -1;
+	private Direction findDirection() 
+	{	
 		int[] newPos = new int[2];
 		
 		if(path.size() < 2) 
@@ -209,33 +221,33 @@ public class Astar
 		    newPos[0] = path.get(path.size() - 2).getX();
 		    newPos[1] = path.get(path.size() - 2).getY();
 		}
-
-		if(enemyCoord[0] / mapScale > newPos[0] 
-			&& path.contains(matrixCell[enemyCoord[0] / mapScale][enemyCoord[1] / mapScale]) 
-			&& path.contains(matrixCell[enemyCoord[0] / mapScale][(enemyCoord[1] + mapScale - 1) / mapScale]))
-		{
-			direction = 0; // UP
-		}
-		else if(enemyCoord[1] / mapScale < newPos[1] 
-			&& path.contains(matrixCell[enemyCoord[0] / mapScale][(enemyCoord[1] + mapScale) / mapScale]) 
-			&& path.contains(matrixCell[(enemyCoord[0] + mapScale - 1)/mapScale][(enemyCoord[1] + mapScale) / mapScale]))
-		{
-			direction = 1; // RIGHT
-		}
-		else if(enemyCoord[0] / mapScale < newPos[0] 
-			&& path.contains(matrixCell[(enemyCoord[0] + mapScale) / mapScale][enemyCoord[1] / mapScale]) 
-			&& path.contains(matrixCell[(enemyCoord[0] + mapScale) / mapScale][(enemyCoord[1] + mapScale - 1) / mapScale]))
-		{
-			direction = 2; // DOWN
-		}
-		else if(enemyCoord[1]/mapScale > newPos[1] 
-			&& path.contains(matrixCell[enemyCoord[0] / mapScale][enemyCoord[1] / mapScale]) 
-			&& path.contains(matrixCell[(enemyCoord[0] + mapScale - 1)/mapScale][enemyCoord[1] / mapScale]))
-		{
-			direction = 3; // LEFT
-		}
 		
-		if(direction == -1)
+		if(enemyCoord[0] / mapScale > newPos[0]
+	            && path.contains(matrixCell[enemyCoord[0] / mapScale][enemyCoord[1] / mapScale]) // TOP LEFT
+	            && path.contains(matrixCell[enemyCoord[0] / mapScale][(enemyCoord[1] + mapScale - 1) / mapScale])) // TOP RIGHT
+	        {
+	            direction = Direction.UP;
+	        }
+	        else if(enemyCoord[1] / mapScale < newPos[1]
+	            && path.contains(matrixCell[enemyCoord[0] / mapScale][(enemyCoord[1] + mapScale) / mapScale]) // TOP RIGHT
+	            && path.contains(matrixCell[(enemyCoord[0] + mapScale - 1)/mapScale][(enemyCoord[1] + mapScale) / mapScale])) // BOTTOM RIGHT
+	        {
+	            direction = Direction.RIGHT;
+	        }
+	        else if(enemyCoord[0] / mapScale < newPos[0]
+	            && path.contains(matrixCell[(enemyCoord[0] + mapScale) / mapScale][enemyCoord[1] / mapScale])  // BOTTOM LEFT
+	            && path.contains(matrixCell[(enemyCoord[0] + mapScale) / mapScale][(enemyCoord[1] + mapScale - 1) / mapScale])) // BOTTOM RIGHT
+	        {
+	            direction = Direction.DOWN;
+	        }
+	        else if(enemyCoord[1]/mapScale > newPos[1]
+	            && path.contains(matrixCell[enemyCoord[0] / mapScale][enemyCoord[1] / mapScale]) // TOP LEFT
+	            && path.contains(matrixCell[(enemyCoord[0] + mapScale - 1)/mapScale][enemyCoord[1] / mapScale])) // BOTTOM RIGHT
+	        {
+	            direction = Direction.LEFT;
+	        }
+		
+		if(direction.equals(Direction.NONE))
 			direction = nextDirection;
 		else
 			nextDirection = direction;

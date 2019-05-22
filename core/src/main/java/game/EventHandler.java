@@ -1,46 +1,40 @@
-package com.mystudio.themaze;
+package game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
+import enums.Direction;
+
 public class EventHandler 
 {
-	private Game game;
+	private Player player;
 	
-	public EventHandler(Game game) 
+	public EventHandler(Player player) 
 	{
-		this.game = game;
+		this.player = player;
 	}
 
 	public void checkUserInputs()
 	{
 		if(Gdx.input.isKeyJustPressed(Keys.UP)) 
 		{
-
+			player.setDirection(Direction.UP);
 		}
 		else if(Gdx.input.isKeyJustPressed(Keys.RIGHT))
     	{
-
+			player.setDirection(Direction.RIGHT);
     	}
 		else if(Gdx.input.isKeyJustPressed(Keys.DOWN))
     	{
-
+			player.setDirection(Direction.DOWN);
     	}
 		else if(Gdx.input.isKeyJustPressed(Keys.LEFT))
     	{
-
+			player.setDirection(Direction.LEFT);
     	}
 		else if(Gdx.input.isKeyJustPressed(Keys.A))
     	{
-
-    	}
-		else if(Gdx.input.isKeyJustPressed(Keys.R))
-    	{
-			game.resetGame();
-    	}
-		else if(Gdx.input.isKeyJustPressed(Keys.M))
-    	{
-			game.callMenu();
+			player.throwItem();
     	}
 	}
 }

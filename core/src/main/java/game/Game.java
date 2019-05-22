@@ -1,4 +1,4 @@
-package com.mystudio.themaze;
+package game;
 
 
 import java.util.ArrayList;
@@ -9,97 +9,72 @@ import org.mini2Dx.core.graphics.Graphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
-import menu.Menu;
-import menu.MenuMethode1;
+import enums.ScreenType;
+import screen.GameScreen;
+import screen.Menu;
+import screen.Screen;
+import screen.ScreenHandler;
 
 public class Game extends BasicGame 
 {
 	public static final String GAME_IDENTIFIER = "com.mystudio.themaze";
-	private EventHandler eventHandler;
-	private Maze maze;
-	private Player player;
-	private Collision collision;
-	private ArrayList<Enemy> enemies;
-	
-	//MenuMethode1 menu = new MenuMethode1();
-	Menu menu = new Menu();
+	private ScreenType state = ScreenType.MENU;
+	private ScreenHandler screenHandler;
+	private ArrayList<Screen> screens;
 	
 	@Override
 	public void initialise() 
 	{
-		eventHandler = new EventHandler(this);
-		//MapTranslator map = new MapTranslator();
-		maze = MapTranslator.translate("/map/MapSkeleton.png");
-
-		player = maze.getPlayer();
-		enemies = maze.getEnemies();
-		//menu.create();
-
-		collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale(), maze.getEventListener());
+		screenHandler = new ScreenHandler();
+		screens = new ArrayList<Screen>();
+		screens.add(new Menu(screenHandler));
+		screens.add(new GameScreen(screenHandler));
 		
-		menu.create();
+		for(int i = 0; i < screens.size(); i++)
+			screens.get(i).initialise();
 	}
 
 	@Override
 	public void update(float delta) 
 	{
-		eventHandler.checkUserInputs();
-		if (player.getAlive() && !player.getEscape() && !menu.getMenuState()) 
-		{
-			player.update();
-			for (int i = 0; i < enemies.size(); i++)
-				enemies.get(i).update();
-			
-			collision.verify();
-			collision.verifyEnemy();
-		}
-		else
-			menu.update();
-
-		maze.getEventListener().updatePlaylist();
+		keyInputs();
+		state = screenHandler.getState();
+		screens.get(state.ordinal()).update();		
 	}
 
 	@Override
 	public void interpolate(float alpha) 
 	{
-
+		// Not used
 	}
 
 	@Override
 	public void render(Graphics g)
 	{
-		if(!menu.getMenuState())
+		screens.get(state.ordinal()).render(g);
+	}
+	
+	public void keyInputs()
+	{
+		if(Gdx.input.isKeyJustPressed(Keys.R))
 		{
-		// maze.PaintMaze(g);
-
-		maze.displayUserMap(g, player);
-
-		player.render(g);
-		maze.displayItems(g);
-		for (int i = 0; i < enemies.size(); i++)
-			enemies.get(i).render(g);
-
-		maze.displayUserMapSecondLayer(g, player);
-		
-		//menu.render();
+			reset(ScreenType.GAME.ordinal());
 		}
-		else
-			menu.render();		
+		else if(Gdx.input.isKeyJustPressed(Keys.M))
+		{
+			callMenu();
+		}
+	}
+	
+	public void reset(int screen) 
+	{
+		screens.get(screen).reset();
 	}
 
 	public void callMenu() 
 	{
-		resetGame();
-		menu.call();
-	}
-	
-	public void resetGame()
-	{
-		for (int i = 0; i < enemies.size(); i++)
-			enemies.get(i).reset();
-		for (int j = 0; j < maze.getItems().size(); j++)
-			maze.getItems().get(j).respawn();
-		player.restart();
-		maze.getEventListener().resetPlaylist();
+		reset(ScreenType.MENU.ordinal());
+		reset(ScreenType.GAME.ordinal());
+		screenHandler.setState(ScreenType.MENU);
 	}
 }

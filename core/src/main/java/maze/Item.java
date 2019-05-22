@@ -1,4 +1,4 @@
-package com.mystudio.themaze;
+package maze;
 
 import org.mini2Dx.core.graphics.Graphics;
 import com.badlogic.gdx.graphics.Texture;

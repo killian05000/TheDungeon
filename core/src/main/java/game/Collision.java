@@ -1,25 +1,20 @@
-package com.mystudio.themaze;
+package game;
 
 import java.util.ArrayList;
 
+import enemy.Enemy;
+import maze.Item;
+import music.MusicPlayer;
+
 public class Collision 
 {
-
 	private ArrayList<Item> items;
 	private ArrayList<Enemy> enemies;
 	private int mapScale;
 	private Player player;
 	private MusicPlayer eventListener;
 
-	/**
-	 * 
-	 * @param _items         :
-	 * @param _player
-	 * @param _enemies
-	 * @param scale
-	 * @param _eventListener
-	 */
-	public Collision(ArrayList<Item> items, Player player, ArrayList<Enemy> enemies, int scale,MusicPlayer eventListener) 
+	public Collision(ArrayList<Item> items, Player player, ArrayList<Enemy> enemies, int scale, MusicPlayer eventListener) 
 	{
 		this.player = player;
 		this.items = items;
@@ -33,38 +28,34 @@ public class Collision
 	 */
 	public void verify() 
 	{
-		int pPosX, pPosY, iPosX, iPosY, pSpeed = 0;
-		pPosX = player.getPosX();
-		pPosY = player.getPosY();
-		pSpeed = player.getSpeed();
+		int playerPosX, playerPosY, itemPosX, itemPosY, playerSpeed = 0;
+		playerPosX = player.getPosX();
+		playerPosY = player.getPosY();
+		playerSpeed = player.getSpeed();
 
 		for (int i = 0; i < items.size(); i++) 
 		{
 			if (!items.get(i).isLaunched) 
 			{
-				iPosX = items.get(i).getPosX();
-				iPosY = items.get(i).getPosY();
+				itemPosX = items.get(i).getPosX();
+				itemPosY = items.get(i).getPosY();
 
-				if (pPosX + mapScale - pSpeed >= iPosX 
-					&& pPosY >= iPosY && pPosX <= iPosX + mapScale - pSpeed
-					&& pPosY <= iPosY + mapScale - pSpeed) 
+				if (playerPosX + mapScale - playerSpeed >= itemPosX 
+					&& playerPosY >= itemPosY && playerPosX <= itemPosX + mapScale - playerSpeed
+					&& playerPosY <= itemPosY + mapScale - playerSpeed) 
 				{
 					player.addItem(items.get(i));
-					System.out.println("The player just collected an item");
 					eventListener.setPickingObjectSoundON(true);
-					// items.remove(i);
 					break;
 				}
 
-				if (pPosY + mapScale - pSpeed >= iPosY 
-					&& pPosX + mapScale - pSpeed >= iPosX
-					&& pPosY + mapScale - pSpeed <= iPosY + mapScale - pSpeed
-					&& pPosX <= iPosX + mapScale - pSpeed) 
+				if (playerPosY + mapScale - playerSpeed >= itemPosY 
+					&& playerPosX + mapScale - playerSpeed >= itemPosX
+					&& playerPosY + mapScale - playerSpeed <= itemPosY + mapScale - playerSpeed
+					&& playerPosX <= itemPosX + mapScale - playerSpeed) 
 				{
 					player.addItem(items.get(i));
-					System.out.println("The player just collected an item");
 					eventListener.setPickingObjectSoundON(true);
-					// items.remove(i);
 					break;
 				}
 			}
@@ -73,33 +64,31 @@ public class Collision
 
 	public void verifyEnemy() 
 	{
-		int pPosX, pPosY, pSpeed, ePosX, ePosY, eSpeed, iPosX, iPosY = 0;
-		pPosX = player.getPosX();
-		pPosY = player.getPosY();
-		pSpeed = player.getSpeed();
+		int playerPosX, playerPosY, playerSpeed, enemyPosX, enemyPosY, enemySpeed, itemPosX, itemPosY = 0;
+		playerPosX = player.getPosX();
+		playerPosY = player.getPosY();
+		playerSpeed = player.getSpeed();
 
 		for (int i = 0; i < enemies.size(); i++) 
 		{
-			ePosX = enemies.get(i).getPosX();
-			ePosY = enemies.get(i).getPosY();
-			eSpeed = enemies.get(i).getSpeed();
+			enemyPosX = enemies.get(i).getPosX();
+			enemyPosY = enemies.get(i).getPosY();
+			enemySpeed = enemies.get(i).getSpeed();
 
-			if (pPosX + mapScale - pSpeed >= ePosX 
-				&& pPosY >= ePosY && pPosX <= ePosX + mapScale - pSpeed
-				&& pPosY <= ePosY + mapScale - pSpeed) 
+			if (playerPosX + mapScale - playerSpeed >= enemyPosX 
+				&& playerPosY >= enemyPosY && playerPosX <= enemyPosX + mapScale - playerSpeed
+				&& playerPosY <= enemyPosY + mapScale - playerSpeed) 
 			{
-				System.out.println("Enemy has collided with the player");
 				player.setAlive(false);
 				eventListener.setGameOverSoundON(true);
 				break;
 			}
 
-			if (pPosY + mapScale - pSpeed >= ePosY 
-				&& pPosX + mapScale - pSpeed >= ePosX
-				&& pPosY + mapScale - pSpeed <= ePosY + mapScale - pSpeed 
-				&& pPosX <= ePosX + mapScale - pSpeed) 
+			if (playerPosY + mapScale - playerSpeed >= enemyPosY 
+				&& playerPosX + mapScale - playerSpeed >= enemyPosX
+				&& playerPosY + mapScale - playerSpeed <= enemyPosY + mapScale - playerSpeed 
+				&& playerPosX <= enemyPosX + mapScale - playerSpeed) 
 			{
-				System.out.println("Enemy has collided with the player");
 				player.setAlive(false);
 				eventListener.setGameOverSoundON(true);
 				break;
@@ -109,26 +98,24 @@ public class Collision
 			{
 				if (items.get(j).isLaunched) 
 				{
-					iPosX = items.get(j).getPosX();
-					iPosY = items.get(j).getPosY();
+					itemPosX = items.get(j).getPosX();
+					itemPosY = items.get(j).getPosY();
 
-					if (ePosX + mapScale - eSpeed >= iPosX 
-						&& ePosY >= iPosY && ePosX <= iPosX + mapScale - eSpeed
-						&& ePosY <= iPosY + mapScale - eSpeed) 
+					if (enemyPosX + mapScale - enemySpeed >= itemPosX 
+						&& enemyPosY >= itemPosY && enemyPosX <= itemPosX + mapScale - enemySpeed
+						&& enemyPosY <= itemPosY + mapScale - enemySpeed) 
 					{
-						System.out.println("Enemy has collided with an object");
 						enemies.get(i).respawn();
 						items.get(j).respawn();
 						items.get(j).isLaunched = false;
 						break;
 					}
 
-					if (ePosY + mapScale - eSpeed >= iPosY 
-						&& ePosX + mapScale - eSpeed >= iPosX
-						&& ePosY + mapScale - eSpeed <= iPosY + mapScale - eSpeed
-						&& ePosX <= iPosX + mapScale - eSpeed) 
+					if (enemyPosY + mapScale - enemySpeed >= itemPosY 
+						&& enemyPosX + mapScale - enemySpeed >= itemPosX
+						&& enemyPosY + mapScale - enemySpeed <= itemPosY + mapScale - enemySpeed
+						&& enemyPosX <= itemPosX + mapScale - enemySpeed) 
 					{
-						System.out.println("Enemy has collided with an object");
 						enemies.get(i).respawn();
 						items.get(j).respawn();
 						items.get(j).isLaunched = false;

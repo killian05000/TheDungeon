@@ -1,8 +1,10 @@
-package com.mystudio.themaze;
+package maze;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
+import enums.MapObject;
 
 public final class MapTranslator 
 {
@@ -29,8 +31,8 @@ public final class MapTranslator
 
 		matrix = new int[map.getHeight() / tileSize][map.getWidth() / tileSize];
 		
-		int xM = 0; // Matrix x
-		int yM = 0; // Matrix y
+		int xMatrix = 0; // Matrix x
+		int yMatrix = 0; // Matrix y
 
 		for (int x = tileSize / 2; x < map.getHeight(); x += tileSize) 
 		{
@@ -39,16 +41,16 @@ public final class MapTranslator
 				int pixel = map.getRGB(y, x); // get the RGB value of a pixel
 
 				// Split the pixel R, G and B value in a vector
-				int[] v = new int[3];
-				v[0] = (pixel >> 16) & 0xff;
-				v[1] = (pixel >> 8) & 0xff;
-				v[2] = pixel & 0xff;
+				int[] RgbVector = new int[3];
+				RgbVector[0] = (pixel >> 16) & 0xff;
+				RgbVector[1] = (pixel >> 8) & 0xff;
+				RgbVector[2] = pixel & 0xff;
 
-				buildMatrix(v, xM, yM);
-				yM++;
+				buildMatrix(RgbVector, xMatrix, yMatrix);
+				yMatrix++;
 			}
-			yM = 0;
-			xM++;
+			yMatrix = 0;
+			xMatrix++;
 		}
 		// displayMatrix();
 		
@@ -65,26 +67,26 @@ public final class MapTranslator
 	 */
 	private static void buildMatrix(int[] p, int x, int y) // (x = line,y = column)
 	{
-		if (p[0] == 198 && p[1] == 198 && p[2] == 198) // ALLEYS
-			matrix[x][y] = 0;
-		else if (p[0] == 60 && p[1] == 60 && p[2] == 60) // WALLS
-			matrix[x][y] = 1;
-		else if (p[0] == 103 && p[1] == 175 && p[2] == 233) // PLAYER SPAWN
-			matrix[x][y] = 2;
-		else if (p[0] == 174 && p[1] == 64 && p[2] == 64) // RANDOM ENEMY SPAWN
-			matrix[x][y] = 3;
-		else if (p[0] == 111 && p[1] == 19 && p[2] == 17) // TRAPS
-			matrix[x][y] = 4;
-		else if (p[0] == 95 && p[1] == 76 && p[2] == 54) // EXIT DOOR
-			matrix[x][y] = 5;
-		else if (p[0] == 158 && p[1] == 233 && p[2] == 135) // EXIT
-			matrix[x][y] = 6;
-		else if (p[0] == 46 && p[1] == 68 && p[2] == 117) // OBJECTS SPAWN
-			matrix[x][y] = 7;
-		else if (p[0] == 217 && p[1] == 211 && p[2] == 109) // SMART ENEMY
-			matrix[x][y] = 8;
-		else if (p[0] == 163 && p[1] == 104 && p[2] == 162) // TELEPORTER
-			matrix[x][y] = 9;
+		if (p[0] == 198 && p[1] == 198 && p[2] == 198)
+			matrix[x][y] = MapObject.ALLEY.ordinal();
+		else if (p[0] == 60 && p[1] == 60 && p[2] == 60)
+			matrix[x][y] = MapObject.WALL.ordinal();
+		else if (p[0] == 103 && p[1] == 175 && p[2] == 233)
+			matrix[x][y] = MapObject.PLAYER_SPAWN.ordinal();
+		else if (p[0] == 174 && p[1] == 64 && p[2] == 64)
+			matrix[x][y] = MapObject.RANDOM_ENEMY_SPAWN.ordinal();
+		else if (p[0] == 111 && p[1] == 19 && p[2] == 17)
+			matrix[x][y] = MapObject.TRAP.ordinal();
+		else if (p[0] == 95 && p[1] == 76 && p[2] == 54)
+			matrix[x][y] = MapObject.DOOR.ordinal();
+		else if (p[0] == 158 && p[1] == 233 && p[2] == 135)
+			matrix[x][y] = MapObject.EXIT.ordinal();
+		else if (p[0] == 46 && p[1] == 68 && p[2] == 117)
+			matrix[x][y] = MapObject.OBJECT_SPAWN.ordinal();
+		else if (p[0] == 217 && p[1] == 211 && p[2] == 109)
+			matrix[x][y] = MapObject.SMART_ENEMY_SPAWN.ordinal();
+		else if (p[0] == 163 && p[1] == 104 && p[2] == 162)
+			matrix[x][y] = MapObject.TELEPORTER.ordinal();
 	}
 
 	/**

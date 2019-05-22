@@ -1,23 +1,29 @@
 
-package com.mystudio.themaze;
+package game;
 
 import java.util.ArrayList;
 import org.mini2Dx.core.graphics.Graphics;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 
+import enums.Direction;
+import enums.MapObject;
+import maze.Item;
+import maze.Maze;
+import music.MusicPlayer;
 
 public class Player 
 {
 	// Movements
 	private int posX;
 	private int posY;
+	private int newPosX;
+	private int newPosY;
 	private int speed = 4;
 	private int defaultPosX;
 	private int defaultPosY;
-	private int direction = -1;	
-	private int nextDirection = -1;
+	private Direction direction = Direction.NONE;	
+	private Direction nextDirection = Direction.NONE;
+	private ArrayList<ArrayList<Integer>> movementModifier;
 
 	// States
 	private boolean alive;
@@ -30,7 +36,8 @@ public class Player
 	Maze maze;
 	
 	// Bag and item position
-	private ArrayList<Item> bag;	
+	private ArrayList<Item> bag;
+	private int requiredObjectNumber = 3;
 	private int itemPos = 0;
 	
 	// Animation
@@ -38,11 +45,9 @@ public class Player
 	private Texture playerSprite;
 	private ArrayList<Texture> animationLeft;
 	private ArrayList<Texture> animationRight;
-	private ArrayList<Texture> animationUp;
-	private ArrayList<Texture> animationDown;
-	private int animCounter=0;
-	private int frameCounter=0;
-	private int previousDir=-1;
+	private int animationCounter = 0;
+	private int frameCounter = 0;
+	private Direction previousDirection = Direction.NONE;
 
 
 	/**
@@ -58,388 +63,215 @@ public class Player
 		matrix = maze.getMatrix();
 		this.eventListener = eventListener;
 		
-		defaultPosX = x*mapScale;
-		defaultPosY = y*mapScale;
+		defaultPosX = x * mapScale;
+		defaultPosY = y * mapScale;
 		posX = defaultPosX;
 		posY = defaultPosY;		
+		newPosX = posX;
+		newPosY = posY;
+		
+		movementModifier = new ArrayList<ArrayList<Integer>>();
+		movementModifier.add(new ArrayList<Integer>());
+		movementModifier.get(0).add(-1);
+		movementModifier.get(0).add(0);
+		
+		movementModifier.add(new ArrayList<Integer>());
+		movementModifier.get(1).add(0);
+		movementModifier.get(1).add(1);
+
+		movementModifier.add(new ArrayList<Integer>());
+		movementModifier.get(2).add(1);
+		movementModifier.get(2).add(0);
+
+		movementModifier.add(new ArrayList<Integer>());
+		movementModifier.get(3).add(0);
+		movementModifier.get(3).add(-1);		
 				
 		alive = true;
 		escape = false;	
 				
 		defaultPlayerSprite = new Texture("player/runLeft/0.png");
 		playerSprite = defaultPlayerSprite;
+		loadTextures();
 		
 		bag = new ArrayList<Item>();
-//		animationLeft = new ArrayList<Texture>();		
-//		animationLeft.add(new Texture("player/badpacLeft.png"));
-//		animationLeft.add(new Texture("player/badpacLeftPink.png"));
-		
-		animationLeft = new ArrayList<Texture>();		
-		animationLeft.add(new Texture("player/runLeft/0.png"));
-		animationLeft.add(new Texture("player/runLeft/1.png"));
-		animationLeft.add(new Texture("player/runLeft/2.png"));
-		animationLeft.add(new Texture("player/runLeft/3.png"));
-		animationLeft.add(new Texture("player/runLeft/4.png"));
-		animationLeft.add(new Texture("player/runLeft/5.png"));
-		animationLeft.add(new Texture("player/runLeft/6.png"));
-		animationLeft.add(new Texture("player/runLeft/7.png"));
-		animationLeft.add(new Texture("player/runLeft/8.png"));
-		animationLeft.add(new Texture("player/runLeft/9.png"));
-		
-//		animationRight = new ArrayList<Texture>();		
-//		animationRight.add(new Texture("player/badpacRight.png"));
-//		animationRight.add(new Texture("player/badpacRightYellow.png"));
-		
+	}
+	
+	public void loadTextures()
+	{
 		animationRight = new ArrayList<Texture>();		
-		animationRight.add(new Texture("player/runRight/0.png"));
-		animationRight.add(new Texture("player/runRight/1.png"));
-		animationRight.add(new Texture("player/runRight/2.png"));
-		animationRight.add(new Texture("player/runRight/3.png"));
-		animationRight.add(new Texture("player/runRight/4.png"));
-		animationRight.add(new Texture("player/runRight/5.png"));
-		animationRight.add(new Texture("player/runRight/6.png"));
-		animationRight.add(new Texture("player/runRight/7.png"));
-		animationRight.add(new Texture("player/runRight/8.png"));
-		animationRight.add(new Texture("player/runRight/9.png"));
+		animationLeft = new ArrayList<Texture>();
 		
-		/*
-		animationUp = new ArrayList<Texture>();		
-		animationUp.add(new Texture("player/badpacUp.png"));
-		animationUp.add(new Texture("player/badpacUpBlue.png"));
+		int animationSize = 10;
 		
-		animationDown = new ArrayList<Texture>();		
-		animationDown.add(new Texture("player/badpacDown.png"));
-		animationDown.add(new Texture("player/badpacDownGreen.png"));
-		*/
+		for(int i = 0; i < animationSize; i++)
+		{
+			animationRight.add(new Texture("player/runRight/" + i + ".png"));
+			animationLeft.add(new Texture("player/runLeft/" + i + ".png"));
+		}
 	}
 	
+	public void setDirection(Direction direction)
+	{
+		if(!alive)
+			return;
+		
+		int corners[] = calculateCorners(direction.ordinal());
+
+		if(directionAvailable(corners[0], corners[1])) 
+		{
+			this.direction = direction;
+			nextDirection = Direction.NONE;
+		}
+		else
+			nextDirection = direction;
+		checkMovements();
+	}
 	
-	
-	/**
-	 * Update the player movements and animations according to the user input
-	 */
-	public  void  update () 
+	public void checkMovements()
 	{		
-		int newPosX;
-    	int newPosY;
-		int topLeft, topRight, botLeft, botRight;
+		if(direction == Direction.NONE)
+			return;		
+
+		int[] corners;
 		
-		keyEventListener();		
-	
-    	switch(direction)
-    	{
-			case 0: // UP
-				newPosX = posX - speed;			
-				if(newPosX >= 0)
-				{
-					topLeft = matrix[newPosX / mapScale][posY / mapScale];
-					topRight = matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
-					
-					move(topLeft, topRight, newPosX, 0, maze);
-				}
-				break;
-				
-			case 1: // RIGHT
-				newPosY = posY + speed;
-				if((newPosY + mapScale - speed) / mapScale < maze.getMatrix()[0].length)
-				{  		
-					topRight = matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
-					botRight = matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
-					
-		    		move(topRight, botRight, newPosY, 1, maze);
-				}
-	    		break;
-	    		
-			case 2: // DOWN
-				newPosX = posX + speed;	 
-				if((newPosX + mapScale - speed) / mapScale < matrix.length)
-				{
-					botLeft = matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
-					botRight = matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
-					
-		    		move(botLeft, botRight, newPosX, 2, maze);
-				}
-				break;
-				
-			case 3: // LEFT
-				newPosY = posY - speed;	
-				if(newPosY >= 0)
-				{
-					topLeft = matrix[posX / mapScale][newPosY / mapScale];
-					botLeft = matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
-					
-		    		move(topLeft, botLeft, newPosY, 3, maze);
-				}
-	    		break;		
+		if(nextDirection != Direction.NONE)
+		{
+			corners = calculateCorners(nextDirection.ordinal());
+			
+			if(directionAvailable(corners[0], corners[1]))
+			{
+				direction = nextDirection;
+				move();
+				nextDirection = Direction.NONE;
+				return;
+			}
 		}
-    	
-    	if(nextDirection != -1)
+
+		corners = calculateCorners(direction.ordinal());
+		
+		if(!collide(corners[0], corners[1]))
     	{
-	    	if(nextDirection == 0)
-	    	{
-	    		newPosX = posX - speed;	
-				if(newPosX >= 0)
-				{
-					topLeft = matrix[newPosX / mapScale][posY / mapScale];
-					topRight = matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
-					
-					setNextDir(topLeft, topRight);
-				}
-	    	}
-	    	else if(nextDirection == 1)
-	    	{
-	    		newPosY = posY + speed;	
-	
-				if((newPosY + mapScale - speed) / mapScale < matrix[0].length)
-				{
-					topRight = matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
-					botRight = matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
-					
-		    		setNextDir(topRight, botRight);
-				}
-	    	}
-	    	else if(nextDirection == 2)
-	    	{
-	    		newPosX = posX + speed;	 
-				if((newPosX + mapScale - speed) / mapScale < matrix.length)
-				{
-					botLeft = matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
-					botRight = matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
-						
-		    		setNextDir(botLeft, botRight);
-				}
-	    	}
-	    	else if(nextDirection == 3)
-	    	{
-	    		newPosY = posY - speed;
-				if(newPosY >= 0)
-				{
-					topLeft = matrix[posX / mapScale][newPosY / mapScale];
-					botLeft = matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
-					
-		    		setNextDir(topLeft, botLeft);
-				}
-	    	}
+    		move();
     	}
-    	
-    	updateAnimation();
+    	else
+    	{
+    		nextDirection = Direction.NONE;
+			triggerCollision(corners[0], corners[1], maze);
+    	}
+		
+		updateAnimation();
 	}
 	
-	/**
-	 * 	Listen user's keyboard inputs & act accordingly (change direction / throw Item)
-	 */
-	private void keyEventListener()
+	public int[] calculateCorners(int direction)
 	{
-		int newPosX;
-    	int newPosY;
-		int topLeft, topRight, botLeft, botRight;
-		
-		if(Gdx.input.isKeyJustPressed(Keys.UP)) 
+		newPosX = posX + movementModifier.get(direction).get(0) * speed; 
+    	newPosY = posY + movementModifier.get(direction).get(1) * speed;
+    	
+    	int[] corners = new int[2];    	
+    	corners[0] = 1;
+    	corners[1] = 1;
+    	    	
+    	if(direction == 0 && newPosX + speed <= 0)
+    		return corners;
+		if(direction == 1 && (newPosY + mapScale - speed)/mapScale >= matrix[0].length)
+			return corners;
+		if(direction == 2 && (newPosX + mapScale - speed)/mapScale >= matrix.length)
+			return corners;
+		if(direction == 3 && newPosY + speed <= 0)
+			return corners;
+	    	
+    	int topLeft = matrix[newPosX / mapScale][newPosY / mapScale];
+    	int topRight = matrix[newPosX / mapScale][(newPosY + mapScale - speed) / mapScale];
+    	int botRight = matrix[(newPosX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale];
+    	int botLeft = matrix[(newPosX + mapScale - speed) / mapScale][newPosY / mapScale];
+
+    	if(direction == Direction.UP.ordinal())
+    	{
+    		corners[0] = topLeft;
+    		corners[1] = topRight;
+    	}
+		else if(direction == Direction.RIGHT.ordinal())
 		{
-			newPosX = posX - speed;	
-			if(newPosX >= 0)
-			{
-				topLeft = matrix[newPosX / mapScale][posY / mapScale];
-				topRight = matrix[newPosX / mapScale][(posY + mapScale - speed) / mapScale];
-				
-				setDir(topLeft, topRight, 0);
-			}
-		}
-		else if(Gdx.input.isKeyJustPressed(Keys.RIGHT))
-    	{
-			newPosY = posY + speed;	
-			if((newPosY + mapScale - speed) / mapScale < maze.getMatrix()[0].length)
-			{
-				topRight = matrix[posX / mapScale][(newPosY + mapScale - speed) / mapScale];
-				botRight = matrix[(posX + mapScale - speed) / mapScale][(newPosY + mapScale - speed) / mapScale]; 
-				
-	    		setDir(topRight, botRight, 1);
-			}
+			corners[0] = topRight;
+    		corners[1] = botRight;
     	}
-		else if(Gdx.input.isKeyJustPressed(Keys.DOWN))
-    	{
-			newPosX = posX + speed;
-			if((newPosX + mapScale - speed) / mapScale < maze.getMatrix().length)
-			{
-				botLeft = matrix[(newPosX + mapScale - speed) / mapScale][posY / mapScale];
-				botRight = matrix[(newPosX + mapScale - speed) / mapScale][(posY + mapScale - speed) / mapScale];
-					
-	    		setDir(botLeft, botRight, 2);
-			}
+		else if(direction == Direction.DOWN.ordinal())
+		{
+			corners[0] = botLeft;
+			corners[1] = botRight;
     	}
-		else if(Gdx.input.isKeyJustPressed(Keys.LEFT))
-    	{
-			newPosY = posY - speed;
-			if(newPosY >= 0)
-			{
-				topLeft = matrix[posX / mapScale][newPosY / mapScale];
-				botLeft = matrix[(posX + mapScale - speed) / mapScale][newPosY / mapScale];
-				
-	    		setDir(topLeft, botLeft, 3);
-			}
-    	}		
-		else if(Gdx.input.isKeyJustPressed(Keys.A))
-    		throwItem();
+		else if(direction == Direction.LEFT.ordinal())
+		{
+			corners[0] = topLeft;
+			corners[1] = botLeft;
+    	}
+    	
+    	return corners;
 	}
 	
-	/**
-	 * Check the collision between the player and map elements
-	 * @param corner1 : used to check if the corner1 is colliding with anything (map level)
-	 * @param corner2 : used to check if the corner2 is colliding with anything (map level)
-	 * @param newPos : new position after the supposed movement
-	 * @param dir : player direction
-	 * @param maze : maze instance
-	 */
-	private void move(int corner1, int corner2, int newPos, int dir, Maze maze)
+	public void move()
 	{
-		if(dir == 0 || dir == 2)
+		posX = newPosX;
+		posY = newPosY;
+	}
+	
+	public void triggerCollision(int corner1, int corner2, Maze maze)
+	{
+		if(corner1 == MapObject.TRAP.ordinal() || corner2 == MapObject.TRAP.ordinal())
 		{
-			if(corner1 == 0 && corner2 == 0)
-			{
-				posX = newPos;
-			}	
-			else if(corner1 == 4 || corner2 == 4)
-			{
-				posX = newPos;
-				alive = false;
-				eventListener.setGameOverSoundON(true);
-			}
-			else if(corner1 == 5 && corner2 == 5 && bag.size() == 3)
-			{
-				posX = newPos;
-			}
-			else if(corner1 == 6 && corner2 == 6)
-			{
-				posX = newPos;
-	    		escape = true;
-	    		eventListener.setVictorySoundON(true);
-			}
+			move();
+			alive = false;
+			eventListener.setGameOverSoundON(true);
 		}
-		else if( dir == 1 || dir == 3)
+		else if(corner1 == MapObject.DOOR.ordinal() && corner2 == MapObject.DOOR.ordinal() && bag.size() == requiredObjectNumber)
 		{
-			if(corner1 == 0 && corner2 == 0)
-			{
-				posY = newPos;
-			}	
-			else if(corner1 == 4 || corner2 == 4)
-			{
-				posY = newPos;
-				alive = false;
-				eventListener.setGameOverSoundON(true);
-			}
-			else if(corner1 == 5 && corner2 == 5 && bag.size() == 3)
-			{
-				posY = newPos;
-			}
-			else if(corner1 == 6 && corner2 == 6)
-			{
-				posY = newPos;
-	    		escape = true;
-	    		eventListener.setVictorySoundON(true);
-			}
+			move();
 		}
-		
-		if(corner1 == 9 && corner2 == 9)
+		else if(corner1 == MapObject.EXIT.ordinal() && corner2 == MapObject.EXIT.ordinal())
+		{
+			move();
+    		escape = true;
+    		eventListener.setVictorySoundON(true);
+		}
+		else if(corner1 == MapObject.TELEPORTER.ordinal() && corner2 == MapObject.TELEPORTER.ordinal())
 		{
 			eventListener.setTeleporterSoundON(true);
 			int[] newTabPos = null;
-			if(dir == 0)
-			{
-				newTabPos = maze.teleportPlayer(newPos  / mapScale, posY / mapScale);
-				posX = newTabPos[0] * mapScale;
-				posY = newTabPos[1] * mapScale;
-			}
-			else if(dir == 1)
-			{
-				newTabPos = maze.teleportPlayer(posX / mapScale, (newPos+mapScale) / mapScale);
-				posX = newTabPos[0] * mapScale;
-				posY = newTabPos[1] * mapScale;
-			}
-			else if(dir == 2)
-			{
-				newTabPos = maze.teleportPlayer((newPos+mapScale) / mapScale, posY / mapScale);
-				posX = newTabPos[0] * mapScale;
-				posY = newTabPos[1] * mapScale;
-			}
-			else if(dir == 3)
-			{
-				newTabPos = maze.teleportPlayer(posX / mapScale, newPos / mapScale);
-				posX = newTabPos[0] * mapScale;
-				posY = newTabPos[1] * mapScale;
-			}
-		}
-	}
-	
-	/**
-	 * Check and change the direction
-	 * @param corner1 : used to check if the direction is available according to the corner1
-	 * @param corner2 : used to check if the direction is available according to the corner2
-	 * @param dir : player direction
-	 */
-	private void setDir(int corner1, int corner2, int dir)
-	{		
-		if(corner1 == 0 && corner2 == 0)
-		{
-			direction = dir;
-			nextDirection = -1;
+			if(direction == Direction.UP)
+				newTabPos = maze.teleportPlayer(newPosX  / mapScale, posY / mapScale);
+			else if(direction == Direction.RIGHT)
+				newTabPos = maze.teleportPlayer(posX / mapScale, (newPosY + mapScale) / mapScale);
+			else if(direction == Direction.DOWN)
+				newTabPos = maze.teleportPlayer((newPosX + mapScale) / mapScale, posY / mapScale);
+			else if(direction == Direction.LEFT)
+				newTabPos = maze.teleportPlayer(posX / mapScale, newPosY / mapScale);
 			
-		}
-		else if(corner1 == 4 && corner2 == 4)
-		{
-			direction = dir;
-			nextDirection = -1;
-		}
-		else if(corner1 == 5 && corner2 == 5)
-		{
-			direction = dir;
-			nextDirection = -1;
-		}
-		else if(corner1 == 6 && corner2 == 6)
-		{
-			direction = dir;
-			nextDirection = -1;
-		}
-		else if(corner1 == 9 && corner2 == 9)
-		{
-			direction = dir;
-			nextDirection = -1;
-		}
-		else
-			nextDirection = dir;
+			newPosX = newTabPos[0] * mapScale;
+			newPosY = newTabPos[1] * mapScale;
+			move();
+		}	
 	}
 	
-	/**
-	 * Set the direction to <type>nextDirection</type> if available
-	 * @param corner1 : used to check if the direction is available according to the corner1
-	 * @param corner2 : used to check if the direction is available according to the corner2
-	 */
-	private void setNextDir(int corner1, int corner2)
+	public boolean collide(int corner1, int corner2)
 	{
-		if(corner1 == 0 && corner2 == 0)
-		{
-			direction = nextDirection;
-			nextDirection = -1;
-		}
-		if(corner1 == 4 && corner2 == 4)
-		{
-			direction = nextDirection;
-			nextDirection = -1;
-		}
-		else if(corner1 == 5 && corner2 == 5)
-		{
-			direction = nextDirection;
-			nextDirection = -1;
-		}
-		else if(corner1 == 6 && corner2 == 6)
-		{
-			direction = nextDirection;
-			nextDirection = -1;
-		}
-		else if(corner1 == 9 && corner2 == 9)
-		{
-			direction = nextDirection;
-			nextDirection = -1; 
-		}			
+		return (corner1 != MapObject.ALLEY.ordinal() || corner2 != MapObject.ALLEY.ordinal());
+	}
+	
+	public boolean directionAvailable(int corner1, int corner2)
+	{
+		if(corner1 == MapObject.ALLEY.ordinal() && corner2 == MapObject.ALLEY.ordinal())
+			return true;
+		if(corner1 == MapObject.TRAP.ordinal() && corner2 == MapObject.TRAP.ordinal())
+			return true;
+		else if(corner1 == MapObject.DOOR.ordinal() && corner2 == MapObject.DOOR.ordinal() && bag.size() == requiredObjectNumber)
+			return true;
+		else if(corner1 == MapObject.EXIT.ordinal() && corner2 == MapObject.EXIT.ordinal())
+			return true;
+		else if(corner1 == MapObject.TELEPORTER.ordinal() && corner2 == MapObject.TELEPORTER.ordinal())
+			return true;
+		else
+			return false;
 	}
 	
 	/**
@@ -450,10 +282,10 @@ public class Player
 	{
 		bag.add(item);
 		item.setPosX(0);
-		item.setPosY(itemPos*mapScale);
+		item.setPosY(itemPos * mapScale);
 		itemPos++;
 		
-		if(bag.size() == 3)
+		if(bag.size() == requiredObjectNumber)
 			eventListener.setDoorOpenSoundON(true);
 	}
 	
@@ -466,11 +298,11 @@ public class Player
 		{
 			Item item = bag.get(itemPos - 1);			
 			eventListener.setThrowingObjectSoundON(true);
-			item.animation(posX,  posY, 5, 8, direction);			
+			item.animation(posX,  posY, 5, 8, direction.ordinal());			
 			bag.remove(itemPos - 1);
 			itemPos--;
 			
-			if(bag.size() == 2)
+			if(bag.size() == requiredObjectNumber - 1)
 				eventListener.setDoorClosedSoundON(true);
 		}
 	}
@@ -491,64 +323,41 @@ public class Player
 	 */
 	private void updateAnimation()
 	{		
-		if(previousDir != direction && (direction != 0 && direction != 2))
+		if(previousDirection != direction && (direction != Direction.UP && direction != Direction.DOWN))
 		{
-			animCounter = 0;
+			animationCounter = 0;
 			frameCounter = 0;
-			System.out.println("RESET");
 		}
 		
-//		if(direction == 0)
-//		{
-//			animate(animationUp);
-//			previousDir = 0;
-//		}
-//		else if(direction == 1)
-//		{
-//			animate(animationRight);
-//			previousDir = 1;
-//		}
-//		else if(direction == 2)
-//		{
-//			animate(animationDown);
-//			previousDir = 2;
-//		}
-//		else if(direction == 3)	
-//		{
-//			animate(animationLeft);
-//			previousDir = 3;
-//		}
-		
-		
-		if(direction == 0 && previousDir == 3)
+		if(direction == Direction.UP && previousDirection == Direction.LEFT)
 		{
 			animate(animationLeft);
-			previousDir = 3;
+			previousDirection = Direction.LEFT;
 		}
-		else if(direction == 0 && previousDir == 1)
+		else if(direction == Direction.UP && previousDirection == Direction.RIGHT)
 		{
 			animate(animationRight);
-			previousDir = 1;
+			previousDirection = Direction.RIGHT;
 		}
-		else if(direction == 1)
+		else if(direction == Direction.RIGHT)
 		{
 			animate(animationRight);
-			previousDir = 1;
+			previousDirection = Direction.RIGHT;
 		}
-		else if(direction == 2 && previousDir == 3)
+		else if(direction == Direction.DOWN && previousDirection == Direction.LEFT)
 		{
 			animate(animationLeft);
-			previousDir = 3;
+			previousDirection = Direction.LEFT;
 		}
-		else if(direction == 2 && previousDir == 1)
+		else if(direction == Direction.DOWN && previousDirection == Direction.RIGHT)
 		{
 			animate(animationRight);
-			previousDir = 1;
+			previousDirection = Direction.RIGHT;
 		}
-		else if(direction == 3)	
+		else if(direction == Direction.LEFT)	
 		{
 			animate(animationLeft);
-			previousDir = 3;
+			previousDirection = Direction.LEFT;
 		}
 	}
 	
@@ -556,17 +365,17 @@ public class Player
 	 * Animate the player
 	 * @param anim : animation sprites list
 	 */
-	private void animate(ArrayList<Texture> anim)
+	private void animate(ArrayList<Texture> animation)
 	{
-		if(frameCounter == animCounter*5)
+		if(frameCounter == animationCounter * 5)
 		{
-			if(animCounter == anim.size())
+			if(animationCounter == animation.size())
 			{
-				animCounter = 0;
+				animationCounter = 0;
 				frameCounter = 0;
 			}
-			playerSprite = anim.get(animCounter);
-			animCounter++;
+			playerSprite = animation.get(animationCounter);
+			animationCounter++;
 		}		
 		frameCounter++;
 	}
@@ -579,8 +388,8 @@ public class Player
 		playerSprite = defaultPlayerSprite;
 		posX = defaultPosX;
 		posY = defaultPosY;
-		nextDirection = -1;
-		direction = -1;
+		nextDirection = Direction.NONE;
+		direction = Direction.NONE;
 		bag.clear();	
 		itemPos = 0;
 		escape = false;
@@ -625,6 +434,11 @@ public class Player
 	public boolean getEscape()
 	{
 		return escape;
+	}
+
+	public int getRequiredObjectNumber() 
+	{
+		return requiredObjectNumber;
 	}
 }
 
