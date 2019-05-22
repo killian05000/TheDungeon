@@ -46,16 +46,16 @@ public class Maze
 		items = new ArrayList<Item>();
 
 		maps = new ArrayList<Texture>();
-		maps.add(new Texture("map/Map.png"));
-		maps.add(new Texture("map/DoorClosed.png"));
-		maps.add(new Texture("map/DoorOpen.png"));
-		maps.add(new Texture("map/MapSecondLayer.png"));
-		maps.add(new Texture("map/GameOver.png"));
-		maps.add(new Texture("map/Victory.png"));
+		maps.add(new Texture("map/map.png"));
+		maps.add(new Texture("map/doorClosed.png"));
+		maps.add(new Texture("map/doorOpen.png"));
+		maps.add(new Texture("map/mapSecondLayer.png"));
+		maps.add(new Texture("map/gameOver.png"));
+		maps.add(new Texture("map/victory.png"));
 
 		mapScale = tileSize;
 		initialiseDefaultPlayerPosition();
-		//initialiseDefaultEnemiesPosition();
+		initialiseDefaultEnemiesPosition();
 		initialiseDefaultItemsPosition();
 		initialiseTeleporterPosition();
 		initialiseDoorPosition();
