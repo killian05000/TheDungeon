@@ -5,24 +5,28 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Item 
 {
-	private Texture sprite;
+	// Positions
 	private int posX;
 	private int posY;
-	private int frameCounter = 0;
-	public boolean isLaunched;
 	private int defaultPosX;
 	private int defaultPosY;
+	
+	// Animation
+	private Texture sprite;
+	private int frameCounter = 0;
+	
+	// Maze
 	private int[][] matrix;
-
-	// Used when is thrown
-	private int range;
-	private int dir;
-	private int speed;
-
 	private int mapScale;
 
+	// Used when is thrown
+	public boolean isLaunched;
+	private int range;
+	private int speed;
+	private int direction;	
+
 	/**
-	 * 
+	 * Create an item
 	 * @param x     : default x item's position
 	 * @param y     : default y item's position
 	 * @param scale : tile size
@@ -42,35 +46,45 @@ public class Item
 
 	/**
 	 * Render the item sprite
-	 * 
 	 * @param g
 	 */
 	public void render(Graphics g) 
 	{
 		if (isLaunched)
-			animation(posX, posY, range, speed, dir);
+			animation(posX, posY, range, speed, direction);
+		
 		g.drawTexture(sprite, posY, posX, mapScale, mapScale);
 	}
-
-	public void animation(int pPosX, int pPosY, int range, int speed, int dir) 
+	
+	/**
+	 * Animate the item when its launched, move from the position
+	 * he was launched to the that same position + (range*mapScale) cases.
+	 * Stop its course if it has collided with anything.
+	 * @param playerPosX : player X position (from where the item is launched)
+	 * @param playerPosY : player Y position (from where the item is launched)
+	 * @param range : number of cases that the item will cross when thrown
+	 * @param speed : speed of the item
+	 * @param direction : direction of the thrown
+	 */
+	public void animation(int playerPosX, int playerPosY, int range, int speed, int direction) 
 	{
 		isLaunched = true;
-		posX = pPosX;
-		posY = pPosY;
+		posX = playerPosX;
+		posY = playerPosY;
 		this.range = range;
-		this.dir = dir;
 		this.speed = speed;
+		this.direction = direction;
 
 		if (frameCounter < range * mapScale) 
 		{
-			if (dir == 0 && (posX - speed) > 0
+			if (direction == 0 && (posX - speed) > 0
 				&& (matrix[(posX - speed) / mapScale][(posY + (mapScale * 20) / 100) / mapScale] == 0
 				&& matrix[(posX - speed) / mapScale][(posY + (mapScale * 80) / 100) / mapScale] == 0)) 
 			{
 				posX = posX - speed;
 				frameCounter += 8;
 			} 
-			else if (dir == 1 && (posY + mapScale + speed) / mapScale < matrix[0].length
+			else if (direction == 1 && (posY + mapScale + speed) / mapScale < matrix[0].length
 					&& (matrix[(posX + (mapScale * 20) / 100) / mapScale][(posY + mapScale + speed) / mapScale] == 0
 					&& matrix[(posX + (mapScale * 80) / 100) / mapScale][(posY + mapScale + speed)
 									/ mapScale] == 0)) 
@@ -78,7 +92,7 @@ public class Item
 				posY = posY + speed;
 				frameCounter += 8;
 			} 
-			else if (dir == 2 
+			else if (direction == 2 
 					&& (posX + mapScale + speed) / mapScale < matrix.length
 					&& (matrix[(posX + mapScale + speed) / mapScale][(posY + (mapScale * 20) / 100) / mapScale] == 0
 					&& matrix[(posX + mapScale + speed) / mapScale][(posY + (mapScale * 80) / 100) / mapScale] == 0)) 
@@ -86,7 +100,7 @@ public class Item
 				posX = posX + speed;
 				frameCounter += 8;
 			} 
-			else if (dir == 3 && (posY - speed) > 0
+			else if (direction == 3 && (posY - speed) > 0
 					&& (matrix[(posX + (mapScale * 20) / 100) / mapScale][(posY - speed) / mapScale] == 0
 					&& matrix[(posX + (mapScale * 80) / 100) / mapScale][(posY - speed) / mapScale] == 0)) 
 			{
@@ -106,6 +120,9 @@ public class Item
 		}
 	}
 
+	/**
+	 * Make the item respawn at its original position
+	 */
 	public void respawn() 
 	{
 		posX = defaultPosX;

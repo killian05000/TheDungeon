@@ -19,6 +19,9 @@ public class GameScreen implements Screen
 	private Collision collision;
 	private ArrayList<Enemy> enemies;
 
+	/**
+	 * Initializes all the game components 
+	 */
 	@Override
 	public void initialise() 
 	{
@@ -30,38 +33,46 @@ public class GameScreen implements Screen
 		
 		enemies = maze.getEnemies();
 
-		collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale(), maze.getEventListener());
+		collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale(), maze.getMusicPlayer());
 	}
 	
+	/**
+	 * Update all the game components while the player is alive
+	 */
 	@Override
 	public void update() 
 	{
-		eventHandler.checkUserInputs();
 		if (player.getAlive() && !player.getEscape()) 
 		{
+			eventHandler.checkUserInputs();
 			player.checkMovements();
 			for (int i = 0; i < enemies.size(); i++)
 				enemies.get(i).update();
 			
-			collision.verify();
-			collision.verifyEnemy();
+			collision.checkCollisions();
 		}
-		maze.getEventListener().updatePlaylist();		
+		maze.getMusicPlayer().updatePlaylist();		
 	}
 
+	/**
+	 * Render all the game components
+	 */
 	@Override
 	public void render(Graphics g) 
 	{
 		maze.displayUserMap(g, player);
 
 		player.render(g);
-		maze.displayItems(g);
+		maze.renderItems(g);
 		for (int i = 0; i < enemies.size(); i++)
 			enemies.get(i).render(g);
 
 		maze.displayUserMapSecondLayer(g, player);
 	}
 	
+	/**
+	 * Reset all the game components
+	 */
 	@Override
 	public void reset()
 	{
@@ -70,7 +81,7 @@ public class GameScreen implements Screen
 		for (int j = 0; j < maze.getItems().size(); j++)
 			maze.getItems().get(j).respawn();
 		player.restart();
-		maze.getEventListener().resetPlaylist();
+		maze.getMusicPlayer().resetPlaylist();
 	}	
 
 }

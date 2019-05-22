@@ -9,11 +9,18 @@ public class EventHandler
 {
 	private Player player;
 	
+	/**
+	 * Event Handler used to get the user input in order to control the player
+	 * @param player : player instance
+	 */
 	public EventHandler(Player player) 
 	{
 		this.player = player;
 	}
 
+	/**
+	 * check the user input and make the player act accordingly
+	 */
 	public void checkUserInputs()
 	{
 		if(Gdx.input.isKeyJustPressed(Keys.UP)) 

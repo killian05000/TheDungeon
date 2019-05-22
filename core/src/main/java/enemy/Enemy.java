@@ -24,14 +24,15 @@ public abstract class Enemy
 	protected Player target;
 	
 	// Animation 
-	private Direction previousDir = Direction.NONE;
-	private int animCounter = 0;
+	private int animationCounter = 0;
 	private int frameCounter = 0;
 	protected Texture enemySprite;
 	protected ArrayList<Texture> animationUp;
 	protected ArrayList<Texture> animationRight;
 	protected ArrayList<Texture> animationDown;
 	protected ArrayList<Texture> animationLeft;
+	private Direction previousDirection = Direction.NONE;
+
 	
 	/**
 	 * @param x : default x enemy's position
@@ -62,6 +63,7 @@ public abstract class Enemy
 	
 	/**
 	 * Load the enemy sprites to render the animations
+	 * @param enemyType : type of the enemy (e.g : smartEnemy)
 	 */
 	protected void loadAnimation(String enemyType) 
 	{
@@ -83,59 +85,59 @@ public abstract class Enemy
 	 */
 	private void updateAnimation()
 	{
-		if(previousDir.ordinal() != direction.ordinal() && (direction != Direction.UP) && direction != Direction.DOWN)
+		if(previousDirection.ordinal() != direction.ordinal() && (direction != Direction.UP) && direction != Direction.DOWN)
 		{
-			animCounter=0;
+			animationCounter=0;
 			frameCounter=0;
 		}
 
-		if(direction == Direction.UP && previousDir == Direction.RIGHT)
+		if(direction == Direction.UP && previousDirection == Direction.RIGHT)
 		{
 			animate(animationRight);
-			previousDir = Direction.RIGHT;
+			previousDirection = Direction.RIGHT;
 		}
-		else if(direction == Direction.UP && previousDir == Direction.LEFT)
+		else if(direction == Direction.UP && previousDirection == Direction.LEFT)
 		{
 			animate(animationLeft);
-			previousDir = Direction.LEFT;
+			previousDirection = Direction.LEFT;
 		}
 		else if(direction == Direction.RIGHT)
 		{
 			animate(animationRight);
-			previousDir = Direction.RIGHT;
+			previousDirection = Direction.RIGHT;
 		}
-		else if(direction == Direction.DOWN && previousDir == Direction.RIGHT)
+		else if(direction == Direction.DOWN && previousDirection == Direction.RIGHT)
 		{
 			animate(animationRight);
-			previousDir = Direction.RIGHT;
+			previousDirection = Direction.RIGHT;
 		}
-		else if(direction == Direction.DOWN && previousDir == Direction.LEFT)
+		else if(direction == Direction.DOWN && previousDirection == Direction.LEFT)
 		{
 			animate(animationLeft);
-			previousDir = Direction.LEFT;
+			previousDirection = Direction.LEFT;
 		}
 		else if(direction == Direction.LEFT)	
 		{
 			animate(animationLeft);
-			previousDir = Direction.LEFT;
+			previousDirection = Direction.LEFT;
 		}
 	}
 	
 	/**
 	 * Animate the enemy
-	 * @param anim : animation sprites list
+	 * @param animation : animation sprites list
 	 */
-	private void animate(ArrayList<Texture> anim)
+	private void animate(ArrayList<Texture> animation)
 	{
-		if(frameCounter == animCounter * 5)
+		if(frameCounter == animationCounter * 5)
 		{
-			if(animCounter == anim.size())
+			if(animationCounter == animation.size())
 			{
-				animCounter = 0;
+				animationCounter = 0;
 				frameCounter = 0;
 			}
-			enemySprite = anim.get(animCounter);
-			animCounter++;
+			enemySprite = animation.get(animationCounter);
+			animationCounter++;
 		}		
 		frameCounter++;
 	}

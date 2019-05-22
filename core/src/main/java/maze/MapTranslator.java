@@ -60,12 +60,11 @@ public final class MapTranslator
 
 	/**
 	 * Build the core matrix of the game according to the image skeleton color code
-	 * 
 	 * @param p : RGB vector
 	 * @param x : axis x of the matrix
 	 * @param y : axis y of the matrix
 	 */
-	private static void buildMatrix(int[] p, int x, int y) // (x = line,y = column)
+	private static void buildMatrix(int[] p, int x, int y) // (x = line, y = column)
 	{
 		if (p[0] == 198 && p[1] == 198 && p[2] == 198)
 			matrix[x][y] = MapObject.ALLEY.ordinal();

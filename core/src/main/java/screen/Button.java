@@ -1,9 +1,7 @@
 package screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Button 
@@ -11,19 +9,22 @@ public class Button
 	private int x;
 	private int y;
 	private String text;
-	private BitmapFont font;
 	private Sprite buttonSprite;
 	private Sprite buttonClickedSprite;
 	private Sprite buttonUnclickedSprite;
 	private boolean isClicked;
 	private boolean isHovered;
 	
+	/**
+	 * Create a Button
+	 * @param x : position X of the Button
+	 * @param y : position Y of the Button
+	 * @param filePath
+	 */
 	public Button(int x, int y, String filePath)
 	{
 		this.x = x;
 		this.y = y;
-		font = new BitmapFont();
-        font.setColor(Color.DARK_GRAY);
         
         buttonClickedSprite = new Sprite(new Texture(filePath+"Clicked.png"));
 		buttonUnclickedSprite = new Sprite(new Texture(filePath+".png"));
@@ -31,6 +32,11 @@ public class Button
 		buttonSprite.setPosition(x,y);
 	}
 	
+	/**
+	 * Check if a click has be done onto the button hitbox
+	 * @param x : x mouse pointer
+	 * @param y : y mouse pointer
+	 */
 	public void checkClick(int x, int y)
 	{
 		if((x > this.x && x < this.x + this.buttonSprite.getWidth()) && (y > this.y && y < this.y + this.buttonSprite.getHeight()))
@@ -58,11 +64,6 @@ public class Button
 	public Sprite getSprite()
 	{
 		return buttonSprite;
-	}
-	
-	public BitmapFont getFont()
-	{
-		return font;
 	}
 	
 	public String getText()

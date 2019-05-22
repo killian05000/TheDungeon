@@ -2,12 +2,15 @@ package algorithm;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Cell {
+public class Cell 
+{
 	private int x;
 	private int y;
-	private int f;
-	private int g;
-	private int h;
+	
+	private int g; // For each node, the cost of getting from the start node to that node
+	private int h; // Heuristic value of the cheapest path from the actual position to the goal
+	private int f; // Total score : f(n) = g(n) + h(n) where n is a node 
+	
 	private List<Cell> neighbors;
 	private Cell previousCell;
 	
@@ -26,7 +29,8 @@ public class Cell {
 	 * Adds the available adjacent tiles to the Cell's neighbors
 	 * @param matrixCell : the matrix containing the cells
 	 */
-	public void addNeighbors(Cell[][] matrixCell) {
+	public void addNeighbors(Cell[][] matrixCell) 
+	{
 		if(x < matrixCell.length - 1 && (matrixCell[x + 1][y] != null)) 
 			neighbors.add(matrixCell[x + 1][y]);
 		

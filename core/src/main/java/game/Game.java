@@ -22,6 +22,9 @@ public class Game extends BasicGame
 	private ScreenHandler screenHandler;
 	private ArrayList<Screen> screens;
 	
+	/**
+	 * Initializes all the screens and the screenHandler
+	 */
 	@Override
 	public void initialise() 
 	{
@@ -34,6 +37,9 @@ public class Game extends BasicGame
 			screens.get(i).initialise();
 	}
 
+	/**
+	 * Update the current screen 
+	 */
 	@Override
 	public void update(float delta) 
 	{
@@ -48,12 +54,20 @@ public class Game extends BasicGame
 		// Not used
 	}
 
+	/**
+	 * Render the current screen
+	 */
 	@Override
 	public void render(Graphics g)
 	{
 		screens.get(state.ordinal()).render(g);
 	}
 	
+	/**
+	 * Check the user inputs regardless of the screen
+	 * R to reset the game
+	 * M to come back to the menu
+	 */
 	public void keyInputs()
 	{
 		if(Gdx.input.isKeyJustPressed(Keys.R))
@@ -66,11 +80,18 @@ public class Game extends BasicGame
 		}
 	}
 	
+	/**
+	 * Reset a screen 	
+	 * @param screen : screen index
+	 */
 	public void reset(int screen) 
 	{
 		screens.get(screen).reset();
 	}
 
+	/**
+	 * Reset all the screens and set the current screen to "menu"
+	 */
 	public void callMenu() 
 	{
 		reset(ScreenType.MENU.ordinal());

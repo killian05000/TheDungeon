@@ -12,21 +12,39 @@ public class Collision
 	private ArrayList<Enemy> enemies;
 	private int mapScale;
 	private Player player;
-	private MusicPlayer eventListener;
+	private MusicPlayer musicPlayer;
 
-	public Collision(ArrayList<Item> items, Player player, ArrayList<Enemy> enemies, int scale, MusicPlayer eventListener) 
+	/**
+	 * Instantiate the map moving objects that could collide
+	 * @param items : items list
+	 * @param player : player instance
+	 * @param enemies : enemies list
+	 * @param scale : tile size
+	 * @param musicPlayer : musicPLayer instance to trigger sounds
+	 */
+	public Collision(ArrayList<Item> items, Player player, ArrayList<Enemy> enemies, int scale, MusicPlayer musicPlayer) 
 	{
+		mapScale = scale;
 		this.player = player;
 		this.items = items;
 		this.enemies = enemies;
-		mapScale = scale;
-		this.eventListener = eventListener;
+		this.musicPlayer = musicPlayer;
+	}
+	
+	/**
+	 * Check all type of collisions
+	 */
+	public void checkCollisions()
+	{
+		checkPlayerObjectCollision();
+		checkEnemyPlayerCollision();
+		checkEnemyObjectCollision();
 	}
 
 	/**
 	 * Check if the player has collided with an object
 	 */
-	public void verify() 
+	public void checkPlayerObjectCollision() 
 	{
 		int playerPosX, playerPosY, itemPosX, itemPosY, playerSpeed = 0;
 		playerPosX = player.getPosX();
@@ -45,7 +63,7 @@ public class Collision
 					&& playerPosY <= itemPosY + mapScale - playerSpeed) 
 				{
 					player.addItem(items.get(i));
-					eventListener.setPickingObjectSoundON(true);
+					musicPlayer.setPickingObjectSoundON(true);
 					break;
 				}
 
@@ -55,16 +73,19 @@ public class Collision
 					&& playerPosX <= itemPosX + mapScale - playerSpeed) 
 				{
 					player.addItem(items.get(i));
-					eventListener.setPickingObjectSoundON(true);
+					musicPlayer.setPickingObjectSoundON(true);
 					break;
 				}
 			}
 		}
 	}
-
-	public void verifyEnemy() 
+	
+	/**
+	 * Check for each enemy if it has collided with the player
+	 */
+	public void checkEnemyPlayerCollision() 
 	{
-		int playerPosX, playerPosY, playerSpeed, enemyPosX, enemyPosY, enemySpeed, itemPosX, itemPosY = 0;
+		int playerPosX, playerPosY, playerSpeed, enemyPosX, enemyPosY;
 		playerPosX = player.getPosX();
 		playerPosY = player.getPosY();
 		playerSpeed = player.getSpeed();
@@ -73,14 +94,13 @@ public class Collision
 		{
 			enemyPosX = enemies.get(i).getPosX();
 			enemyPosY = enemies.get(i).getPosY();
-			enemySpeed = enemies.get(i).getSpeed();
 
 			if (playerPosX + mapScale - playerSpeed >= enemyPosX 
 				&& playerPosY >= enemyPosY && playerPosX <= enemyPosX + mapScale - playerSpeed
 				&& playerPosY <= enemyPosY + mapScale - playerSpeed) 
 			{
 				player.setAlive(false);
-				eventListener.setGameOverSoundON(true);
+				musicPlayer.setGameOverSoundON(true);
 				break;
 			}
 
@@ -90,17 +110,32 @@ public class Collision
 				&& playerPosX <= enemyPosX + mapScale - playerSpeed) 
 			{
 				player.setAlive(false);
-				eventListener.setGameOverSoundON(true);
+				musicPlayer.setGameOverSoundON(true);
 				break;
 			}
-
+		}
+	}
+	
+	/**
+	 * Check for each enemy if it has collided with a thrown object
+	 */	
+	public void checkEnemyObjectCollision()
+	{
+		int enemyPosX, enemyPosY, enemySpeed, itemPosX, itemPosY;		
+		
+		for (int i = 0; i < enemies.size(); i++) 
+		{
+			enemyPosX = enemies.get(i).getPosX();
+			enemyPosY = enemies.get(i).getPosY();
+			enemySpeed = enemies.get(i).getSpeed();
+			
 			for (int j = 0; j < items.size(); j++) 
 			{
 				if (items.get(j).isLaunched) 
 				{
 					itemPosX = items.get(j).getPosX();
 					itemPosY = items.get(j).getPosY();
-
+	
 					if (enemyPosX + mapScale - enemySpeed >= itemPosX 
 						&& enemyPosY >= itemPosY && enemyPosX <= itemPosX + mapScale - enemySpeed
 						&& enemyPosY <= itemPosY + mapScale - enemySpeed) 
@@ -110,7 +145,7 @@ public class Collision
 						items.get(j).isLaunched = false;
 						break;
 					}
-
+	
 					if (enemyPosY + mapScale - enemySpeed >= itemPosY 
 						&& enemyPosX + mapScale - enemySpeed >= itemPosX
 						&& enemyPosY + mapScale - enemySpeed <= itemPosY + mapScale - enemySpeed

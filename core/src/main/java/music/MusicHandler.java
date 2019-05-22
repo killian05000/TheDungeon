@@ -24,8 +24,8 @@ public class MusicHandler
         {
             gameMusic = Gdx.audio.newMusic(Gdx.files.internal("music/gameMusic.wav"));
             gameMusic.setLooping(true);
-            gameOver = Gdx.audio.newSound(Gdx.files.internal("music/gameOver.wav"));
             win = Gdx.audio.newSound(Gdx.files.internal("music/win.wav"));
+            gameOver = Gdx.audio.newSound(Gdx.files.internal("music/gameOver.wav"));
             gettingItem = Gdx.audio.newSound(Gdx.files.internal("music/getItem.wav"));
             throwingItem = Gdx.audio.newSound(Gdx.files.internal("music/throwItem.wav"));
             doorOpened = Gdx.audio.newSound(Gdx.files.internal("music/doorOpen.wav"));
@@ -91,16 +91,25 @@ public class MusicHandler
         throwingItem.play();
     }
    
+    /**
+     * Door open sound
+     */
     public void doorOpenSound()
     {
         doorOpened.play();
     }
    
+    /**
+     * Door closed sound
+     */
     public void doorClosedSound()
     {
         doorClosed.play();
     }
    
+    /**
+     * Teleporter sound
+     */
     public void teleporterSound()
     {
         teleported.play();

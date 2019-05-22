@@ -11,11 +11,11 @@ public class SmartEnemy extends Enemy
 	private Player target;
 	
 	/**
-	 * Call the constructor of the mother class
+	 * Call the constructor of the mother class, instantiate the Astar algorithm and load the animations
 	 * @param x : default x enemy's position
 	 * @param y : default y enemy's position
 	 * @param maze : maze instance
-	 * @param _target : target of the enemy
+	 * @param target : target of the enemy
 	 * @param speed : enemy speed
 	 */
 	public SmartEnemy(int x, int y, Maze maze, Player target, int speed) 
@@ -28,7 +28,7 @@ public class SmartEnemy extends Enemy
 	}
 
 	/**
-	 * Launch the A star algorithm to generate directions for the enemy in order to catch the target
+	 * Launch the Astar algorithm to generate directions for the enemy in order to catch the target
 	 */
 	@Override
 	public void algorithm() 

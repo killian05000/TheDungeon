@@ -30,38 +30,38 @@ public class Player
 	private boolean escape;
 	
 	// Sound event and map stuff
-	private MusicPlayer eventListener;
+	private MusicPlayer musicPlayer;
 	private int mapScale;	
 	int[][] matrix;
 	Maze maze;
 	
 	// Bag and item position
-	private ArrayList<Item> bag;
 	private int requiredObjectNumber = 3;
+	private ArrayList<Item> bag;
 	private int itemPos = 0;
 	
 	// Animation
 	private Texture defaultPlayerSprite;	
 	private Texture playerSprite;
-	private ArrayList<Texture> animationLeft;
-	private ArrayList<Texture> animationRight;
-	private int animationCounter = 0;
 	private int frameCounter = 0;
+	private int animationCounter = 0;	
+	private ArrayList<Texture> animationLeft;
+	private ArrayList<Texture> animationRight;	
 	private Direction previousDirection = Direction.NONE;
 
 
 	/**
 	 * @param x : default x player's position
 	 * @param y : default y player's position
-	 * @param _maze : maze instance
-	 * @param _eventListener : event listener instance
+	 * @param maze : maze instance
+	 * @param musicPlayer : musicPlayer instance
 	 */	
-	public Player(int x, int y, Maze maze, MusicPlayer eventListener) 
+	public Player(int x, int y, Maze maze, MusicPlayer musicPlayer) 
 	{
 		this.maze = maze;
 		mapScale = maze.getMapScale();
 		matrix = maze.getMatrix();
-		this.eventListener = eventListener;
+		this.musicPlayer = musicPlayer;
 		
 		defaultPosX = x * mapScale;
 		defaultPosY = y * mapScale;
@@ -97,6 +97,9 @@ public class Player
 		bag = new ArrayList<Item>();
 	}
 	
+	/**
+	 * Load all the player's textures
+	 */
 	public void loadTextures()
 	{
 		animationRight = new ArrayList<Texture>();		
@@ -111,11 +114,12 @@ public class Player
 		}
 	}
 	
+	/**
+	 * Set the player direction to the chosen direction if available, if not, save it in <type>nextDirection</type>
+	 * @param direction : direction wanted
+	 */
 	public void setDirection(Direction direction)
 	{
-		if(!alive)
-			return;
-		
 		int corners[] = calculateCorners(direction.ordinal());
 
 		if(directionAvailable(corners[0], corners[1])) 
@@ -128,6 +132,11 @@ public class Player
 		checkMovements();
 	}
 	
+	/**
+	 * Check if a <type>nextDirection</type> is saved and move the player
+	 * if it's available. If not check if the current direction is available,
+	 * move the player if it is, stay put if it's not.
+	 */
 	public void checkMovements()
 	{		
 		if(direction == Direction.NONE)
@@ -163,6 +172,12 @@ public class Player
 		updateAnimation();
 	}
 	
+	/**
+	 * According to the direction picked, calculate which <type>MapObject</type> 
+	 * the 2 corners involved are onto.
+	 * @param direction : the chosen direction
+	 * @return a table of two corners
+	 */
 	public int[] calculateCorners(int direction)
 	{
 		newPosX = posX + movementModifier.get(direction).get(0) * speed; 
@@ -210,19 +225,29 @@ public class Player
     	return corners;
 	}
 	
+	/**
+	 * Set the player's position to the new position
+	 */
 	public void move()
 	{
 		posX = newPosX;
 		posY = newPosY;
 	}
 	
+	/**
+	 * Trigger an effect according to which <type>MapObject</type>
+	 * the corners are onto.
+	 * @param corner1
+	 * @param corner2
+	 * @param maze
+	 */
 	public void triggerCollision(int corner1, int corner2, Maze maze)
 	{
 		if(corner1 == MapObject.TRAP.ordinal() || corner2 == MapObject.TRAP.ordinal())
 		{
 			move();
 			alive = false;
-			eventListener.setGameOverSoundON(true);
+			musicPlayer.setGameOverSoundON(true);
 		}
 		else if(corner1 == MapObject.DOOR.ordinal() && corner2 == MapObject.DOOR.ordinal() && bag.size() == requiredObjectNumber)
 		{
@@ -232,11 +257,11 @@ public class Player
 		{
 			move();
     		escape = true;
-    		eventListener.setVictorySoundON(true);
+    		musicPlayer.setVictorySoundON(true);
 		}
 		else if(corner1 == MapObject.TELEPORTER.ordinal() && corner2 == MapObject.TELEPORTER.ordinal())
 		{
-			eventListener.setTeleporterSoundON(true);
+			musicPlayer.setTeleporterSoundON(true);
 			int[] newTabPos = null;
 			if(direction == Direction.UP)
 				newTabPos = maze.teleportPlayer(newPosX  / mapScale, posY / mapScale);
@@ -253,11 +278,24 @@ public class Player
 		}	
 	}
 	
+	/**
+	 * Check if the two corners are onto something else than an ALLEY,
+	 * if they are, they have collided with something.
+	 * @param corner1
+	 * @param corner2
+	 * @return true if there is a collision
+	 */
 	public boolean collide(int corner1, int corner2)
 	{
 		return (corner1 != MapObject.ALLEY.ordinal() || corner2 != MapObject.ALLEY.ordinal());
 	}
 	
+	/**
+	 * Check if the direction is available based on the two corners given
+	 * @param corner1
+	 * @param corner2
+	 * @return true if available
+	 */
 	public boolean directionAvailable(int corner1, int corner2)
 	{
 		if(corner1 == MapObject.ALLEY.ordinal() && corner2 == MapObject.ALLEY.ordinal())
@@ -286,7 +324,7 @@ public class Player
 		itemPos++;
 		
 		if(bag.size() == requiredObjectNumber)
-			eventListener.setDoorOpenSoundON(true);
+			musicPlayer.setDoorOpenSoundON(true);
 	}
 	
 	/**
@@ -297,13 +335,13 @@ public class Player
 		if(itemPos > 0)
 		{
 			Item item = bag.get(itemPos - 1);			
-			eventListener.setThrowingObjectSoundON(true);
+			musicPlayer.setThrowingObjectSoundON(true);
 			item.animation(posX,  posY, 5, 8, direction.ordinal());			
 			bag.remove(itemPos - 1);
 			itemPos--;
 			
 			if(bag.size() == requiredObjectNumber - 1)
-				eventListener.setDoorClosedSoundON(true);
+				musicPlayer.setDoorClosedSoundON(true);
 		}
 	}
 	

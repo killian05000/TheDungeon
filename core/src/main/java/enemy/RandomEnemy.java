@@ -7,7 +7,7 @@ import maze.Maze;
 public class RandomEnemy extends Enemy
 {
 	/**
-	 * Call the constructor of the mother class
+	 * Call the constructor of the mother class and load the animations
 	 * @param x : default x enemy's position
 	 * @param y : default y enemy's position
 	 * @param maze : maze instance

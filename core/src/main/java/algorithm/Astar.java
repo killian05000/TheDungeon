@@ -29,8 +29,8 @@ public class Astar
 	
 	/**
 	 * This constructor will create a cell for each available tiles and add its neighbors
-	 * @param matrix
-	 * @param mapScale
+	 * @param matrix : game matrix
+	 * @param mapScale : tile size
 	 */
 	public Astar(int[][] matrix, int mapScale) 
 	{
@@ -58,7 +58,7 @@ public class Astar
 	}
 	
 	/**
-	 * Creating cells for each tiles except the walls  
+	 * Creates cells for each walkable tile  
 	 */
 	private void creatingCell() 
 	{
@@ -88,10 +88,10 @@ public class Astar
 	}
 	
 	/**
-	 * Calculate the manhattan distance
+	 * Calculate the Manhattan distance
 	 * @param source : source Cell
 	 * @param destination : destination Cell
-	 * @return the result of the calculated manhattan distance
+	 * @return the result of the calculated Manhattan distance
 	 */
 	public int heuristic(Cell source, Cell destination) 
 	{

@@ -23,12 +23,18 @@ public class Menu implements Screen
 	
 	private ScreenHandler screenHandler;
 
-	
+	/**
+	 * Create a Menu screen
+	 * @param screenHandler : screenHandler instance
+	 */
 	public Menu(ScreenHandler screenHandler)
 	{
 		this.screenHandler = screenHandler;
 	}
 	
+	/**
+	 * Initialize all the menu components
+	 */
 	@Override
 	public void initialise()
 	{
@@ -50,39 +56,49 @@ public class Menu implements Screen
 		menuON = true;
 	}
 	
+	/**
+	 * Check if a button has been clicked, and act accordingly
+	 */
 	@Override
 	public void update()
 	{
-		if(menuButtons.get(0).getIsClicked())
+		if(menuButtons.get(0).getIsClicked()) // Play button
 		{
+			resetClicks();
 			screenHandler.setState(ScreenType.GAME);
 		}
-		else if(menuButtons.get(1).getIsClicked())
+		else if(menuButtons.get(1).getIsClicked()) // Help button
 		{
+			resetClicks();
 			menuON = false;
 			helpON = true;
 		}
-		else if(menuButtons.get(2).getIsClicked())
-			System.exit (1);
-		
-		if(helpON)
+		else if(menuButtons.get(2).getIsClicked()) // Quit button
 		{
-			if(helpButtons.get(0).getIsClicked())
+			resetClicks();
+			System.exit (1);
+		}
+		
+		if(helpON) // if we are on the help tab
+		{
+			if(helpButtons.get(0).getIsClicked()) // Return button
 			{
+				resetClicks();
 				menuON = true;
 				helpON = false;
 			}
 		}
-		
-		resetClicks();
 	}
 	
+	/**
+	 * Render the buttons and the background sprite of the current tab (menu or help)
+	 */
 	@Override
 	public void render(Graphics g)
 	{
 		batch.begin();
-
 		buttonPressed();
+		
 		if(menuON)
 		{
 			menuSprite.draw(batch);
@@ -99,6 +115,9 @@ public class Menu implements Screen
 		batch.end();
 	}
 	
+	/**
+	 * Check for the current tab if one of its buttons has been clicked
+	 */
 	public void buttonPressed() 
 	{
 		if(menuON)
@@ -118,6 +137,9 @@ public class Menu implements Screen
 		}
 	}
 	
+	/**
+	 * Set for all the buttons their isClicked variable to false 
+	 */
 	public void resetClicks()
 	{
 		for(int i = 0; i < menuButtons.size(); i++)
@@ -127,16 +149,9 @@ public class Menu implements Screen
 			helpButtons.get(i).setIsClicked(false);
 	}
 	
-	public void call() 
-	{
-		for(int i = 0; i < menuButtons.size(); i++)
-		{
-			menuButtons.get(i).setIsClicked(false);
-		}
-		helpON = false;
-		menuON = true;
-	}
-	
+	/**
+	 * Reset the clicks, and call the menu to be displayed
+	 */
 	@Override
 	public void reset()
 	{
