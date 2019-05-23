@@ -118,7 +118,7 @@ public class Menu implements Screen
 	/**
 	 * Check for the current tab if one of its buttons has been clicked
 	 */
-	public void buttonPressed() 
+	private void buttonPressed() 
 	{
 		if(menuON)
 		{
@@ -140,7 +140,7 @@ public class Menu implements Screen
 	/**
 	 * Set for all the buttons their isClicked variable to false 
 	 */
-	public void resetClicks()
+	private void resetClicks()
 	{
 		for(int i = 0; i < menuButtons.size(); i++)
 			menuButtons.get(i).setIsClicked(false);

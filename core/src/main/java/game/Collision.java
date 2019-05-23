@@ -44,7 +44,7 @@ public class Collision
 	/**
 	 * Check if the player has collided with an object
 	 */
-	public void checkPlayerObjectCollision() 
+	private void checkPlayerObjectCollision() 
 	{
 		int playerPosX, playerPosY, itemPosX, itemPosY, playerSpeed = 0;
 		playerPosX = player.getPosX();
@@ -83,7 +83,7 @@ public class Collision
 	/**
 	 * Check for each enemy if it has collided with the player
 	 */
-	public void checkEnemyPlayerCollision() 
+	private void checkEnemyPlayerCollision() 
 	{
 		int playerPosX, playerPosY, playerSpeed, enemyPosX, enemyPosY;
 		playerPosX = player.getPosX();
@@ -119,7 +119,7 @@ public class Collision
 	/**
 	 * Check for each enemy if it has collided with a thrown object
 	 */	
-	public void checkEnemyObjectCollision()
+	private void checkEnemyObjectCollision()
 	{
 		int enemyPosX, enemyPosY, enemySpeed, itemPosX, itemPosY;		
 		
