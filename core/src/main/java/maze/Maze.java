@@ -47,7 +47,7 @@ public class Maze
 		items = new ArrayList<Item>();
 
 		maps = new ArrayList<Texture>();
-		maps.add(new Texture("map/map.png"));
+		maps.add(new Texture("map/mapSkeletonTest.png"));
 		maps.add(new Texture("map/doorClosed.png"));
 		maps.add(new Texture("map/doorOpen.png"));
 		maps.add(new Texture("map/mapSecondLayer.png"));
@@ -180,18 +180,18 @@ public class Maze
 	}
 
 	/**
-	 * Paint the map displayed to the user
+	 * Display the map and its door to the user
 	 * @param g
 	 * @param path : map path
 	 */
 	public void displayUserMap(Graphics g, Player player) 
 	{
-		g.drawTexture(maps.get(0), 0, 0, maps.get(0).getWidth(), maps.get(0).getHeight());
+		g.drawTexture(maps.get(0), 0, 0, maps.get(0).getWidth(), maps.get(0).getHeight()); // User map
 
 		if (player.getBag().size() != player.getRequiredObjectNumber())
-			g.drawTexture(maps.get(1), doorY, doorX, maps.get(1).getWidth(), maps.get(1).getHeight());
+			g.drawTexture(maps.get(1), doorY, doorX, maps.get(1).getWidth(), maps.get(1).getHeight()); // Door closed
 		else
-			g.drawTexture(maps.get(2), doorY, doorX, maps.get(2).getWidth(), maps.get(1).getHeight());
+			g.drawTexture(maps.get(2), doorY, doorX, maps.get(2).getWidth(), maps.get(1).getHeight()); // Door opened
 
 	}
 	
@@ -200,15 +200,22 @@ public class Maze
 	 * @param g
 	 * @param player
 	 */
-	public void displayUserMapSecondLayer(Graphics g, Player player) 
+	public void displayUserMapSecondLayer(Graphics g) 
 	{
-		g.drawTexture(maps.get(3), 0, 0, maps.get(3).getWidth(), maps.get(3).getHeight());
-
+		g.drawTexture(maps.get(3), 0, 0, maps.get(3).getWidth(), maps.get(3).getHeight()); // Map second Layer
+	}
+	
+	/**
+	 * Test if the game is over, and display the game over sprite or victory sprite accordingly
+	 * @param g
+	 */
+	public void displayEndGameScreen(Graphics g)
+	{
 		if (!player.getAlive())
-			g.drawTexture(maps.get(4), 0, 0, maps.get(4).getWidth(), maps.get(4).getHeight());
+			g.drawTexture(maps.get(4), 0, 0, maps.get(4).getWidth(), maps.get(4).getHeight()); // Game over
 
 		else if (player.getEscape())
-			g.drawTexture(maps.get(5), 0, 0, maps.get(5).getWidth(), maps.get(5).getHeight());
+			g.drawTexture(maps.get(5), 0, 0, maps.get(5).getWidth(), maps.get(5).getHeight()); // Victory
 	}
 
 	/**
