@@ -53,13 +53,13 @@ correctly.
 --------------------------------
 CREDITS
 --------------------------------
-	Libraries :		https://mini2dx.org/
-				https://libgdx.badlogicgames.com/
 	Font:			https://www.dafont.com/magic-school.font
 	Map assets:		https://elthen.itch.io/2d-pixel-art-dungeon-tileset
 	Player & enemy assets:	https://ragewortt.itch.io/
 	Sounds & music:		https://www.zapsplat.com/
 				https://freesound.org/people/Kastenfrosch/packs/10069/
+	Libraries :		https://mini2dx.org/
+				https://libgdx.badlogicgames.com/
 
 --------------------------------
 COPYRIGHT
