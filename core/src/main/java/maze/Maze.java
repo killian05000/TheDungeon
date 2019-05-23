@@ -118,7 +118,7 @@ public class Maze
 	}
 
 	/**
-	 * save the teleporters coordinates
+	 * Save the teleporters coordinates
 	 */
 	private void initialiseTeleporterPosition() 
 	{
@@ -180,9 +180,8 @@ public class Maze
 	/**
 	 * Display the map and its door to the user
 	 * @param g
-	 * @param path : map path
 	 */
-	public void displayUserMap(Graphics g, Player player) 
+	public void displayUserMap(Graphics g) 
 	{
 		g.drawTexture(maps.get(0), 0, 0, maps.get(0).getWidth(), maps.get(0).getHeight()); // User map
 
@@ -196,7 +195,6 @@ public class Maze
 	/**
 	 * Display the map second layer
 	 * @param g
-	 * @param player
 	 */
 	public void displayUserMapSecondLayer(Graphics g) 
 	{
