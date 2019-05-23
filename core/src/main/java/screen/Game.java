@@ -33,7 +33,7 @@ public class Game implements Screen
 		
 		enemies = maze.getEnemies();
 
-		collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale(), maze.getMusicPlayer());
+		collision = new Collision(maze.getItems(), player, enemies, maze.getMapScale(), maze.getSoundPlayer());
 	}
 	
 	/**
@@ -50,8 +50,8 @@ public class Game implements Screen
 				enemies.get(i).update();
 			
 			collision.checkCollisions();
+			maze.getSoundPlayer().updatePlaylist();		
 		}
-		maze.getMusicPlayer().updatePlaylist();		
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class Game implements Screen
 		for (int j = 0; j < maze.getItems().size(); j++)
 			maze.getItems().get(j).respawn();
 		player.restart();
-		maze.getMusicPlayer().resetPlaylist();
+		maze.getSoundPlayer().resetPlaylist();
 	}	
 
 }

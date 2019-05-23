@@ -30,7 +30,7 @@ public class Player
 	private boolean escape;
 	
 	// Sound event and map stuff
-	private SoundPlayer musicPlayer;
+	private SoundPlayer soundPlayer;
 	private int mapScale;	
 	int[][] matrix;
 	Maze maze;
@@ -54,14 +54,14 @@ public class Player
 	 * @param x : default x player's position
 	 * @param y : default y player's position
 	 * @param maze : maze instance
-	 * @param musicPlayer : musicPlayer instance
+	 * @param soundPlayer : soundPlayer instance
 	 */	
-	public Player(int x, int y, Maze maze, SoundPlayer musicPlayer) 
+	public Player(int x, int y, Maze maze, SoundPlayer soundPlayer) 
 	{
 		this.maze = maze;
 		mapScale = maze.getMapScale();
 		matrix = maze.getMatrix();
-		this.musicPlayer = musicPlayer;
+		this.soundPlayer = soundPlayer;
 		
 		defaultPosX = x * mapScale;
 		defaultPosY = y * mapScale;
@@ -247,7 +247,7 @@ public class Player
 		{
 			move();
 			alive = false;
-			musicPlayer.setGameOverSoundON(true);
+			soundPlayer.setGameOverSoundON(true);
 		}
 		else if(corner1 == MapObject.DOOR.ordinal() && corner2 == MapObject.DOOR.ordinal() && bag.size() == requiredObjectNumber)
 		{
@@ -257,11 +257,11 @@ public class Player
 		{
 			move();
     		escape = true;
-    		musicPlayer.setVictorySoundON(true);
+    		soundPlayer.setVictorySoundON(true);
 		}
 		else if(corner1 == MapObject.TELEPORTER.ordinal() && corner2 == MapObject.TELEPORTER.ordinal())
 		{
-			musicPlayer.setTeleporterSoundON(true);
+			soundPlayer.setTeleporterSoundON(true);
 			int[] newTabPos = null;
 			if(direction == Direction.UP)
 				newTabPos = maze.teleportPlayer(newPosX  / mapScale, posY / mapScale);
@@ -324,7 +324,7 @@ public class Player
 		itemPos++;
 		
 		if(bag.size() == requiredObjectNumber)
-			musicPlayer.setDoorOpenSoundON(true);
+			soundPlayer.setDoorOpenSoundON(true);
 	}
 	
 	/**
@@ -335,13 +335,13 @@ public class Player
 		if(itemPos > 0)
 		{
 			Item item = bag.get(itemPos - 1);			
-			musicPlayer.setThrowingObjectSoundON(true);
+			soundPlayer.setThrowingObjectSoundON(true);
 			item.animate(posX,  posY, 5, 8, direction.ordinal());			
 			bag.remove(itemPos - 1);
 			itemPos--;
 			
 			if(bag.size() == requiredObjectNumber - 1)
-				musicPlayer.setDoorClosedSoundON(true);
+				soundPlayer.setDoorClosedSoundON(true);
 		}
 	}
 	

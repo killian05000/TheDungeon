@@ -12,7 +12,7 @@ public class Collision
 	private ArrayList<Enemy> enemies;
 	private int mapScale;
 	private Player player;
-	private SoundPlayer musicPlayer;
+	private SoundPlayer soundPlayer;
 
 	/**
 	 * Instantiate the map moving objects that could collide
@@ -20,15 +20,15 @@ public class Collision
 	 * @param player : player instance
 	 * @param enemies : enemies list
 	 * @param scale : tile size
-	 * @param musicPlayer : musicPLayer instance to trigger sounds
+	 * @param soundPlayer : soundPlayer instance to trigger sounds
 	 */
-	public Collision(ArrayList<Item> items, Player player, ArrayList<Enemy> enemies, int scale, SoundPlayer musicPlayer) 
+	public Collision(ArrayList<Item> items, Player player, ArrayList<Enemy> enemies, int scale, SoundPlayer soundPlayer) 
 	{
 		mapScale = scale;
 		this.player = player;
 		this.items = items;
 		this.enemies = enemies;
-		this.musicPlayer = musicPlayer;
+		this.soundPlayer = soundPlayer;
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public class Collision
 					&& playerPosY <= itemPosY + mapScale - playerSpeed) 
 				{
 					player.addItem(items.get(i));
-					musicPlayer.setPickingObjectSoundON(true);
+					soundPlayer.setPickingObjectSoundON(true);
 					break;
 				}
 
@@ -73,7 +73,7 @@ public class Collision
 					&& playerPosX <= itemPosX + mapScale - playerSpeed) 
 				{
 					player.addItem(items.get(i));
-					musicPlayer.setPickingObjectSoundON(true);
+					soundPlayer.setPickingObjectSoundON(true);
 					break;
 				}
 			}
@@ -100,7 +100,7 @@ public class Collision
 				&& playerPosY <= enemyPosY + mapScale - playerSpeed) 
 			{
 				player.setAlive(false);
-				musicPlayer.setGameOverSoundON(true);
+				soundPlayer.setGameOverSoundON(true);
 				break;
 			}
 
@@ -110,7 +110,7 @@ public class Collision
 				&& playerPosX <= enemyPosX + mapScale - playerSpeed) 
 			{
 				player.setAlive(false);
-				musicPlayer.setGameOverSoundON(true);
+				soundPlayer.setGameOverSoundON(true);
 				break;
 			}
 		}

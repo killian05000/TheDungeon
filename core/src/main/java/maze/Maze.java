@@ -16,7 +16,7 @@ public class Maze
 	private int mapScale;
 	private int[][] matrix;
 	private ArrayList<Texture> maps;
-	private SoundPlayer musicPlayer;
+	private SoundPlayer soundPlayer;
 
 	private Player player;
 	private ArrayList<Item> items;
@@ -37,7 +37,7 @@ public class Maze
 		this.matrix = new int[matrix.length][matrix[0].length];
 		this.matrix = matrix;
 
-		musicPlayer = new SoundPlayer();
+		soundPlayer = new SoundPlayer();
 
 		enemies = new ArrayList<Enemy>();
 
@@ -70,7 +70,7 @@ public class Maze
 			for (int j = 0; j < matrix[0].length; j++) 
 			{
 				if (matrix[i][j] == 2)
-					player = new Player(i, j, this, musicPlayer);
+					player = new Player(i, j, this, soundPlayer);
 			}
 		}
 	}
@@ -264,8 +264,8 @@ public class Maze
 		return enemies;
 	}
 
-	public SoundPlayer getMusicPlayer() 
+	public SoundPlayer getSoundPlayer() 
 	{
-		return musicPlayer;
+		return soundPlayer;
 	}
 }

@@ -10,14 +10,14 @@ public class SoundPlayer
 	private boolean teleporterSoundON;
 	private boolean doorOpenON;
 	private boolean doorClosedON;
-	private SoundHandler music;
+	private SoundHandler soundHandler;
 
 	/**
 	 * Constructor puts all sound events to false
 	 */
 	public SoundPlayer() 
 	{
-		music = new SoundHandler();
+		soundHandler = new SoundHandler();
 		gameMusicON = true;
 		gameOverSoundON = false;
 		victorySoundON = false;
@@ -35,50 +35,50 @@ public class SoundPlayer
 	{
 		if (gameMusicON) 
 		{
-			music.startGameMusic();
+			soundHandler.startGameMusic();
 			gameMusicON = false;
 		}
 
 		if (gameOverSoundON) 
 		{
-			music.gameOverSound();
+			soundHandler.gameOverSound();
 			gameOverSoundON = false;
 			gameMusicON = false;
 		} 
 		else if (victorySoundON) 
 		{
-			music.gameWinSound();
+			soundHandler.gameWinSound();
 			victorySoundON = false;
 			gameMusicON = false;
 		}
 
 		if (pickingObjectSoundON) 
 		{
-			music.pickItemSound();
+			soundHandler.pickItemSound();
 			pickingObjectSoundON = false;
 		}
 
 		if (throwingObjectSoundON) 
 		{
-			music.throwItemSound();
+			soundHandler.throwItemSound();
 			throwingObjectSoundON = false;
 		}
 
 		if (teleporterSoundON) 
 		{
-			music.teleporterSound();
+			soundHandler.teleporterSound();
 			teleporterSoundON = false;
 		}
 
 		if (doorOpenON) 
 		{
-			music.doorOpenSound();
+			soundHandler.doorOpenSound();
 			doorOpenON = false;
 		}
 
 		if (doorClosedON) 
 		{
-			music.doorClosedSound();
+			soundHandler.doorClosedSound();
 			doorClosedON = false;
 		}
 	}
@@ -89,7 +89,7 @@ public class SoundPlayer
 	 */
 	public void resetPlaylist() 
 	{
-		music.resetSounds();
+		soundHandler.resetSounds();
 		gameMusicON = true;
 		gameOverSoundON = false;
 		victorySoundON = false;
