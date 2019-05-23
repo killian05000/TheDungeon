@@ -51,7 +51,7 @@ public class Item
 	public void render(Graphics g) 
 	{
 		if (isLaunched)
-			animation(posX, posY, range, speed, direction);
+			animate(posX, posY, range, speed, direction);
 		
 		g.drawTexture(sprite, posY, posX, mapScale, mapScale);
 	}
@@ -66,7 +66,7 @@ public class Item
 	 * @param speed : speed of the item
 	 * @param direction : direction of the thrown
 	 */
-	public void animation(int playerPosX, int playerPosY, int range, int speed, int direction) 
+	public void animate(int playerPosX, int playerPosY, int range, int speed, int direction) 
 	{
 		isLaunched = true;
 		posX = playerPosX;

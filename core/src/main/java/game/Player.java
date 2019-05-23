@@ -336,7 +336,7 @@ public class Player
 		{
 			Item item = bag.get(itemPos - 1);			
 			musicPlayer.setThrowingObjectSoundON(true);
-			item.animation(posX,  posY, 5, 8, direction.ordinal());			
+			item.animate(posX,  posY, 5, 8, direction.ordinal());			
 			bag.remove(itemPos - 1);
 			itemPos--;
 			
