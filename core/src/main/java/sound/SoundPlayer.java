@@ -1,4 +1,4 @@
-package music;
+package sound;
 
 public class SoundPlayer 
 {

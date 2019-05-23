@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import enemy.Enemy;
 import maze.Item;
-import music.SoundPlayer;
+import sound.SoundPlayer;
 
 public class Collision 
 {

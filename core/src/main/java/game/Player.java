@@ -9,7 +9,7 @@ import enums.Direction;
 import enums.MapObject;
 import maze.Item;
 import maze.Maze;
-import music.SoundPlayer;
+import sound.SoundPlayer;
 
 public class Player 
 {

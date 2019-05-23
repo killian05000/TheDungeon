@@ -9,7 +9,7 @@ import enemy.Enemy;
 import enemy.RandomEnemy;
 import enemy.SmartEnemy;
 import game.Player;
-import music.SoundPlayer;
+import sound.SoundPlayer;
 
 public class Maze 
 {
