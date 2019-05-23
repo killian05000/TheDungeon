@@ -60,7 +60,7 @@ public class Game implements Screen
 	@Override
 	public void render(Graphics g) 
 	{
-		maze.displayUserMap(g, player);
+		maze.displayUserMap(g);
 
 		player.render(g);
 		maze.renderItems(g);
