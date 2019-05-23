@@ -3,8 +3,6 @@ package maze;
 import java.util.ArrayList;
 
 import org.mini2Dx.core.graphics.Graphics;
-
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 
 import enemy.Enemy;

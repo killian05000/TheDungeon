@@ -10,12 +10,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
 import enums.ScreenType;
-import screen.GameScreen;
+import screen.Game;
 import screen.Menu;
 import screen.Screen;
 import screen.ScreenHandler;
 
-public class Game extends BasicGame 
+public class Main extends BasicGame 
 {
 	public static final String GAME_IDENTIFIER = "com.mystudio.themaze";
 	private ScreenType state = ScreenType.MENU;
@@ -31,7 +31,7 @@ public class Game extends BasicGame
 		screenHandler = new ScreenHandler();
 		screens = new ArrayList<Screen>();
 		screens.add(new Menu(screenHandler));
-		screens.add(new GameScreen());
+		screens.add(new Game());
 		
 		for(int i = 0; i < screens.size(); i++)
 			screens.get(i).initialise();

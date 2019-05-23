@@ -11,7 +11,7 @@ import game.Player;
 import maze.MapTranslator;
 import maze.Maze;
 
-public class GameScreen implements Screen
+public class Game implements Screen
 {
 	private EventHandler eventHandler;
 	private Maze maze;
