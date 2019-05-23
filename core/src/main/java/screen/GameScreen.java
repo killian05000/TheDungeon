@@ -25,7 +25,7 @@ public class GameScreen implements Screen
 	@Override
 	public void initialise() 
 	{
-		maze = MapTranslator.translate("/map/mapSkeleton.png");
+		maze = MapTranslator.translate("/map/mapSkeletonTest.png");
 
 		player = maze.getPlayer();
 		
@@ -67,7 +67,8 @@ public class GameScreen implements Screen
 		for (int i = 0; i < enemies.size(); i++)
 			enemies.get(i).render(g);
 
-		maze.displayUserMapSecondLayer(g, player);
+		maze.displayUserMapSecondLayer(g);
+		maze.displayEndGameScreen(g);
 	}
 	
 	/**
