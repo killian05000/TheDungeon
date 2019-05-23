@@ -54,7 +54,7 @@ correctly.
 CREDITS
 --------------------------------
 	Libraries :		https://mini2dx.org/
-					https://libgdx.badlogicgames.com/
+				https://libgdx.badlogicgames.com/
 	Font:			https://www.dafont.com/magic-school.font
 	Map assets:		https://elthen.itch.io/2d-pixel-art-dungeon-tileset
 	Player & enemy assets:	https://ragewortt.itch.io/
