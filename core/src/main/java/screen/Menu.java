@@ -76,7 +76,7 @@ public class Menu implements Screen
 		else if(menuButtons.get(2).getIsClicked()) // Quit button
 		{
 			resetClicks();
-			System.exit (1);
+			System.exit (0);
 		}
 		
 		if(helpON) // if we are on the help tab
