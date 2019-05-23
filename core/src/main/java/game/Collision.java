@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import enemy.Enemy;
 import maze.Item;
-import music.MusicPlayer;
+import music.SoundPlayer;
 
 public class Collision 
 {
@@ -12,7 +12,7 @@ public class Collision
 	private ArrayList<Enemy> enemies;
 	private int mapScale;
 	private Player player;
-	private MusicPlayer musicPlayer;
+	private SoundPlayer musicPlayer;
 
 	/**
 	 * Instantiate the map moving objects that could collide
@@ -22,7 +22,7 @@ public class Collision
 	 * @param scale : tile size
 	 * @param musicPlayer : musicPLayer instance to trigger sounds
 	 */
-	public Collision(ArrayList<Item> items, Player player, ArrayList<Enemy> enemies, int scale, MusicPlayer musicPlayer) 
+	public Collision(ArrayList<Item> items, Player player, ArrayList<Enemy> enemies, int scale, SoundPlayer musicPlayer) 
 	{
 		mapScale = scale;
 		this.player = player;

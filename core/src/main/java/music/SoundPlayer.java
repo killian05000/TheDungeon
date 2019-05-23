@@ -1,6 +1,6 @@
 package music;
 
-public class MusicPlayer 
+public class SoundPlayer 
 {
 	private boolean gameMusicON;
 	private boolean gameOverSoundON;
@@ -10,14 +10,14 @@ public class MusicPlayer
 	private boolean teleporterSoundON;
 	private boolean doorOpenON;
 	private boolean doorClosedON;
-	private MusicHandler music;
+	private SoundHandler music;
 
 	/**
 	 * Constructor puts all sound events to false
 	 */
-	public MusicPlayer() 
+	public SoundPlayer() 
 	{
-		music = new MusicHandler();
+		music = new SoundHandler();
 		gameMusicON = true;
 		gameOverSoundON = false;
 		victorySoundON = false;

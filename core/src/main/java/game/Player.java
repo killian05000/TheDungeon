@@ -9,7 +9,7 @@ import enums.Direction;
 import enums.MapObject;
 import maze.Item;
 import maze.Maze;
-import music.MusicPlayer;
+import music.SoundPlayer;
 
 public class Player 
 {
@@ -30,7 +30,7 @@ public class Player
 	private boolean escape;
 	
 	// Sound event and map stuff
-	private MusicPlayer musicPlayer;
+	private SoundPlayer musicPlayer;
 	private int mapScale;	
 	int[][] matrix;
 	Maze maze;
@@ -56,7 +56,7 @@ public class Player
 	 * @param maze : maze instance
 	 * @param musicPlayer : musicPlayer instance
 	 */	
-	public Player(int x, int y, Maze maze, MusicPlayer musicPlayer) 
+	public Player(int x, int y, Maze maze, SoundPlayer musicPlayer) 
 	{
 		this.maze = maze;
 		mapScale = maze.getMapScale();

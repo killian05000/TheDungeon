@@ -9,14 +9,14 @@ import enemy.Enemy;
 import enemy.RandomEnemy;
 import enemy.SmartEnemy;
 import game.Player;
-import music.MusicPlayer;
+import music.SoundPlayer;
 
 public class Maze 
 {
 	private int mapScale;
 	private int[][] matrix;
 	private ArrayList<Texture> maps;
-	private MusicPlayer musicPlayer;
+	private SoundPlayer musicPlayer;
 
 	private Player player;
 	private ArrayList<Item> items;
@@ -37,7 +37,7 @@ public class Maze
 		this.matrix = new int[matrix.length][matrix[0].length];
 		this.matrix = matrix;
 
-		musicPlayer = new MusicPlayer();
+		musicPlayer = new SoundPlayer();
 
 		enemies = new ArrayList<Enemy>();
 
@@ -264,7 +264,7 @@ public class Maze
 		return enemies;
 	}
 
-	public MusicPlayer getMusicPlayer() 
+	public SoundPlayer getMusicPlayer() 
 	{
 		return musicPlayer;
 	}
