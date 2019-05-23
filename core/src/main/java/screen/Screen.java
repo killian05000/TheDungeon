@@ -7,5 +7,5 @@ public interface Screen
 	public void initialise();
 	public void update();
 	public void render(Graphics g);
-	void reset();
+	public void reset();
 }
