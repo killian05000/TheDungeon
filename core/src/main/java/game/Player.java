@@ -100,7 +100,7 @@ public class Player
 	/**
 	 * Load all the player's textures
 	 */
-	public void loadTextures()
+	private void loadTextures()
 	{
 		animationRight = new ArrayList<Texture>();		
 		animationLeft = new ArrayList<Texture>();
@@ -178,7 +178,7 @@ public class Player
 	 * @param direction : the chosen direction
 	 * @return a table of two corners
 	 */
-	public int[] calculateCorners(int direction)
+	private int[] calculateCorners(int direction)
 	{
 		newPosX = posX + movementModifier.get(direction).get(0) * speed; 
     	newPosY = posY + movementModifier.get(direction).get(1) * speed;
@@ -228,7 +228,7 @@ public class Player
 	/**
 	 * Set the player's position to the new position
 	 */
-	public void move()
+	private void move()
 	{
 		posX = newPosX;
 		posY = newPosY;
@@ -241,7 +241,7 @@ public class Player
 	 * @param corner2
 	 * @param maze
 	 */
-	public void triggerCollision(int corner1, int corner2, Maze maze)
+	private void triggerCollision(int corner1, int corner2, Maze maze)
 	{
 		if(corner1 == MapObject.TRAP.ordinal() || corner2 == MapObject.TRAP.ordinal())
 		{
@@ -285,7 +285,7 @@ public class Player
 	 * @param corner2
 	 * @return true if there is a collision
 	 */
-	public boolean collide(int corner1, int corner2)
+	private boolean collide(int corner1, int corner2)
 	{
 		return (corner1 != MapObject.ALLEY.ordinal() || corner2 != MapObject.ALLEY.ordinal());
 	}
@@ -296,7 +296,7 @@ public class Player
 	 * @param corner2
 	 * @return true if available
 	 */
-	public boolean directionAvailable(int corner1, int corner2)
+	private boolean directionAvailable(int corner1, int corner2)
 	{
 		if(corner1 == MapObject.ALLEY.ordinal() && corner2 == MapObject.ALLEY.ordinal())
 			return true;
